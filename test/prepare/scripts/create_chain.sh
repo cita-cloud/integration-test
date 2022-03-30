@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# Copyright Rivtower Technologies LLC.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+
+# create a chain named my-chain
+cco-cli all-in-one create my-chain --pullPolicy Always
+
+# wait all pod running
+times=300
+while [ $times -ge 1 ]
+do
+  all_run="true"
+  if [ `kubectl get pods -ncita --no-headers=true -l app.kubernetes.io/chain-name=my-chain -ojson | jq '.items|length'` == 0 ]; then
+    all_run=""
+  else
+    for status in `kubectl get pods -ncita --no-headers=true -l app.kubernetes.io/chain-name=my-chain | awk '{print $3}'`; do
+      if [ $status != "Running" ]; then
+        all_run="false"
+        break
+      fi
+    done
+  fi
+  if [[ $all_run == "true" ]]; then
+    break
+  else
+    echo "wait all pod running..."
+    let times--
+    sleep 1
+  fi
+done
+if [ $times -lt 1 ]; then
+  echo "wait timeout for chain pods, maybe happen some errors"
+  exit 1
+else
+  echo "chain pods are all Running"
+fi
