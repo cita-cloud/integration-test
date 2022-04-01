@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/python
 #
 # Copyright Rivtower Technologies LLC.
 #
@@ -13,7 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-#
 
-echo "get peer count"
+import subprocess
+result = subprocess.getoutput("cldi get block-number")
+if result.isdigit():
+    exit(0)
+exit(1)
+

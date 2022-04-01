@@ -1,0 +1,38 @@
+#!/usr/bin/python
+#
+# Copyright Rivtower Technologies LLC.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import subprocess, json, schedule
+
+
+def check(get_tx):
+    result = subprocess.getoutput(get_tx)
+    try:
+        json_obj = json.loads(result)
+    except ValueError:
+        if not result.__contains__(' message: "NoTransaction"') and not result.__contains__(' message: "NoTxHeight"'):
+            exit(1)
+        return
+    if isinstance(json_obj['height'], int) and isinstance(json_obj['index'], int):
+        exit(0)
+    exit(1)
+
+
+if __name__ == "__main__":
+
+    send_result = subprocess.getoutput("cldi send {} 0x".format('0x' + ''.join(['0' for i in range(40)])))
+    cmd = "cldi get tx {}".format(send_result)
+    schedule.every(1).seconds.do(check, cmd)
+    while True:
+        schedule.run_pending()
