@@ -16,4 +16,12 @@
 #
 #
 
-echo "get peer count"
+# set default context
+source "`pwd`/test/utils/set_context.sh"
+# get block number
+bn=`cldi get block-number`
+if [ "$?" != "0" ]; then
+  echo "get block number error"
+  exit 1
+fi
+echo "the block number is $bn"
