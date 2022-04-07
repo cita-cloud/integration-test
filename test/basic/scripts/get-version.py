@@ -24,6 +24,7 @@ def is_version(result):
 
 
 if __name__ == "__main__":
+    print(11111111)
     result = subprocess.getoutput("cldi get version")
     if is_version(result):
         exit(0)

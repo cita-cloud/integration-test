@@ -37,6 +37,18 @@ contract_code = "0x608060405234801561001057600080fd5b5060f58061001f6000396000f30
 create_fmt = 'cldi create {}'
 get_receipt_fmt = 'cldi get receipt {}'
 get_code_fmt = 'cldi get code {}'
+get_abi_fmt = 'cldi get abi {}'
+store_abi_fmt = 'cldi rpc store-abi {} {}'
+
+abi = '[]'
+
+
+def check_abi(cmd):
+    if subprocess.getoutput(cmd) != abi:
+        return
+    if subprocess.getoutput(get_abi_fmt.format(bad_contract_addr)) != '':
+        exit(1)
+    exit(0)
 
 
 def check(get_receipt):
@@ -50,11 +62,13 @@ def check(get_receipt):
     code = subprocess.getoutput(get_code_fmt.format(json_obj['contract_addr']))
     if not code.startswith(hex_prefix):
         exit(1)
-    exit(0)
+    if not subprocess.getoutput(store_abi_fmt.format(json_obj['contract_addr'], abi)).startswith(
+            hex_prefix):
+        exit(1)
+    schedule.every(1).seconds.do(check_abi, get_abi_fmt.format(json_obj['contract_addr']))
 
 
 if __name__ == "__main__":
-
     create_result = subprocess.getoutput(create_fmt.format(contract_code))
     if not create_result.startswith(hex_prefix) or not len(create_result) == 2 + 64:
         exit(1)
