@@ -20,7 +20,7 @@ dir=`dirname $0`
 path=$pwd/$dir/scripts
 
 for file in `ls "$path"`; do
-  python3 "$path/$file"
+  python "$path/$file"
   if [ "$?" = "0" ]; then
     echo "exec $file successful"
   else
