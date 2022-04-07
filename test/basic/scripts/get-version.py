@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/python
 #
 # Copyright Rivtower Technologies LLC.
 #
@@ -13,18 +13,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-#
-pwd=`pwd`
-dir=`dirname $0`
-path=$pwd/$dir/scripts
 
-for file in `ls "$path"`; do
-  python "$path/$file"
-  if [ "$?" = "0" ]; then
-    echo "exec $file successful"
-  else
-    echo "exec $file failed"
-    exit 1
-  fi
-done
+import subprocess, re
+
+pattern = r'\d+\.(?:\d+\.)\d+'
+
+
+def is_version(result):
+    return re.match(pattern, result)
+
+
+if __name__ == "__main__":
+    result = subprocess.getoutput("cldi get version")
+    if is_version(result):
+        exit(0)
+    exit(1)
