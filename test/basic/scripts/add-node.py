@@ -16,8 +16,7 @@
 import subprocess
 
 if __name__ == "__main__":
-    subprocess.getoutput('source "`pwd`/test/utils/set_context.sh"')
-    result = subprocess.getoutput("cldi rpc add-node localhost 60000")
+    result = subprocess.getoutput('source "`pwd`/test/utils/set_context.sh" && cldi rpc add-node localhost 60000')
     print(result)
     if result != 'Success':
         exit(1)
