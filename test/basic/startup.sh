@@ -18,6 +18,7 @@
 pwd=`pwd`
 dir=`dirname $0`
 path=$pwd/$dir/scripts
+source $pwd/test/utils/set_context.sh
 
 for file in `ls "$path"`; do
   python "$path/$file"

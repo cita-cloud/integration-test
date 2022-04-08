@@ -17,12 +17,7 @@ import subprocess
 
 
 if __name__ == "__main__":
-
-    proc = subprocess.Popen(['/bin/bash', '-c', 'source "`pwd`/test/utils/set_context.sh" && cldi rpc add-node localhost 60000'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-    result = proc.stdout.read().decode().strip('\n')
-
-    print(result)
-
+    result = subprocess.getoutput('cldi rpc add-node localhost 60000')
     if result != 'Success':
         exit(1)
     exit(0)
