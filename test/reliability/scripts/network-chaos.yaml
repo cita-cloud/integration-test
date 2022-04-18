@@ -1,0 +1,72 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: Workflow
+metadata:
+  name: network-workflow
+spec:
+  entry: network-entry
+  templates:
+    - name: network-entry
+      templateType: Serial
+      deadline: 240s
+      children:
+        - workflow-network-netem
+        - workflow-network-bandwidth
+        - workflow-network-partition
+    - name: workflow-network-partition
+      templateType: NetworkChaos
+      deadline: 80s
+      networkChaos:
+        action: partition
+        mode: one
+        selector:
+          namespaces:
+          - cita
+          labelSelectors:
+            app.kubernetes.io/chain-name: my-chain
+        direction: to
+        target:
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: my-chain
+    - name: workflow-network-bandwidth
+      templateType: NetworkChaos
+      deadline: 80s
+      networkChaos:
+        action: bandwidth
+        mode: all
+        selector:
+          namespaces:
+          - cita
+          labelSelectors:
+            app.kubernetes.io/chain-name: my-chain
+        bandwidth:
+          rate: '1mbps'
+          limit: 100
+          buffer: 10000
+    - name: workflow-network-netem
+      templateType: NetworkChaos
+      deadline: 80s
+      networkChaos:
+        action: netem
+        mode: one
+        selector:
+          namespaces:
+          - cita
+          labelSelectors:
+            app.kubernetes.io/chain-name: my-chain
+        delay:
+          latency: "90ms"
+          correlation: "25"
+          jitter: "90ms"
+        loss:
+          loss: "25"
+          correlation: "25"
+        duplicate:
+          duplicate: "25"
+          correlation: "25"
+        corrupt:
+          corrupt: "25"
+          correlation: "25"
