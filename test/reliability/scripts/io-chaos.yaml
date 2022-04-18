@@ -1,0 +1,80 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: Workflow
+metadata:
+  name: io-workflow
+spec:
+  entry: io-entry
+  templates:
+    - name: io-entry
+      templateType: Serial
+      deadline: 300s
+      children:
+        - workflow-io-latency
+        - workflow-io-fault
+        - workflow-io-mistake
+    - name: workflow-io-latency
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 90s"
+        concurrencyPolicy: Allow
+        type: IOChaos
+        ioChaos:
+          action: latency
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: my-chain
+          volumePath: /data
+          path: '/data/**/*'
+          delay: '100ms'
+          percent: 50
+          duration: '10s'
+    - name: workflow-io-fault
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 90s"
+        concurrencyPolicy: Allow
+        type: IOChaos
+        ioChaos:
+          action: fault
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: my-chain
+          volumePath: /data
+          path: '/data/**/*'
+          errno: 5
+          percent: 50
+          duration: '10s'
+    - name: workflow-io-mistake
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 90s"
+        concurrencyPolicy: Allow
+        type: IOChaos
+        ioChaos:
+          action: fault
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: my-chain
+          volumePath: /data
+          path: '/data/**/*'
+          mistake:
+            filling: zero
+            maxOccurrences: 1
+            maxLength: 10
+          methods:
+            - READ
+            - WRITE
+          percent: 10
+          duration: '10s'
