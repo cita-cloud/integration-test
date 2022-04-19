@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 #
-
+set -x
 set -o errexit
 
 # randomly get the service name of a node
