@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 #
+set -x
 
 # create admin account by cloud-cli
 admin_addr=$(cldi account generate --name admin | jq -r '.address')
