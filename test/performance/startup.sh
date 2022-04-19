@@ -23,8 +23,9 @@ path=$pwd/$dir/scripts
 source $pwd/test/utils/set_context.sh
 
 for file in `ls "$path"`; do
-  ret=$(python "$path/$file")
-  if [ $ret = "0" ]; then
+  python "$path/$file"
+  ret=$?
+  if [ "$ret" = "0" ]; then
     echo "exec $file successful"
   else
     echo "exec $file failed, ret = $ret"

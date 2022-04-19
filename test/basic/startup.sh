@@ -24,10 +24,11 @@ source $pwd/test/utils/set_context.sh
 
 for file in `ls "$path"`; do
   python "$path/$file"
-  if [ "$?" = "0" ]; then
+  ret=$?
+  if [ "$ret" = "0" ]; then
     echo "exec $file successful"
   else
-    echo "exec $file failed"
+    echo "exec $file failed ret = $ret"
     exit 1
   fi
 done

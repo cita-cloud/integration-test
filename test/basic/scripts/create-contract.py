@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+#
 # Copyright Rivtower Technologies LLC.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +17,7 @@
 # creat contract get receipt get code
 import json
 import subprocess
-
+import time
 import schedule
 
 no_receipt_message = ' message: "Not get the receipt"'
@@ -79,3 +81,4 @@ if __name__ == "__main__":
     schedule.every(1).seconds.do(check, get_receipt_fmt.format(create_result))
     while True:
         schedule.run_pending()
+        time.sleep(1)
