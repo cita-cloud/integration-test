@@ -15,7 +15,6 @@
 # limitations under the License.
 #
 #
-set -x
 
 pwd=`pwd`
 dir=`dirname $0`

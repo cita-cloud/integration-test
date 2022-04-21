@@ -15,7 +15,6 @@
 # limitations under the License.
 #
 #
-set -x
 set -o errexit
 
 if [ "`kubectl get deployment cita-cloud-operator -ncita -ojson | jq '.status.availableReplicas'`" == "1" ]; then
