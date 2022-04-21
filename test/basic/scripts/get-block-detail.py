@@ -28,7 +28,7 @@ if __name__ == "__main__":
             exit(10)
     except ValueError:
         exit(20)
-    if not height_bad_result.__contains__(' message: "NoBlock"'):
+    if not height_bad_result.__contains__(' message: "NotFound"'):
         exit(30)
 
     good_hash = subprocess.getoutput("cldi get block-hash {}".format(good_height))
