@@ -15,14 +15,15 @@
 # limitations under the License.
 
 
-import subprocess, sys, json, time
+import subprocess
+import time
 
 if __name__ == "__main__":
     apply_cmd = "kubectl apply -f {}"
     delete_cmd = "kubectl delete -f {}"
 
     # network chaos test 240s
-    ret = subprocess.getoutput(apply_cmd.format("test/reliability/scripts/network-chaos.yaml"))
+    ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/network-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply network chaos test failed!")
         exit(10)
@@ -30,7 +31,7 @@ if __name__ == "__main__":
     time.sleep(300)
 
     # delete network chaos test
-    ret = subprocess.getoutput(delete_cmd.format("test/reliability/scripts/network-chaos.yaml"))
+    ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/network-chaos.yaml"))
     if not ret.__contains__("deleted"):
         print("delete network chaos test failed!")
         exit(20)   
@@ -47,7 +48,7 @@ if __name__ == "__main__":
         exit(30) 
     
     # pod chaos test 400s
-    ret = subprocess.getoutput(apply_cmd.format("test/reliability/scripts/pod-chaos.yaml"))
+    ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply pod chaos test failed!")
         exit(40)
@@ -55,7 +56,7 @@ if __name__ == "__main__":
     time.sleep(500)
 
     # delete pod chaos test
-    ret = subprocess.getoutput(delete_cmd.format("test/reliability/scripts/pod-chaos.yaml"))
+    ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
     if not ret.__contains__("deleted"):
         print("delete pod chaos test failed!")
         exit(50)   
@@ -72,7 +73,7 @@ if __name__ == "__main__":
         exit(60)    
 
     # io chaos test 300s
-    ret = subprocess.getoutput(apply_cmd.format("test/reliability/scripts/io-chaos.yaml"))
+    ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/io-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply io chaos test failed!")
         exit(70)
@@ -80,7 +81,7 @@ if __name__ == "__main__":
     time.sleep(400)
 
     # delete io chaos test
-    ret = subprocess.getoutput(delete_cmd.format("test/reliability/scripts/io-chaos.yaml"))
+    ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/io-chaos.yaml"))
     if not ret.__contains__("deleted"):
         print("delete io chaos test failed!")
         exit(80)   
