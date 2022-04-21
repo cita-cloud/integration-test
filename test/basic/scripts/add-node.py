@@ -17,7 +17,8 @@ import subprocess
 
 
 if __name__ == "__main__":
-    result = subprocess.getoutput('cldi rpc add-node localhost 60000')
+    result = subprocess.getoutput('cldi rpc add-node localhost 60000 domain')
     if result != 'Success':
         exit(1)
     exit(0)
+
