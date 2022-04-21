@@ -25,11 +25,11 @@ if __name__ == "__main__":
     try:
         result = json.loads(height_good_result)
         if result['height'] != good_height:
-            exit(1)
+            exit(10)
     except ValueError:
-        exit(1)
-    if not height_bad_result.__contains__(' message: "NoBlock"'):
-        exit(1)
+        exit(20)
+    if not height_bad_result.__contains__(' message: "NotFound"'):
+        exit(30)
 
     good_hash = subprocess.getoutput("cldi get block-hash {}".format(good_height))
     hash_good_result = subprocess.getoutput(cmd.format(good_hash))
@@ -38,11 +38,11 @@ if __name__ == "__main__":
     try:
         result = json.loads(hash_good_result)
         if result['height'] != good_height:
-            exit(1)
+            exit(40)
     except ValueError:
-        exit(1)
+        exit(50)
     if not hash_bad_result.__contains__(' message: "NoBlockHeight"'):
-        exit(1)
+        exit(60)
     exit(0)
 
 
