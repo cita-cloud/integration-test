@@ -20,7 +20,7 @@
 admin_addr=$(cldi account generate --name admin | jq -r '.address')
 
 # create a chain named my-chain
-cco-cli all-in-one create -a $admin_addr my-chain --pullPolicy Always
+cco-cli all-in-one create -a $admin_addr my-chain --pullPolicy Always --enableTls --consensusType BFT --nodeCount 4
 
 # wait all pod running
 times=300
