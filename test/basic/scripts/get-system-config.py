@@ -26,7 +26,7 @@ def is_json(result):
 
 
 if __name__ == "__main__":
-    result = subprocess.getoutput("cldi get system-config")
+    result = subprocess.getoutput("cldi -c default get system-config")
     if is_json(result):
         exit(0)
     exit(1)

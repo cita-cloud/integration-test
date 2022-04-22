@@ -34,11 +34,11 @@ contract_code = "0x608060405234801561001057600080fd5b5060f58061001f6000396000f30
                 "fd5b5060a660c0565b005b60005481565b60016000808282540192505081905550565b600080" \
                 "819055505600a165627a7a72305820faa1d1f51d7b5ca2b200e0f6cdef4f2d7e44ee686209e300beb1146f40d32dee0029"
 
-create_fmt = 'cldi create {}'
-get_receipt_fmt = 'cldi get receipt {}'
-get_code_fmt = 'cldi get code {}'
-get_abi_fmt = 'cldi get abi {}'
-store_abi_fmt = 'cldi rpc store-abi {} {}'
+create_fmt = 'cldi -c default create {}'
+get_receipt_fmt = 'cldi -c default get receipt {}'
+get_code_fmt = 'cldi -c default get code {}'
+get_abi_fmt = 'cldi -c default get abi {}'
+store_abi_fmt = 'cldi -c default rpc store-abi {} {}'
 
 abi = '[]'
 

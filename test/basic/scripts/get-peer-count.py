@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import subprocess
-result = subprocess.getoutput("cldi get peer-count")
+result = subprocess.getoutput("cldi -c default get peer-count")
 if result.isdigit():
     exit(0)
 exit(1)

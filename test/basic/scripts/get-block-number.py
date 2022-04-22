@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import subprocess
-result = subprocess.getoutput("cldi get block-number")
+result = subprocess.getoutput("cldi -c default get block-number")
 if result.isdigit():
     exit(0)
 exit(1)

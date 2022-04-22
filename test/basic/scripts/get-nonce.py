@@ -22,7 +22,7 @@ if __name__ == "__main__":
     hex_prefix = '0x'
     good_addr = hex_prefix + ''.join(['0' for i in range(40)])
     bad_addr = hex_prefix + ''.join(['0' for j in range(39)])
-    get_nonce_fmt = "cldi get nonce {}"
+    get_nonce_fmt = "cldi -c default get nonce {}"
     good_result = subprocess.getoutput(get_nonce_fmt.format(good_addr))
     bad_result = subprocess.getoutput(get_nonce_fmt.format(bad_addr))
     if good_result.startswith(hex_prefix) \
