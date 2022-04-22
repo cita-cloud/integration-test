@@ -19,6 +19,6 @@ if __name__ == "__main__":
     hex_prefix = '0x'
     good_addr = hex_prefix + ''.join(['0' for i in range(40)])
     zero_balance = hex_prefix + ''.join(['0' for i in range(64)])
-    if subprocess.getoutput("cldi get balance {}".format(good_addr)) == zero_balance:
+    if subprocess.getoutput("cldi -c default get balance {}".format(good_addr)) == zero_balance:
         exit(0)
     exit(1)

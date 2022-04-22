@@ -17,7 +17,7 @@ import subprocess
 
 if __name__ == "__main__":
     hex_prefix = '0x'
-    result = subprocess.getoutput("cldi get block-hash 1")
+    result = subprocess.getoutput("cldi -c default get block-hash 1")
     if result.startswith(hex_prefix) and len(result) == len(hex_prefix) + 64:
         exit(0)
     exit(1)

@@ -19,7 +19,7 @@ if __name__ == "__main__":
     good_height = 1
     bad_height = sys.maxsize
     bad_hash = '0x' + ''.join(['0' for i in range(64)])
-    cmd = "cldi get block {}"
+    cmd = "cldi -c default get block {}"
     height_good_result = subprocess.getoutput(cmd.format(1))
     height_bad_result = subprocess.getoutput(cmd.format(sys.maxsize))
     try:
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     if not height_bad_result.__contains__(' message: "NoBlock"'):
         exit(30)
 
-    good_hash = subprocess.getoutput("cldi get block-hash {}".format(good_height))
+    good_hash = subprocess.getoutput("cldi -c default get block-hash {}".format(good_height))
     hash_good_result = subprocess.getoutput(cmd.format(good_hash))
     hash_bad_result = subprocess.getoutput(cmd.format(bad_hash))
 

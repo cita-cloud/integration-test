@@ -18,7 +18,7 @@ import subprocess
 
 if __name__ == "__main__":
 
-    result = subprocess.getoutput("cldi get peers-info")
+    result = subprocess.getoutput("cldi -c default get peers-info")
     try:
         json_obj = json.loads(result)
         node_list = json_obj['nodes']
@@ -27,7 +27,7 @@ if __name__ == "__main__":
                 exit(0)
             else:
                 node_0 = node_list[0]
-                if len(node_0) == 4 and isinstance(node_0['address'], str) and isinstance(node_0['host'], str) \
+                if len(node_0) == 5 and isinstance(node_0['address'], str) and isinstance(node_0['host'], str) \
                         and isinstance(node_0['origin'], int) and isinstance(node_0['port'], int):
                     exit(0)
     except ValueError:
