@@ -14,11 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import json
+import pprint
 import subprocess
 
 if __name__ == "__main__":
-
     result = subprocess.getoutput("cldi -c default get peers-info")
+    pprint.pprint("get peers-info: {result}".format(result=result), indent=4)
     try:
         json_obj = json.loads(result)
         node_list = json_obj['nodes']

@@ -13,7 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import subprocess, sys, json
+import json
+import pprint
+import subprocess
+import sys
 
 if __name__ == "__main__":
     good_height = 1
@@ -21,7 +24,9 @@ if __name__ == "__main__":
     bad_hash = '0x' + ''.join(['0' for i in range(64)])
     cmd = "cldi -c default get block {}"
     height_good_result = subprocess.getoutput(cmd.format(1))
+    pprint.pprint("height_good_result: {height_good_result}".format(height_good_result=height_good_result))
     height_bad_result = subprocess.getoutput(cmd.format(sys.maxsize))
+    pprint.pprint("height_bad_result: {height_bad_result}".format(height_bad_result=height_bad_result))
     try:
         result = json.loads(height_good_result)
         if result['height'] != good_height:
@@ -32,8 +37,11 @@ if __name__ == "__main__":
         exit(30)
 
     good_hash = subprocess.getoutput("cldi -c default get block-hash {}".format(good_height))
+    pprint.pprint("good_hash: {good_hash}".format(good_hash=good_hash))
     hash_good_result = subprocess.getoutput(cmd.format(good_hash))
+    pprint.pprint("hash_good_result: {hash_good_result}".format(hash_good_result=hash_good_result))
     hash_bad_result = subprocess.getoutput(cmd.format(bad_hash))
+    pprint.pprint("hash_bad_result: {hash_bad_result}".format(hash_bad_result=hash_bad_result))
 
     try:
         result = json.loads(hash_good_result)
@@ -44,5 +52,3 @@ if __name__ == "__main__":
     if not hash_bad_result.__contains__(' message: "NoBlockHeight"'):
         exit(60)
     exit(0)
-
-

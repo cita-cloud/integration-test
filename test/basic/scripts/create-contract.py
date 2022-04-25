@@ -18,6 +18,7 @@
 import json
 import subprocess
 import time
+
 import schedule
 
 no_receipt_message = ' message: "Not get the receipt"'
@@ -47,7 +48,7 @@ def check_abi(cmd):
     if subprocess.getoutput(cmd) != abi:
         return
     if subprocess.getoutput(get_abi_fmt.format(bad_contract_addr)) != '':
-        exit(1)
+        exit(34)
     exit(0)
 
 
@@ -57,27 +58,27 @@ def check(get_receipt):
         json_obj = json.loads(result)
     except ValueError:
         if not result.__contains__(no_receipt_message):
-            exit(1)
+            exit(31)
         return
     code = subprocess.getoutput(get_code_fmt.format(json_obj['contract_addr']))
     if not code.startswith(hex_prefix):
-        exit(1)
+        exit(32)
     if not subprocess.getoutput(store_abi_fmt.format(json_obj['contract_addr'], abi)).startswith(
             hex_prefix):
-        exit(1)
+        exit(33)
     schedule.every(1).seconds.do(check_abi, get_abi_fmt.format(json_obj['contract_addr']))
 
 
 if __name__ == "__main__":
     create_result = subprocess.getoutput(create_fmt.format(contract_code))
     if not create_result.startswith(hex_prefix) or not len(create_result) == 2 + 64:
-        exit(1)
+        exit(10)
     bad_receipt = subprocess.getoutput(get_receipt_fmt.format(bad_hash))
     if not bad_receipt.__contains__(no_receipt_message):
-        exit(1)
+        exit(20)
 
     if hex_prefix != subprocess.getoutput(get_code_fmt.format(bad_contract_addr)):
-        exit(1)
+        exit(30)
     schedule.every(1).seconds.do(check, get_receipt_fmt.format(create_result))
     while True:
         schedule.run_pending()

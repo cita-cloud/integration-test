@@ -13,8 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-import subprocess, re
+import pprint
+import re
+import subprocess
 
 pattern = r'\d+\.(?:\d+\.)\d+'
 
@@ -25,6 +26,7 @@ def is_version(result):
 
 if __name__ == "__main__":
     result = subprocess.getoutput("cldi -c default get version")
+    pprint.pprint("get cldi version: {result}".format(result=result), indent=4)
     if is_version(result):
         exit(0)
     exit(1)

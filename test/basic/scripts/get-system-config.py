@@ -14,12 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import subprocess, json
+import json
+import pprint
+import subprocess
 
 
-def is_json(result):
+def is_json(res):
     try:
-        json.loads(result)
+        json.loads(res)
     except ValueError:
         return False
     return True
@@ -27,6 +29,7 @@ def is_json(result):
 
 if __name__ == "__main__":
     result = subprocess.getoutput("cldi -c default get system-config")
+    pprint.pprint("get system-config: {result}".format(result=result), indent=4)
     if is_json(result):
         exit(0)
     exit(1)
