@@ -13,7 +13,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import subprocess, json, schedule
+import json
+import subprocess
+
+import schedule
 
 
 def check(get_tx):
@@ -22,11 +25,11 @@ def check(get_tx):
         json_obj = json.loads(result)
     except ValueError:
         if not result.__contains__(' message: "NoTransaction"') and not result.__contains__(' message: "NoTxHeight"'):
-            exit(1)
+            exit(10)
         return
     if isinstance(json_obj['height'], int) and isinstance(json_obj['index'], int):
         exit(0)
-    exit(1)
+    exit(20)
 
 
 if __name__ == "__main__":
