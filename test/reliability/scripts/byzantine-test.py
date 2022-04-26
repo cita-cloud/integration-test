@@ -92,9 +92,18 @@ if __name__ == "__main__":
     ret = subprocess.getoutput(cmd.format(node2_name))
     if not ret.__contains__("success"):
         print("start node failed!")
-        exit(70)
+        exit(71)
 
-    time.sleep(90)
+    for i in range(3):
+        time.sleep(60 * (i + 1))
+        cmd = "cco-cli node list | grep {} | grep Running"
+        ret2 = subprocess.getoutput(cmd.format(node2_name))
+        ret3 = subprocess.getoutput(cmd.format(node3_name))
+        if len(ret2) != 0 and len(ret3) != 0:
+            break
+        if i == 2:
+            print("restore node failed!")
+            exit(75)
     
     # check work well
     pre_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
