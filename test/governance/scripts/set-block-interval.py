@@ -61,12 +61,13 @@ if __name__ == "__main__":
 
     # check timestamp in block to verify block interval
     old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
+    time.sleep(100)
     for i in range(3):
-        time.sleep(20 * (i + 1))
+        time.sleep(10 * (i + 1))
 
         new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
         
-        if new_block_number > old_block_number + 1:
+        if new_block_number > old_block_number + 10:
             break
         if i == 2:
             print("block number not increase!")
@@ -131,12 +132,13 @@ if __name__ == "__main__":
 
     # check timestamp in block to verify block interval
     old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
+    time.sleep(30)
     for i in range(3):
-        time.sleep(10 * (i + 1))
+        time.sleep(6 * (i + 1))
 
         new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
         
-        if new_block_number > old_block_number + 1:
+        if new_block_number > old_block_number + 10:
             break
         if i == 2:
             print("block number not increase!")
