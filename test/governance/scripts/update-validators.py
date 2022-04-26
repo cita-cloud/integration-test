@@ -42,13 +42,16 @@ if __name__ == "__main__":
         print("update-validators failed!")
         exit(10)
 
-    time.sleep(6)
+    for i in range(3):
+        time.sleep(6 * (i + 1))
 
-    cmd = "cldi -c default get tx {}"
-    cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-    if cmd_result.__contains__("Error"):
-        print("get update-validators tx failed")
-        exit(20)
+        cmd = "cldi -c default get tx {}"
+        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
+        if not cmd_result.__contains__("Error"):
+            break
+        if i == 2:
+            print("get update-validators tx failed")
+            exit(20)
 
     # check new validators in system-config
     cmd = "cldi -c default get system-config"
@@ -74,13 +77,16 @@ if __name__ == "__main__":
         print("update-validators failed!")
         exit(50)
 
-    time.sleep(6)
+    for i in range(3):
+        time.sleep(6 * (i + 1))
 
-    cmd = "cldi -c default get tx {}"
-    cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-    if cmd_result.__contains__("Error"):
-        print("get update-validators tx failed")
-        exit(60)
+        cmd = "cldi -c default get tx {}"
+        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
+        if not cmd_result.__contains__("Error"):
+            break
+        if i == 2:
+            print("get update-validators tx failed")
+            exit(60)
 
     # check new validators in system-config
     cmd = "cldi -c default get system-config"

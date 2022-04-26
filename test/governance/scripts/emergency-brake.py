@@ -24,16 +24,19 @@ if __name__ == "__main__":
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
         print("send tx failed!")
         exit(10)
-    
-    time.sleep(9)
 
-    cmd = "cldi -c default get receipt {}"
-    ret = subprocess.getoutput(cmd.format(tx_hash))
-    if ret.__contains__("Error"):
-        print("get receipt failed!")
-        exit(20)  
+    for i in range(3):
+        time.sleep(6 * (i + 1))
 
-    tx_receipt = json.loads(ret)
+        cmd = "cldi -c default get receipt {}"
+        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
+        if not cmd_result.__contains__("Error"):
+            break
+        if i == 2:
+            print("get receipt failed!")
+            exit(20)
+
+    tx_receipt = json.loads(cmd_result)
     if len(tx_receipt['error_msg']) != 0:
         print("receipt has error!")
         exit(30)        
@@ -47,13 +50,16 @@ if __name__ == "__main__":
         print("turn on emergency-brake failed!")
         exit(40)
 
-    time.sleep(9)
+    for i in range(3):
+        time.sleep(6 * (i + 1))
 
-    cmd = "cldi -c default get tx {}"
-    cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-    if cmd_result.__contains__("Error"):
-        print("get turn on emergency-brake tx failed")
-        exit(50)
+        cmd = "cldi -c default get tx {}"
+        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
+        if not cmd_result.__contains__("Error"):
+            break
+        if i == 2:
+            print("get turn on emergency-brake tx failed")
+            exit(50)
 
     # check emergency_brake in system-config
     cmd = "cldi -c default get system-config"
@@ -84,13 +90,16 @@ if __name__ == "__main__":
         print("turn off emergency-brake failed!")
         exit(90)
 
-    time.sleep(9)
+    for i in range(3):
+        time.sleep(6 * (i + 1))
 
-    cmd = "cldi -c default get tx {}"
-    cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-    if cmd_result.__contains__("Error"):
-        print("get turn off emergency-brake tx failed")
-        exit(100)
+        cmd = "cldi -c default get tx {}"
+        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
+        if not cmd_result.__contains__("Error"):
+            break
+        if i == 2:
+            print("get turn off emergency-brake tx failed")
+            exit(100)
 
     # check emergency_brake in system-config
     cmd = "cldi -c default get system-config"
@@ -113,16 +122,19 @@ if __name__ == "__main__":
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
         print("send tx failed!")
         exit(130)
-    
-    time.sleep(9)
 
-    cmd = "cldi -c default get receipt {}"
-    ret = subprocess.getoutput(cmd.format(tx_hash))
-    if ret.__contains__("Error"):
-        print("get receipt failed!")
-        exit(140)  
+    for i in range(3):
+        time.sleep(6 * (i + 1))
 
-    tx_receipt = json.loads(ret)
+        cmd = "cldi -c default get receipt {}"
+        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
+        if not cmd_result.__contains__("Error"):
+            break
+        if i == 2:
+            print("get receipt failed!")
+            exit(20)
+
+    tx_receipt = json.loads(cmd_result)
     if len(tx_receipt['error_msg']) != 0:
         print("receipt has error!")
         exit(150)  

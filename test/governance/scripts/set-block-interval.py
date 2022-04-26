@@ -35,13 +35,16 @@ if __name__ == "__main__":
         print("set-block-interval failed!")
         exit(20)
 
-    time.sleep(6)
+    for i in range(3):
+        time.sleep(6 * (i + 1))
 
-    cmd = "cldi -c default get tx {}"
-    cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-    if cmd_result.__contains__("Error"):
-        print("get set-block-interval tx failed")
-        exit(30)
+        cmd = "cldi -c default get tx {}"
+        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
+        if not cmd_result.__contains__("Error"):
+            break
+        if i == 2:
+            print("get set-block-interval tx failed")
+            exit(30)
 
     # check new block interval in system-config
     cmd = "cldi -c default get system-config"
@@ -57,7 +60,18 @@ if __name__ == "__main__":
         exit(50)
 
     # check timestamp in block to verify block interval
-    time.sleep(30)
+    old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
+    for i in range(3):
+        time.sleep(20 * (i + 1))
+
+        new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
+        
+        if new_block_number > old_block_number + 1:
+            break
+        if i == 2:
+            print("block number not increase!")
+            exit(55)
+
     result = int(subprocess.getoutput("cldi -c default get block-number"))
     cmd = "cldi -c default get block {}"
     latest_block_ret = subprocess.getoutput(cmd.format(result))
@@ -91,13 +105,16 @@ if __name__ == "__main__":
         print("set-block-interval failed!")
         exit(90)
 
-    time.sleep(30)
+    for i in range(3):
+        time.sleep(10 * (i + 1))
 
-    cmd = "cldi -c default get tx {}"
-    cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-    if cmd_result.__contains__("Error"):
-        print("get set-block-interval tx failed")
-        exit(100)
+        cmd = "cldi -c default get tx {}"
+        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
+        if not cmd_result.__contains__("Error"):
+            break
+        if i == 2:
+            print("get set-block-interval tx failed")
+            exit(100)
 
     # check new block interval in system-config
     cmd = "cldi -c default get system-config"
@@ -113,7 +130,18 @@ if __name__ == "__main__":
         exit(120)
 
     # check timestamp in block to verify block interval
-    time.sleep(9)
+    old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
+    for i in range(3):
+        time.sleep(10 * (i + 1))
+
+        new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
+        
+        if new_block_number > old_block_number + 1:
+            break
+        if i == 2:
+            print("block number not increase!")
+            exit(125)
+
     result = int(subprocess.getoutput("cldi -c default get block-number"))
     cmd = "cldi -c default get block {}"
     latest_block_ret = subprocess.getoutput(cmd.format(result))
