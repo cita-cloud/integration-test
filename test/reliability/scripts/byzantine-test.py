@@ -28,7 +28,7 @@ if __name__ == "__main__":
     # check work well
     pre_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
-    time.sleep(6)
+    time.sleep(30)
 
     latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
@@ -46,12 +46,12 @@ if __name__ == "__main__":
         print("stop node failed!")
         exit(30)
 
-    time.sleep(60)
+    time.sleep(30)
     
     # check work well
     pre_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
-    time.sleep(6)
+    time.sleep(30)
 
     latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
@@ -68,12 +68,12 @@ if __name__ == "__main__":
         print("stop node failed!")
         exit(50)
 
-    time.sleep(60)
+    time.sleep(30)
     
     # check work well
     pre_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
-    time.sleep(6)
+    time.sleep(30)
 
     latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     # check work well
     pre_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
-    time.sleep(6)
+    time.sleep(30)
 
     latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
