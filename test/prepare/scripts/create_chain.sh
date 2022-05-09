@@ -16,6 +16,12 @@
 #
 #
 
+kubectl get chainconfigs my-chain -ncita
+if [ $? -eq 0 ];then
+    # delete my-chain
+    kubectl delete chainconfigs my-chain -ncita
+fi
+
 # create admin account by cloud-cli
 admin_addr=$(cldi account generate --name admin | jq -r '.address')
 
