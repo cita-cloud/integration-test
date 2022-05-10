@@ -57,3 +57,6 @@ if [ $times -lt 1 ]; then
 else
   echo "chain pods are all Running"
 fi
+
+# wait for chain start up
+sleep 100

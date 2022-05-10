@@ -42,7 +42,18 @@ store_abi_fmt = 'cldi -c default rpc store-abi {} {}'
 abi = '[]'
 
 if __name__ == "__main__":
+    old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
+    for i in range(3):
+        time.sleep(6 * (i + 1))
+        new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
+        if new_block_number > old_block_number + 1:
+            break
+        if i == 2:
+            print("block number not increase!")
+            exit(5)
+
     create_result = subprocess.getoutput(create_fmt.format(contract_code))
+    print("create_result: ", create_result)
     if not create_result.startswith(hex_prefix) or not len(create_result) == 2 + 64:
         exit(10)
     bad_receipt = subprocess.getoutput(get_receipt_fmt.format(bad_hash))
@@ -51,7 +62,6 @@ if __name__ == "__main__":
 
     if hex_prefix != subprocess.getoutput(get_code_fmt.format(bad_contract_addr)):
         exit(30)
-
 
     for i in range(3):
         time.sleep(6 * (i + 1))
@@ -75,7 +85,9 @@ if __name__ == "__main__":
     if subprocess.getoutput(get_abi_fmt.format(bad_contract_addr)) != '':
         exit(34)
     
-    if not subprocess.getoutput(store_abi_fmt.format(contract_addr, abi)).startswith(hex_prefix):
+    store_abi_result = subprocess.getoutput(store_abi_fmt.format(contract_addr, abi))
+    print("store_abi_result: ", store_abi_result)
+    if not store_abi_result.startswith(hex_prefix):
         exit(33)
 
     for i in range(3):
