@@ -19,8 +19,6 @@ import json
 import subprocess
 import time
 
-import schedule
-
 no_receipt_message = ' message: "Not get the receipt"'
 hex_prefix = '0x'
 
@@ -43,32 +41,6 @@ store_abi_fmt = 'cldi -c default rpc store-abi {} {}'
 
 abi = '[]'
 
-
-def check_abi(cmd):
-    if subprocess.getoutput(cmd) != abi:
-        return
-    if subprocess.getoutput(get_abi_fmt.format(bad_contract_addr)) != '':
-        exit(34)
-    exit(0)
-
-
-def check(get_receipt):
-    result = subprocess.getoutput(get_receipt)
-    try:
-        json_obj = json.loads(result)
-    except ValueError:
-        if not result.__contains__(no_receipt_message):
-            exit(31)
-        return
-    code = subprocess.getoutput(get_code_fmt.format(json_obj['contract_addr']))
-    if not code.startswith(hex_prefix):
-        exit(32)
-    if not subprocess.getoutput(store_abi_fmt.format(json_obj['contract_addr'], abi)).startswith(
-            hex_prefix):
-        exit(33)
-    schedule.every(1).seconds.do(check_abi, get_abi_fmt.format(json_obj['contract_addr']))
-
-
 if __name__ == "__main__":
     create_result = subprocess.getoutput(create_fmt.format(contract_code))
     if not create_result.startswith(hex_prefix) or not len(create_result) == 2 + 64:
@@ -79,7 +51,46 @@ if __name__ == "__main__":
 
     if hex_prefix != subprocess.getoutput(get_code_fmt.format(bad_contract_addr)):
         exit(30)
-    schedule.every(1).seconds.do(check, get_receipt_fmt.format(create_result))
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+
+
+    for i in range(3):
+        time.sleep(6 * (i + 1))
+
+        result = subprocess.getoutput(get_receipt_fmt.format(create_result))
+
+        if not result.__contains__("Error"):
+            break
+
+        if i == 2:
+            print("get receipt failed after 3 retry!")
+            exit(31)
+
+    json_obj = json.loads(result)
+    contract_addr = json_obj['contract_addr']
+
+    code = subprocess.getoutput(get_code_fmt.format(contract_addr))
+    if not code.startswith(hex_prefix):
+        exit(32)
+
+    if subprocess.getoutput(get_abi_fmt.format(bad_contract_addr)) != '':
+        exit(34)
+    
+    if not subprocess.getoutput(store_abi_fmt.format(contract_addr, abi)).startswith(hex_prefix):
+        exit(33)
+
+    for i in range(3):
+        time.sleep(6 * (i + 1))
+
+        result = subprocess.getoutput(get_abi_fmt.format(contract_addr))
+
+        if not result.__contains__("Error"):
+            break
+
+        if i == 2:
+            print("get abi failed after 3 retry!")
+            exit(31)
+    
+    if  result!= abi:
+        exit(35)
+    
+    exit(0)
