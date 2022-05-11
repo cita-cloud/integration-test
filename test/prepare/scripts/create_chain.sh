@@ -59,4 +59,5 @@ else
 fi
 
 # wait for chain start up
-sleep 100
+echo `date`
+sleep 600
