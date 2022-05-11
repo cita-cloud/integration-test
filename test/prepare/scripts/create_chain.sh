@@ -20,6 +20,24 @@ kubectl get chainconfigs my-chain -ncita
 if [ $? -eq 0 ];then
     # delete my-chain
     kubectl delete chainconfigs my-chain -ncita
+    # check account all deleted
+    times=60
+    while [ $times -ge 1 ]
+    do
+      if [ 0 == `kubectl get accounts.citacloud.rivtower.com -ncita -oyaml | grep 'chain: my-chain' | wc -l` ] && [ 0 == `kubectl get chainnodes.citacloud.rivtower.com -ncita -oyaml | grep 'chainName: my-chain' | wc -l` ] && [ 0 == `kubectl get secrets -ncita | grep my-chain | wc -l` ] && [ 0 == `kubectl get configmaps -ncita | grep my-chain | wc -l` ]; then
+        break
+      else
+        echo "account or node info still exists..."
+        let times--
+        sleep 1
+      fi
+    done
+    if [ $times -lt 1 ]; then
+      echo "wait timeout for delete original account or node info"
+      exit 1
+    else
+      echo "delete original account or node info successful"
+    fi
 fi
 
 # create admin account by cloud-cli
