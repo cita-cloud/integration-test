@@ -33,12 +33,12 @@ if __name__ == "__main__":
         if not cmd_result.__contains__("Error"):
             break
         if i == 2:
-            print("get receipt failed!")
+            print("get receipt failed!", cmd_result)
             exit(20)
 
     tx_receipt = json.loads(cmd_result)
     if len(tx_receipt['error_msg']) != 0:
-        print("receipt has error!")
+        print("receipt has error!", tx_receipt)
         exit(30)        
 
     # turn on emergency-brake
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         if not cmd_result.__contains__("Error"):
             break
         if i == 2:
-            print("get turn on emergency-brake tx failed")
+            print("get turn on emergency-brake tx failed!", cmd_result)
             exit(50)
 
     # check emergency_brake in system-config
@@ -67,18 +67,18 @@ if __name__ == "__main__":
     system_config = json.loads(cmd_result)
     
     if system_config['emergency_brake'] == False:
-        print("emergency-brake is also off")
+        print("emergency-brake is also off!", system_config)
         exit(60)
     
     if system_config['emergency_brake_pre_hash'] != tx_hash:
-        print("emergency_brake tx hash mismatch!")
+        print("emergency_brake tx hash mismatch!", system_config)
         exit(70)
 
     # check emergency_brake with send tx
     cmd = "cldi -c default create 6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a7230582046766cd5070278ffbc2c4e4c4440283d2f56a8ffb73b0f93eb52fc092a6fa15a0029"
     result = subprocess.getoutput(cmd)
     if not result.__contains__("Error"):
-        print("emergency-brake is also off")
+        print("emergency-brake is also off!", result)
         exit(80)
 
     # turn off emergency-brake
@@ -98,7 +98,7 @@ if __name__ == "__main__":
         if not cmd_result.__contains__("Error"):
             break
         if i == 2:
-            print("get turn off emergency-brake tx failed")
+            print("get turn off emergency-brake tx failed!", cmd_result)
             exit(100)
 
     # check emergency_brake in system-config
@@ -107,12 +107,12 @@ if __name__ == "__main__":
     system_config = json.loads(cmd_result)
     
     if system_config['emergency_brake'] == True:
-        print("emergency-brake is also on")
+        print("emergency-brake is also on!", system_config)
         exit(110)
     
     if system_config['emergency_brake_pre_hash'] != tx_hash:
-        print("emergency_brake tx hash mismatch!")
-        exit(120)    
+        print("emergency_brake tx hash mismatch!", system_config)
+        exit(120)
 
 
     # check with send tx
@@ -131,12 +131,12 @@ if __name__ == "__main__":
         if not cmd_result.__contains__("Error"):
             break
         if i == 2:
-            print("get receipt failed!")
+            print("get receipt failed!", cmd_result)
             exit(20)
 
     tx_receipt = json.loads(cmd_result)
     if len(tx_receipt['error_msg']) != 0:
-        print("receipt has error!")
+        print("receipt has error!", tx_receipt)
         exit(150)  
 
     exit(0)

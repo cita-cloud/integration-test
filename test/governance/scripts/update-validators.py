@@ -50,7 +50,7 @@ if __name__ == "__main__":
         if not cmd_result.__contains__("Error"):
             break
         if i == 2:
-            print("get update-validators tx failed")
+            print("get update-validators tx failed", cmd_result)
             exit(20)
 
     # check new validators in system-config
@@ -59,11 +59,11 @@ if __name__ == "__main__":
     system_config = json.loads(cmd_result)
 
     if not system_config['validators'].__contains__(fake_validator):
-        print("validators mismatch")
+        print("validators mismatch!", system_config)
         exit(30)
 
     if system_config['validators_pre_hash'] != tx_hash:
-        print("update-validators tx hash mismatch!")
+        print("update-validators tx hash mismatch!", system_config)
         exit(40)
 
 
@@ -85,7 +85,7 @@ if __name__ == "__main__":
         if not cmd_result.__contains__("Error"):
             break
         if i == 2:
-            print("get update-validators tx failed")
+            print("get update-validators tx failed!", cmd_result)
             exit(60)
 
     # check new validators in system-config
@@ -94,11 +94,11 @@ if __name__ == "__main__":
     system_config = json.loads(cmd_result)
 
     if system_config['validators'].__contains__(fake_validator):
-        print("validators mismatch")
+        print("validators mismatch!", system_config)
         exit(70)
 
     if system_config['validators_pre_hash'] != tx_hash:
-        print("update-validators tx hash mismatch!")
+        print("update-validators tx hash mismatch!", system_config)
         exit(80)
 
     exit(0)

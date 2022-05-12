@@ -22,7 +22,7 @@ if __name__ == "__main__":
     cmd = "kubectl get pod -ncita | grep my-chain | wc -l"
     node_count = int(subprocess.getoutput(cmd))
     if node_count != 4:
-        print("There are no 4 node, can't fault tolerance!")
+        print("There are no 4 node, can't fault tolerance!", node_count)
         exit(10)
     
     # check work well
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
     if not latest_block_numbner > pre_block_numbner:
-        print("block number not increase!")
+        print("block number not increase!", pre_block_numbner, latest_block_numbner)
         exit(20)
     
     # for BFT we can Fault Tolerance 1
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     cmd = "cco-cli node stop {}"
     ret = subprocess.getoutput(cmd.format(node3_name))
     if not ret.__contains__("success"):
-        print("stop node failed!")
+        print("stop node failed!", ret)
         exit(30)
 
     time.sleep(30)
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
     if not latest_block_numbner > pre_block_numbner:
-        print("block number not increase!")
+        print("block number not increase!", pre_block_numbner, latest_block_numbner)
         exit(40)
 
     # shutdown 2 node is not ok
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     cmd = "cco-cli node stop {}"
     ret = subprocess.getoutput(cmd.format(node2_name))
     if not ret.__contains__("success"):
-        print("stop node failed!")
+        print("stop node failed!", ret)
         exit(50)
 
     time.sleep(30)
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
     if latest_block_numbner > pre_block_numbner:
-        print("block number should not increase!")
+        print("block number should not increase!", pre_block_numbner, latest_block_numbner)
         exit(60)
     
 
@@ -86,12 +86,12 @@ if __name__ == "__main__":
     cmd = "cco-cli node start {}"
     ret = subprocess.getoutput(cmd.format(node3_name))
     if not ret.__contains__("success"):
-        print("start node failed!")
+        print("start node failed!", ret)
         exit(70)
     
     ret = subprocess.getoutput(cmd.format(node2_name))
     if not ret.__contains__("success"):
-        print("start node failed!")
+        print("start node failed!", ret)
         exit(71)
 
     for i in range(3):
@@ -102,7 +102,7 @@ if __name__ == "__main__":
         if len(ret2) != 0 and len(ret3) != 0:
             break
         if i == 2:
-            print("restore node failed!")
+            print("restore node failed!", subprocess.getoutput("cco-cli node list"))
             exit(75)
     
     # check work well
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
 
     if not latest_block_numbner > pre_block_numbner:
-        print("block number not increase!")
+        print("block number not increase!", pre_block_numbner, latest_block_numbner)
         exit(80)
 
     exit(0)

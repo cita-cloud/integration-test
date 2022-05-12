@@ -49,7 +49,7 @@ if __name__ == "__main__":
         if new_block_number > old_block_number + 1:
             break
         if i == 2:
-            print("block number not increase!")
+            print("block number not increase!", old_block_number, new_block_number)
             exit(5)
 
     create_result = subprocess.getoutput(create_fmt.format(contract_code))
@@ -72,7 +72,7 @@ if __name__ == "__main__":
             break
 
         if i == 2:
-            print("get receipt failed after 3 retry!")
+            print("get receipt failed after 3 retry!", result)
             exit(31)
 
     json_obj = json.loads(result)
@@ -99,7 +99,7 @@ if __name__ == "__main__":
             break
 
         if i == 2:
-            print("get abi failed after 3 retry!")
+            print("get abi failed after 3 retry!", result)
             exit(31)
     
     if  result!= abi:
