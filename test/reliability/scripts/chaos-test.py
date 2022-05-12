@@ -25,7 +25,7 @@ if __name__ == "__main__":
     # network chaos test 240s
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/network-chaos.yaml"))
     if not ret.__contains__("created"):
-        print("apply network chaos test failed!")
+        print("apply network chaos test failed!", ret)
         exit(10)
 
     time.sleep(300)
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     # delete network chaos test
     ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/network-chaos.yaml"))
     if not ret.__contains__("deleted"):
-        print("delete network chaos test failed!")
+        print("delete network chaos test failed!", ret)
         exit(20)   
     
     # check work well
@@ -44,13 +44,13 @@ if __name__ == "__main__":
         if new_block_number > old_block_number:
             break
         if i == 2:
-            print("block number not increase!")
+            print("block number not increase!", old_block_number, new_block_number)
             exit(30)
     
     # pod chaos test 400s
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
     if not ret.__contains__("created"):
-        print("apply pod chaos test failed!")
+        print("apply pod chaos test failed!", ret)
         exit(40)
 
     time.sleep(600)
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     # delete pod chaos test
     ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
     if not ret.__contains__("deleted"):
-        print("delete pod chaos test failed!")
+        print("delete pod chaos test failed!", ret)
         exit(50)
     
     # check work well
@@ -70,13 +70,13 @@ if __name__ == "__main__":
         if new_block_number > old_block_number:
             break
         if i == 2:
-            print("block number not increase!")
+            print("block number not increase!", old_block_number, new_block_number)
             exit(60)
 
     # io chaos test 300s
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/io-chaos.yaml"))
     if not ret.__contains__("created"):
-        print("apply io chaos test failed!")
+        print("apply io chaos test failed!", ret)
         exit(70)
 
     time.sleep(400)
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     # delete io chaos test
     ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/io-chaos.yaml"))
     if not ret.__contains__("deleted"):
-        print("delete io chaos test failed!")
+        print("delete io chaos test failed!", ret)
         exit(80)
     
     # check work well
@@ -95,7 +95,7 @@ if __name__ == "__main__":
         if new_block_number > old_block_number:
             break
         if i == 2:
-            print("block number not increase!")
+            print("block number not increase!", old_block_number, new_block_number)
             exit(90)
 
     exit(0)

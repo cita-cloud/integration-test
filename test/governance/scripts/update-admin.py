@@ -36,7 +36,7 @@ if __name__ == "__main__":
     admin_hash = system_config['admin_pre_hash']
 
     if admin != admin_addr:
-        print("admin account mismatch!")
+        print("admin account mismatch!", admin, admin_addr)
         exit(10)
 
     # create new admin account 
@@ -63,7 +63,7 @@ if __name__ == "__main__":
         if not cmd_result.__contains__("Error"):
             break
         if i == 2:
-            print("get update-admin tx failed")
+            print("get update-admin tx failed!", cmd_result)
             exit(30)
 
     # check admin in system-config
@@ -74,11 +74,11 @@ if __name__ == "__main__":
     admin_hash = system_config['admin_pre_hash']
 
     if admin != new_admin_addr:
-        print("new admin account mismatch!")
+        print("new admin account mismatch!", admin, new_admin_addr)
         exit(40)
 
     if admin_hash != tx_hash:
-        print("update-admin tx hash mismatch!")
+        print("update-admin tx hash mismatch!", admin_hash, tx_hash)
         exit(50)
 
     # reset to old admin account
@@ -98,7 +98,7 @@ if __name__ == "__main__":
         if not cmd_result.__contains__("Error"):
             break
         if i == 2:
-            print("get update-admin tx failed")
+            print("get update-admin tx failed!", cmd_result)
             exit(70)
 
     # check admin in system-config
@@ -109,11 +109,11 @@ if __name__ == "__main__":
     admin_hash = system_config['admin_pre_hash']
 
     if admin != admin_addr:
-        print("new admin account mismatch!")
+        print("new admin account mismatch!", admin, admin_addr)
         exit(80)
 
     if admin_hash != tx_hash:
-        print("update-admin tx hash mismatch!")
+        print("update-admin tx hash mismatch!", admin_hash, tx_hash)
         exit(90)
 
     exit(0)

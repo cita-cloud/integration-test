@@ -43,7 +43,7 @@ if __name__ == "__main__":
         if not cmd_result.__contains__("Error"):
             break
         if i == 2:
-            print("get set-block-interval tx failed")
+            print("get set-block-interval tx failed!", cmd_result)
             exit(30)
 
     # check new block interval in system-config
@@ -52,11 +52,11 @@ if __name__ == "__main__":
     system_config = json.loads(cmd_result)
 
     if not system_config['block_interval'] == 10:
-        print("block interval mismatch")
+        print("block interval mismatch!", system_config)
         exit(40)
 
     if system_config['block_interval_pre_hash'] != tx_hash:
-        print("set-block-interval tx hash mismatch!")
+        print("set-block-interval tx hash mismatch!", system_config)
         exit(50)
 
     # check timestamp in block to verify block interval
@@ -70,19 +70,19 @@ if __name__ == "__main__":
         if new_block_number > old_block_number + 10:
             break
         if i == 2:
-            print("block number not increase!")
+            print("block number not increase!", old_block_number, new_block_number)
             exit(55)
 
     result = int(subprocess.getoutput("cldi -c default get block-number"))
     cmd = "cldi -c default get block {}"
     latest_block_ret = subprocess.getoutput(cmd.format(result))
     if latest_block_ret.__contains__("Error"):
-        print("get block failed!")
+        print("get block failed!", latest_block_ret)
         exit(60)
 
     pre_block_ret = subprocess.getoutput(cmd.format(result - 1))
     if pre_block_ret.__contains__("Error"):
-        print("get block failed!")
+        print("get block failed!", pre_block_ret)
         exit(70)
 
     latest_block = json.loads(latest_block_ret)
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     diff = latest_block_time - pre_block_time
 
     if diff.seconds < 8:
-        print("block interval incoreect: ", diff)
+        print("block interval incoreect!", diff, pre_block_time, latest_block_time)
         exit(80)        
 
     # reset old block interval
@@ -114,7 +114,7 @@ if __name__ == "__main__":
         if not cmd_result.__contains__("Error"):
             break
         if i == 2:
-            print("get set-block-interval tx failed")
+            print("get set-block-interval tx failed!", cmd_result)
             exit(100)
 
     # check new block interval in system-config
@@ -123,11 +123,11 @@ if __name__ == "__main__":
     system_config = json.loads(cmd_result)
 
     if not system_config['block_interval'] == 3:
-        print("block interval mismatch")
+        print("block interval mismatch!", system_config)
         exit(110)
 
     if system_config['block_interval_pre_hash'] != tx_hash:
-        print("set-block-interval tx hash mismatch!")
+        print("set-block-interval tx hash mismatch!", system_config)
         exit(120)
 
     # check timestamp in block to verify block interval
@@ -141,19 +141,19 @@ if __name__ == "__main__":
         if new_block_number > old_block_number + 10:
             break
         if i == 2:
-            print("block number not increase!")
+            print("block number not increase!", old_block_number, new_block_number)
             exit(125)
 
     result = int(subprocess.getoutput("cldi -c default get block-number"))
     cmd = "cldi -c default get block {}"
     latest_block_ret = subprocess.getoutput(cmd.format(result))
     if latest_block_ret.__contains__("Error"):
-        print("get block failed!")
+        print("get block failed!", latest_block_ret)
         exit(130)
 
     pre_block_ret = subprocess.getoutput(cmd.format(result - 1))
     if pre_block_ret.__contains__("Error"):
-        print("get block failed!")
+        print("get block failed!", pre_block_ret)
         exit(140)
 
     latest_block = json.loads(latest_block_ret)
@@ -164,7 +164,7 @@ if __name__ == "__main__":
     diff = latest_block_time - pre_block_time
 
     if diff.seconds > 5:
-        print("block interval incoreect: ", diff)
-        exit(150)        
+        print("block interval incoreect!", diff, pre_block_time, latest_block_time)
+        exit(150)
 
     exit(0)
