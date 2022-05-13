@@ -78,4 +78,4 @@ fi
 
 # wait for chain start up
 echo `date`
-sleep 100
+sleep 300
