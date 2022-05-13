@@ -70,7 +70,7 @@ def get_abi(contract_addr):
 
 @retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
 def get_block(block):
-    block_ret = subprocess.getoutput(cmd.format(block))
+    block_ret = subprocess.getoutput(get_block_fmt.format(block))
     if block_ret.__contains__("Error"):
         raise Exception("get block failed!")
     return block_ret
