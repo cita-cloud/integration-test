@@ -16,7 +16,7 @@
 import subprocess, json, time, datetime
 
 import sys
-sys.path.append("../../utils")
+sys.path.append("test/utils")
 import util
 
 if __name__ == "__main__":

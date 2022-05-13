@@ -17,7 +17,7 @@ import json
 import subprocess
 
 import sys
-sys.path.append("../../utils")
+sys.path.append("test/utils")
 import util
 
 
