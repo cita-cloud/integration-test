@@ -19,7 +19,7 @@ import json
 import subprocess
 
 import sys
-sys.path.append("../../utils")
+sys.path.append("test/utils")
 import util
 
 no_receipt_message = ' message: "Not get the receipt"'
