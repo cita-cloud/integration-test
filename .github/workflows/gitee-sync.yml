@@ -1,0 +1,27 @@
+name: Sync Repository Action
+
+on:
+  push:
+    branches:
+      - main
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  run:
+    name: Sync to Gitee
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Mirror Github to Gitee
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: github/cita-cloud
+          dst: gitee/cita-cloud
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          static_list: "integration-test"
+          account_type: org
+          debug: true
+          force_update: true
