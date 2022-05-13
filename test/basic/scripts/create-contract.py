@@ -75,8 +75,11 @@ if __name__ == "__main__":
     if not store_abi_result.startswith(hex_prefix):
         exit(33)
 
+    util.get_receipt(store_abi_result)
+
     result = util.get_abi(contract_addr)    
     if  result!= abi:
+        print("abi not correct!", result)
         exit(35)
     
     exit(0)
