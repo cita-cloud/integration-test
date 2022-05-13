@@ -21,6 +21,7 @@ dir=`dirname $0`
 path=$pwd/$dir/scripts
 
 for file in `ls "$path"`; do
+  echo `date`
   bash "$path/$file"
   ret=$?
   if [ "$ret" = "0" ]; then

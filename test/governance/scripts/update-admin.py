@@ -13,7 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import subprocess, sys, json, time
+import subprocess, json, time
+
+import sys
+sys.path.append("../../utils")
+import util
 
 if __name__ == "__main__":
     cmd = "cldi account list"
@@ -55,16 +59,7 @@ if __name__ == "__main__":
         print("update-admin failed!")
         exit(20)
 
-    for i in range(3):
-        time.sleep(6 * (i + 1))
-
-        cmd = "cldi -c default get tx {}"
-        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-        if not cmd_result.__contains__("Error"):
-            break
-        if i == 2:
-            print("get update-admin tx failed!", cmd_result)
-            exit(30)
+    util.get_tx(tx_hash)
 
     # check admin in system-config
     cmd = "cldi -c default get system-config"
@@ -90,16 +85,7 @@ if __name__ == "__main__":
         print("update-admin failed!")
         exit(60)
 
-    for i in range(3):
-        time.sleep(6 * (i + 1))
-
-        cmd = "cldi -c default get tx {}"
-        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-        if not cmd_result.__contains__("Error"):
-            break
-        if i == 2:
-            print("get update-admin tx failed!", cmd_result)
-            exit(70)
+    util.get_tx(tx_hash)
 
     # check admin in system-config
     cmd = "cldi -c default get system-config"

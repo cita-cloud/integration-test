@@ -17,7 +17,10 @@
 # creat contract get receipt get code
 import json
 import subprocess
-import time
+
+import sys
+sys.path.append("../../utils")
+import util
 
 no_receipt_message = ' message: "Not get the receipt"'
 hex_prefix = '0x'
@@ -42,15 +45,7 @@ store_abi_fmt = 'cldi -c default rpc store-abi {} {}'
 abi = '[]'
 
 if __name__ == "__main__":
-    old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-    for i in range(3):
-        time.sleep(6 * (i + 1))
-        new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-        if new_block_number > old_block_number + 1:
-            break
-        if i == 2:
-            print("block number not increase!", old_block_number, new_block_number)
-            exit(5)
+    util.check_block_increase()
 
     create_result = subprocess.getoutput(create_fmt.format(contract_code))
     print("create_result: ", create_result)
@@ -63,17 +58,7 @@ if __name__ == "__main__":
     if hex_prefix != subprocess.getoutput(get_code_fmt.format(bad_contract_addr)):
         exit(30)
 
-    for i in range(3):
-        time.sleep(6 * (i + 1))
-
-        result = subprocess.getoutput(get_receipt_fmt.format(create_result))
-
-        if not result.__contains__("Error"):
-            break
-
-        if i == 2:
-            print("get receipt failed after 3 retry!", result)
-            exit(31)
+    result = util.get_receipt(create_result)
 
     json_obj = json.loads(result)
     contract_addr = json_obj['contract_addr']
@@ -90,18 +75,7 @@ if __name__ == "__main__":
     if not store_abi_result.startswith(hex_prefix):
         exit(33)
 
-    for i in range(3):
-        time.sleep(6 * (i + 1))
-
-        result = subprocess.getoutput(get_abi_fmt.format(contract_addr))
-
-        if not result.__contains__("Error"):
-            break
-
-        if i == 2:
-            print("get abi failed after 3 retry!", result)
-            exit(31)
-    
+    result = util.get_abi(contract_addr)    
     if  result!= abi:
         exit(35)
     

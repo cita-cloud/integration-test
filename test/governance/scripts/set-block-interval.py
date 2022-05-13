@@ -13,7 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import subprocess, sys, json, time, datetime
+import subprocess, json, time, datetime
+
+import sys
+sys.path.append("../../utils")
+import util
 
 if __name__ == "__main__":
     # get system-config
@@ -35,16 +39,7 @@ if __name__ == "__main__":
         print("set-block-interval failed!")
         exit(20)
 
-    for i in range(3):
-        time.sleep(6 * (i + 1))
-
-        cmd = "cldi -c default get tx {}"
-        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-        if not cmd_result.__contains__("Error"):
-            break
-        if i == 2:
-            print("get set-block-interval tx failed!", cmd_result)
-            exit(30)
+    util.get_tx(tx_hash)
 
     # check new block interval in system-config
     cmd = "cldi -c default get system-config"
@@ -60,30 +55,13 @@ if __name__ == "__main__":
         exit(50)
 
     # check timestamp in block to verify block interval
-    old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-    time.sleep(100)
-    for i in range(3):
-        time.sleep(10 * (i + 1))
+    util.check_block_increase()
 
-        new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-        
-        if new_block_number > old_block_number + 10:
-            break
-        if i == 2:
-            print("block number not increase!", old_block_number, new_block_number)
-            exit(55)
+    result = util.get_block_number()
 
-    result = int(subprocess.getoutput("cldi -c default get block-number"))
-    cmd = "cldi -c default get block {}"
-    latest_block_ret = subprocess.getoutput(cmd.format(result))
-    if latest_block_ret.__contains__("Error"):
-        print("get block failed!", latest_block_ret)
-        exit(60)
+    latest_block_ret = util.get_block(result)
 
-    pre_block_ret = subprocess.getoutput(cmd.format(result - 1))
-    if pre_block_ret.__contains__("Error"):
-        print("get block failed!", pre_block_ret)
-        exit(70)
+    pre_block_ret = util.get_block(result - 1)
 
     latest_block = json.loads(latest_block_ret)
     pre_block = json.loads(pre_block_ret)
@@ -106,16 +84,7 @@ if __name__ == "__main__":
         print("set-block-interval failed!")
         exit(90)
 
-    for i in range(3):
-        time.sleep(10 * (i + 1))
-
-        cmd = "cldi -c default get tx {}"
-        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-        if not cmd_result.__contains__("Error"):
-            break
-        if i == 2:
-            print("get set-block-interval tx failed!", cmd_result)
-            exit(100)
+    util.get_tx(tx_hash)
 
     # check new block interval in system-config
     cmd = "cldi -c default get system-config"
@@ -131,30 +100,13 @@ if __name__ == "__main__":
         exit(120)
 
     # check timestamp in block to verify block interval
-    old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-    time.sleep(30)
-    for i in range(3):
-        time.sleep(6 * (i + 1))
+    util.check_block_increase()
 
-        new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-        
-        if new_block_number > old_block_number + 10:
-            break
-        if i == 2:
-            print("block number not increase!", old_block_number, new_block_number)
-            exit(125)
+    result = util.get_block_number()
 
-    result = int(subprocess.getoutput("cldi -c default get block-number"))
-    cmd = "cldi -c default get block {}"
-    latest_block_ret = subprocess.getoutput(cmd.format(result))
-    if latest_block_ret.__contains__("Error"):
-        print("get block failed!", latest_block_ret)
-        exit(130)
+    latest_block_ret = util.get_block(result)
 
-    pre_block_ret = subprocess.getoutput(cmd.format(result - 1))
-    if pre_block_ret.__contains__("Error"):
-        print("get block failed!", pre_block_ret)
-        exit(140)
+    pre_block_ret = util.get_block(result - 1)
 
     latest_block = json.loads(latest_block_ret)
     pre_block = json.loads(pre_block_ret)
