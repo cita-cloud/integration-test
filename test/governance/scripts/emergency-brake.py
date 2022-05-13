@@ -13,7 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import subprocess, sys, json, time
+import subprocess, json, time
+
+import sys
+sys.path.append("../../utils")
+import util
 
 if __name__ == "__main__":
     # emergency-brake default is off
@@ -25,16 +29,7 @@ if __name__ == "__main__":
         print("send tx failed!")
         exit(10)
 
-    for i in range(3):
-        time.sleep(6 * (i + 1))
-
-        cmd = "cldi -c default get receipt {}"
-        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-        if not cmd_result.__contains__("Error"):
-            break
-        if i == 2:
-            print("get receipt failed!", cmd_result)
-            exit(20)
+    cmd_result = util.get_receipt(tx_hash)
 
     tx_receipt = json.loads(cmd_result)
     if len(tx_receipt['error_msg']) != 0:
@@ -50,16 +45,7 @@ if __name__ == "__main__":
         print("turn on emergency-brake failed!")
         exit(40)
 
-    for i in range(3):
-        time.sleep(6 * (i + 1))
-
-        cmd = "cldi -c default get tx {}"
-        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-        if not cmd_result.__contains__("Error"):
-            break
-        if i == 2:
-            print("get turn on emergency-brake tx failed!", cmd_result)
-            exit(50)
+    util.get_tx(tx_hash)
 
     # check emergency_brake in system-config
     cmd = "cldi -c default get system-config"
@@ -90,16 +76,7 @@ if __name__ == "__main__":
         print("turn off emergency-brake failed!")
         exit(90)
 
-    for i in range(3):
-        time.sleep(6 * (i + 1))
-
-        cmd = "cldi -c default get tx {}"
-        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-        if not cmd_result.__contains__("Error"):
-            break
-        if i == 2:
-            print("get turn off emergency-brake tx failed!", cmd_result)
-            exit(100)
+    util.get_tx(tx_hash)
 
     # check emergency_brake in system-config
     cmd = "cldi -c default get system-config"
@@ -123,17 +100,8 @@ if __name__ == "__main__":
         print("send tx failed!")
         exit(130)
 
-    for i in range(3):
-        time.sleep(6 * (i + 1))
-
-        cmd = "cldi -c default get receipt {}"
-        cmd_result = subprocess.getoutput(cmd.format(tx_hash))
-        if not cmd_result.__contains__("Error"):
-            break
-        if i == 2:
-            print("get receipt failed!", cmd_result)
-            exit(20)
-
+    cmd_result = util.get_receipt(tx_hash)
+    
     tx_receipt = json.loads(cmd_result)
     if len(tx_receipt['error_msg']) != 0:
         print("receipt has error!", tx_receipt)

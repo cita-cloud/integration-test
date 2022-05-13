@@ -21,4 +21,3 @@ if __name__ == "__main__":
         print("add-node error: ", result)
         exit(1)
     exit(0)
-

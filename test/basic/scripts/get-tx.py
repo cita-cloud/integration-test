@@ -16,11 +16,12 @@
 import json
 import subprocess
 
-import schedule
+import sys
+sys.path.append("../../utils")
+import util
 
 
-def check(get_tx):
-    result = subprocess.getoutput(get_tx)
+def check(result):
     try:
         json_obj = json.loads(result)
     except ValueError:
@@ -34,7 +35,5 @@ def check(get_tx):
 
 if __name__ == "__main__":
     send_result = subprocess.getoutput("cldi -c default send {} 0x".format('0x' + ''.join(['0' for i in range(40)])))
-    cmd = "cldi get tx {}".format(send_result)
-    schedule.every(1).seconds.do(check, cmd)
-    while True:
-        schedule.run_pending()
+    result = util.get_tx(send_result)
+    check(result)

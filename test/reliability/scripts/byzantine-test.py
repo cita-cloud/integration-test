@@ -15,7 +15,11 @@
 # limitations under the License.
 
 
-import subprocess, sys, json, time
+import subprocess, time
+
+import sys
+sys.path.append("../../utils")
+import util
 
 if __name__ == "__main__":
     # now we have 4 node
@@ -26,15 +30,7 @@ if __name__ == "__main__":
         exit(10)
     
     # check work well
-    pre_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
-
-    time.sleep(30)
-
-    latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
-
-    if not latest_block_numbner > pre_block_numbner:
-        print("block number not increase!", pre_block_numbner, latest_block_numbner)
-        exit(20)
+    util.check_block_increase()
     
     # for BFT we can Fault Tolerance 1
     # shutdown 1 node is ok
@@ -49,15 +45,7 @@ if __name__ == "__main__":
     time.sleep(30)
     
     # check work well
-    pre_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
-
-    time.sleep(30)
-
-    latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
-
-    if not latest_block_numbner > pre_block_numbner:
-        print("block number not increase!", pre_block_numbner, latest_block_numbner)
-        exit(40)
+    util.check_block_increase()
 
     # shutdown 2 node is not ok
     cmd = "kubectl get svc -ncita --no-headers=true -l app.kubernetes.io/chain-name=my-chain | tail -n 2 | awk '{print $1}'"
@@ -70,17 +58,16 @@ if __name__ == "__main__":
 
     time.sleep(30)
     
-    # check work well
-    pre_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
+    # check work not well
+    pre_block_numbner = util.get_block_number()
 
     time.sleep(30)
 
-    latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
+    latest_block_numbner = util.get_block_number()
 
     if latest_block_numbner > pre_block_numbner:
         print("block number should not increase!", pre_block_numbner, latest_block_numbner)
         exit(60)
-    
 
     # restore 2 node, chain will be ok
     cmd = "cco-cli node start {}"
@@ -94,8 +81,8 @@ if __name__ == "__main__":
         print("start node failed!", ret)
         exit(71)
 
-    for i in range(3):
-        time.sleep(60 * (i + 1))
+    for i in range(5):
+        time.sleep(60)
         cmd = "cco-cli node list | grep {} | grep Running"
         ret2 = subprocess.getoutput(cmd.format(node2_name))
         ret3 = subprocess.getoutput(cmd.format(node3_name))
@@ -106,14 +93,6 @@ if __name__ == "__main__":
             exit(75)
     
     # check work well
-    pre_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
-
-    time.sleep(30)
-
-    latest_block_numbner = int(subprocess.getoutput("cldi -c default get block-number"))
-
-    if not latest_block_numbner > pre_block_numbner:
-        print("block number not increase!", pre_block_numbner, latest_block_numbner)
-        exit(80)
+    util.check_block_increase()
 
     exit(0)

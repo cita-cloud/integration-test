@@ -37,15 +37,7 @@ if __name__ == "__main__":
         exit(20)   
     
     # check work well
-    old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-    for i in range(3):
-        time.sleep(10 * (i + 1))
-        new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-        if new_block_number > old_block_number:
-            break
-        if i == 2:
-            print("block number not increase!", old_block_number, new_block_number)
-            exit(30)
+    util.check_block_increase()
     
     # pod chaos test 400s
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
@@ -62,16 +54,7 @@ if __name__ == "__main__":
         exit(50)
     
     # check work well
-    old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-    time.sleep(30)
-    for i in range(3):
-        time.sleep(10 * (i + 1))
-        new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-        if new_block_number > old_block_number:
-            break
-        if i == 2:
-            print("block number not increase!", old_block_number, new_block_number)
-            exit(60)
+    util.check_block_increase()
 
     # io chaos test 300s
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/io-chaos.yaml"))
@@ -88,14 +71,6 @@ if __name__ == "__main__":
         exit(80)
     
     # check work well
-    old_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-    for i in range(3):
-        time.sleep(10 * (i + 1))
-        new_block_number = int(subprocess.getoutput("cldi -c default get block-number"))
-        if new_block_number > old_block_number:
-            break
-        if i == 2:
-            print("block number not increase!", old_block_number, new_block_number)
-            exit(90)
+    util.check_block_increase()
 
     exit(0)
