@@ -39,6 +39,8 @@ if __name__ == "__main__":
         print("set-block-interval failed!")
         exit(20)
 
+    time.sleep(10)
+
     util.get_tx(tx_hash)
 
     # check new block interval in system-config
@@ -53,6 +55,8 @@ if __name__ == "__main__":
     if system_config['block_interval_pre_hash'] != tx_hash:
         print("set-block-interval tx hash mismatch!", system_config)
         exit(50)
+    
+    time.sleep(30)
 
     # check timestamp in block to verify block interval
     util.check_block_increase()
@@ -83,6 +87,8 @@ if __name__ == "__main__":
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
         print("set-block-interval failed!")
         exit(90)
+    
+    time.sleep(30)
 
     util.get_tx(tx_hash)
 
@@ -98,6 +104,8 @@ if __name__ == "__main__":
     if system_config['block_interval_pre_hash'] != tx_hash:
         print("set-block-interval tx hash mismatch!", system_config)
         exit(120)
+
+    time.sleep(30)
 
     # check timestamp in block to verify block interval
     util.check_block_increase()
