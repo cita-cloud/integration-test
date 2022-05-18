@@ -86,6 +86,12 @@ pipeline {
     success {
       container('cli') {
         sh 'test/cleanup/startup.sh'
+        sh "test/utils/send_msg.sh success"
+      }
+    }
+    failure {
+      container('cli') {
+        sh "test/utils/send_msg.sh failure"
       }
     }
   }
