@@ -29,7 +29,7 @@ if [ $? -eq 0 ];then
       else
         echo "account or node info still exists..."
         let times--
-        sleep 1
+        sleep 3
       fi
     done
     if [ $times -lt 1 ]; then
@@ -38,6 +38,7 @@ if [ $? -eq 0 ];then
     else
       echo "delete original account or node info successful"
     fi
+    sleep 30
 fi
 
 # create admin account by cloud-cli
