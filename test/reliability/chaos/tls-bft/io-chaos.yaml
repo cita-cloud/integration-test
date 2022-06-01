@@ -26,7 +26,7 @@ spec:
             namespaces:
             - cita
             labelSelectors:
-              app.kubernetes.io/chain-name: my-chain
+              app.kubernetes.io/chain-name: test-chain-tls-bft
           volumePath: /data
           path: '/data/**/*'
           delay: '100ms'
@@ -46,7 +46,7 @@ spec:
             namespaces:
             - cita
             labelSelectors:
-              app.kubernetes.io/chain-name: my-chain
+              app.kubernetes.io/chain-name: test-chain-tls-bft
           volumePath: /data
           path: '/data/**/*'
           errno: 5
@@ -66,7 +66,7 @@ spec:
             namespaces:
             - cita
             labelSelectors:
-              app.kubernetes.io/chain-name: my-chain
+              app.kubernetes.io/chain-name: test-chain-tls-bft
           volumePath: /data
           path: '/data/**/*'
           mistake:

@@ -22,7 +22,7 @@ spec:
           namespaces:
           - cita
           labelSelectors:
-            app.kubernetes.io/chain-name: my-chain
+            app.kubernetes.io/chain-name: test-chain-tls-bft
         direction: to
         target:
           mode: one
@@ -30,7 +30,7 @@ spec:
             namespaces:
             - cita
             labelSelectors:
-              app.kubernetes.io/chain-name: my-chain
+              app.kubernetes.io/chain-name: test-chain-tls-bft
     - name: workflow-network-bandwidth
       templateType: NetworkChaos
       deadline: 80s
@@ -41,7 +41,7 @@ spec:
           namespaces:
           - cita
           labelSelectors:
-            app.kubernetes.io/chain-name: my-chain
+            app.kubernetes.io/chain-name: test-chain-tls-bft
         bandwidth:
           rate: '1mbps'
           limit: 100
@@ -56,7 +56,7 @@ spec:
           namespaces:
           - cita
           labelSelectors:
-            app.kubernetes.io/chain-name: my-chain
+            app.kubernetes.io/chain-name: test-chain-tls-bft
         delay:
           latency: "90ms"
           correlation: "25"

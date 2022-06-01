@@ -1,0 +1,78 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: Workflow
+metadata:
+  name: container-workflow
+spec:
+  entry: container-entry
+  templates:
+    - name: container-entry
+      templateType: Serial
+      deadline: 400s
+      children:
+        - workflow-pod-failure
+        - workflow-pod-kill
+        - workflow-contailner-kill
+        - workflow-stress-test
+    - name: workflow-pod-kill
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 90s"
+        concurrencyPolicy: Allow
+        type: PodChaos
+        podChaos:
+          action: pod-kill
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: test-chain-tls-bft
+    - name: workflow-pod-failure
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 90s"
+        concurrencyPolicy: Allow
+        type: PodChaos
+        podChaos:
+          action: pod-failure
+          mode: one
+          duration: "30s"
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: test-chain-tls-bft
+    - name: workflow-contailner-kill
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 90s"
+        concurrencyPolicy: Allow
+        type: PodChaos
+        podChaos:
+          action: container-kill
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: test-chain-tls-bft
+          containerNames:
+            - consensus
+    - name: workflow-stress-test
+      templateType: StressChaos
+      deadline: 100s
+      stressChaos:
+        mode: one
+        selector:
+          namespaces:
+          - cita
+          labelSelectors:
+            app.kubernetes.io/chain-name: test-chain-tls-bft
+        stressors:
+          cpu:
+            workers: 1
+            load: 20
+            options: ["--cpu 1", "--timeout 600"]
