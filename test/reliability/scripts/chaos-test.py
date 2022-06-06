@@ -21,14 +21,20 @@ import sys
 sys.path.append("test/utils")
 import util
 
-if __name__ == "__main__":
-    apply_cmd = "kubectl apply -f {}"
-    delete_cmd = "kubectl delete -f {}"
+apply_cmd = "kubectl apply -f {}"
+delete_cmd = "kubectl delete -f {}"
 
+def clean():
+    subprocess.getoutput(delete_cmd.format("test/reliability/chaos/network-chaos.yaml"))
+    subprocess.getoutput(delete_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
+    subprocess.getoutput(delete_cmd.format("test/reliability/chaos/io-chaos.yaml"))
+
+if __name__ == "__main__":
     # network chaos test 240s
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/network-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply network chaos test failed!", ret)
+        clean()
         exit(10)
 
     time.sleep(300)
@@ -46,6 +52,7 @@ if __name__ == "__main__":
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply pod chaos test failed!", ret)
+        clean()
         exit(40)
 
     time.sleep(600)
@@ -63,6 +70,7 @@ if __name__ == "__main__":
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/io-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply io chaos test failed!", ret)
+        clean()
         exit(70)
 
     time.sleep(400)
