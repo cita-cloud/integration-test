@@ -33,7 +33,7 @@ if [ $CHAIN_TYPE == "tls-bft" ]; then
     else
       echo "old chain resource still exists, delete it..."
       # delete command maybe return errors, ignore
-      kubectl delete -f test/prepare/yaml/tls-bft --recursive 2>/dev/null
+      kubectl delete -f test/resource/tls-bft --recursive 2>/dev/null
       let times--
       sleep 5
     fi
@@ -53,7 +53,7 @@ if [ $CHAIN_TYPE == "tls-bft" ]; then
   done
   # create chain
   echo "create tls-bft chain"
-  kubectl apply -f test/prepare/yaml/tls-bft --recursive
+  kubectl apply -f test/resource/tls-bft --recursive
 elif [ $CHAIN_TYPE == "tls-raft" ]; then
   # check pod
   times=60
@@ -64,7 +64,7 @@ elif [ $CHAIN_TYPE == "tls-raft" ]; then
     else
       echo "old chain resource still exists, delete it..."
       # delete command maybe return errors, ignore
-      kubectl delete -f test/prepare/yaml/tls-raft --recursive 2>/dev/null
+      kubectl delete -f test/resource/tls-raft --recursive 2>/dev/null
       let times--
       sleep 5
     fi
@@ -84,7 +84,7 @@ elif [ $CHAIN_TYPE == "tls-raft" ]; then
   done
   # create chain
   echo "create tls-raft chain"
-  kubectl apply -f test/prepare/yaml/tls-raft --recursive
+  kubectl apply -f test/resource/tls-raft --recursive
 fi
 
 # check all pod's status is RUNNING
