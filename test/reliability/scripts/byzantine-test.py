@@ -18,10 +18,16 @@
 import subprocess, time
 
 import sys
+import os
 sys.path.append("test/utils")
 import util
 
 if __name__ == "__main__":
+    # raft chain don't need to execute this test
+    if os.getenv("CHAIN_TYPE") == "tls-raft":
+        print("raft chain don't need to execute byzantine test")
+        exit(0)
+
     # now we have 4 node
     cmd = "kubectl get pod -ncita --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME | wc -l"
     node_count = int(subprocess.getoutput(cmd))

@@ -18,10 +18,7 @@
 
 # admin account import
 echo 'import admin account'
-cldi account import 0xb2371a70c297106449f89445f20289e6d16942f08f861b5e95cbcf0462e384c1 --name admin -p 123456 --crypto SM
-# unlock account
-echo 'unlock admin account'
-cldi account unlock -p 123456 admin
+cldi account import 0xb2371a70c297106449f89445f20289e6d16942f08f861b5e95cbcf0462e384c1 --name admin --crypto SM
 
 if [ $CHAIN_TYPE == "tls-bft" ]; then
   # check pod
