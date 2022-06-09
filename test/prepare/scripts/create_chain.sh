@@ -16,67 +16,88 @@
 #
 #
 
-kubectl get chainconfigs my-chain -ncita
-if [ $? -eq 0 ];then
-    # delete my-chain
-    kubectl delete chainconfigs my-chain -ncita
-    # check account all deleted
-    times=60
-    while [ $times -ge 1 ]
-    do
-      if [ 0 == `kubectl get accounts.citacloud.rivtower.com -ncita -oyaml | grep 'chain: my-chain' | wc -l` ] && [ 0 == `kubectl get chainnodes.citacloud.rivtower.com -ncita -oyaml | grep 'chainName: my-chain' | wc -l` ] && [ 0 == `kubectl get secrets -ncita | grep my-chain | wc -l` ] && [ 0 == `kubectl get configmaps -ncita | grep my-chain | wc -l` ]; then
-        break
-      else
-        echo "account or node info still exists..."
-        let times--
-        sleep 3
-      fi
-    done
-    if [ $times -lt 1 ]; then
-      echo "wait timeout for delete original account or node info"
-      exit 1
+# admin account import
+echo 'import admin account'
+cldi account import 0xb2371a70c297106449f89445f20289e6d16942f08f861b5e95cbcf0462e384c1 --name admin --crypto SM
+
+if [ $CHAIN_TYPE == "tls-bft" ]; then
+  # check pod
+  times=60
+  while [ $times -ge 0 ]
+  do
+    if [ 0 == `kubectl get pod --no-headers=true -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME | wc -l` ]; then
+      break
     else
-      echo "delete original account or node info successful"
+      echo "old chain resource still exists, delete it..."
+      # delete command maybe return errors, ignore
+      kubectl delete -f test/resource/tls-bft --recursive 2>/dev/null
+      let times--
+      sleep 5
     fi
-    sleep 30
+  done
+  # check pvc
+  times=60
+  while [ $times -ge 0 ]
+  do
+    if [ 0 == `kubectl get pvc --no-headers=true -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME | wc -l` ]; then
+      break
+    else
+      echo "old chain pvc still exists, delete it..."
+      kubectl delete pvc -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME 2>/dev/null
+      let times--
+      sleep 5
+    fi
+  done
+  # create chain
+  echo "create tls-bft chain"
+  kubectl apply -f test/resource/tls-bft --recursive
+elif [ $CHAIN_TYPE == "tls-raft" ]; then
+  # check pod
+  times=60
+  while [ $times -ge 0 ]
+  do
+    if [ 0 == `kubectl get pod --no-headers=true -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME | wc -l` ]; then
+      break
+    else
+      echo "old chain resource still exists, delete it..."
+      # delete command maybe return errors, ignore
+      kubectl delete -f test/resource/tls-raft --recursive 2>/dev/null
+      let times--
+      sleep 5
+    fi
+  done
+  # check pvc
+  times=60
+  while [ $times -ge 0 ]
+  do
+    if [ 0 == `kubectl get pvc --no-headers=true -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME | wc -l` ]; then
+      break
+    else
+      echo "old chain pvc still exists, delete it..."
+      kubectl delete pvc -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME 2>/dev/null
+      let times--
+      sleep 5
+    fi
+  done
+  # create chain
+  echo "create tls-raft chain"
+  kubectl apply -f test/resource/tls-raft --recursive
 fi
 
-# create admin account by cloud-cli
-admin_addr=$(cldi account generate --name admin | jq -r '.address')
-
-# create a chain named my-chain
-cco-cli all-in-one create -a $admin_addr my-chain --pullPolicy Always --enableTls --consensusType BFT --nodeCount 4
-
-# wait all pod running
+# check all pod's status is RUNNING
 times=300
-while [ $times -ge 1 ]
+while [ $times -ge 0 ]
 do
-  all_run="true"
-  if [ `kubectl get pods -ncita --no-headers=true -l app.kubernetes.io/chain-name=my-chain -ojson | jq '.items|length'` == 0 ]; then
-    all_run=""
-  else
-    for status in `kubectl get pods -ncita --no-headers=true -l app.kubernetes.io/chain-name=my-chain | awk '{print $3}'`; do
-      if [ $status != "Running" ]; then
-        all_run="false"
-        break
-      fi
-    done
-  fi
-  if [[ $all_run == "true" ]]; then
+  if [ 4 == `kubectl get pod --no-headers=true -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME | grep Running | wc -l` ]; then
+    # all pod is Running
     break
   else
-    echo "wait all pod running..."
+    echo "pod's status is not Running, waiting..."
     let times--
-    sleep 1
+    sleep 3
   fi
 done
-if [ $times -lt 1 ]; then
-  echo "wait timeout for chain pods, maybe happen some errors"
-  exit 1
-else
-  echo "chain pods are all Running"
-fi
 
-# wait for chain start up
+# wait half of minute
 echo `date`
-sleep 300
+sleep 30

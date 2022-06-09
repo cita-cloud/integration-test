@@ -18,7 +18,7 @@
 
 type=$1
 if [ $type == "success" ]; then
-  curl -X POST -H "Content-Type: application/json" -d '{"msg_type":"text","content":{"text":"集成测试执行成功<at user_id=\"all\">所有人</at>"}}' $FEISHU_WEBHOOK
+  curl -X POST -H "Content-Type: application/json" -d '{"msg_type":"text","content":{"text":"集成测试执行成功: '$CHAIN_NAME'<at user_id=\"all\">所有人</at>"}}' $FEISHU_WEBHOOK
 elif [ $type == "failure" ]; then
-  curl -X POST -H "Content-Type: application/json" -d '{"msg_type":"text","content":{"text":"集成测试执行失败<at user_id=\"all\">所有人</at>"}}' $FEISHU_WEBHOOK
+  curl -X POST -H "Content-Type: application/json" -d '{"msg_type":"text","content":{"text":"集成测试执行失败: '$CHAIN_NAME'<at user_id=\"all\">所有人</at>"}}' $FEISHU_WEBHOOK
 fi

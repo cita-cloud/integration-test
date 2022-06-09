@@ -16,8 +16,11 @@
 #
 #
 
-# delete chain
-cco-cli chain delete my-chain
-if [ "$?" != "0" ]; then
-  exit 1
+# delete chain resource
+if [ $CHAIN_TYPE == "tls-bft" ]; then
+  kubectl delete -f test/resource/tls-bft --recursive
+elif [ $CHAIN_TYPE == "tls-raft" ]; then
+  kubectl delete -f test/resource/tls-raft --recursive
 fi
+
+kubectl delete pvc -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME

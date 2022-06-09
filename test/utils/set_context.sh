@@ -18,5 +18,5 @@
 set -o errexit
 
 # randomly get the service name of a node
-service_name=`kubectl get svc -ncita --no-headers=true -l app.kubernetes.io/chain-name=my-chain | head -n 1 | awk '{print $1}'`
+service_name=`kubectl get svc -ncita --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME  | head -n 1 | awk '{print $1}'`
 cldi -r $service_name.cita:50004 -e $service_name.cita:50002 -u default context save default
