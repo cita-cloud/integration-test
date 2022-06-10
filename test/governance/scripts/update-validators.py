@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import subprocess, json, time
+import subprocess, json, os
 
 import sys
 sys.path.append("test/utils")
@@ -34,7 +34,11 @@ if __name__ == "__main__":
     print("validators_arg: ", validators_arg)
 
     # fake validator
-    fake_validator = "0x545055b46b8292a82ba6e2d6e51014df1a2ac230"
+    if os.getenv("CHAIN_TYPE") == "tls-overlord":
+        fake_validator = "0xb3471e316fe114774e968fb3d71e1975412ad518a7beacd9d522500456b5af9d28078589e0e4d0e8170778e363b3a122"
+    else:
+        fake_validator = "0x545055b46b8292a82ba6e2d6e51014df1a2ac230"
+    
 
     # append validator
     cmd = "cldi -c default -u admin admin update-validators {}"
