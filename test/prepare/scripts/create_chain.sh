@@ -82,6 +82,37 @@ elif [ $CHAIN_TYPE == "tls-raft" ]; then
   # create chain
   echo "create tls-raft chain"
   kubectl apply -f test/resource/tls-raft --recursive
+elif [ $CHAIN_TYPE == "tls-overlord" ]; then
+  # check pod
+  times=60
+  while [ $times -ge 0 ]
+  do
+    if [ 0 == `kubectl get pod --no-headers=true -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME | wc -l` ]; then
+      break
+    else
+      echo "old chain resource still exists, delete it..."
+      # delete command maybe return errors, ignore
+      kubectl delete -f test/resource/tls-overlord --recursive 2>/dev/null
+      let times--
+      sleep 5
+    fi
+  done
+  # check pvc
+  times=60
+  while [ $times -ge 0 ]
+  do
+    if [ 0 == `kubectl get pvc --no-headers=true -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME | wc -l` ]; then
+      break
+    else
+      echo "old chain pvc still exists, delete it..."
+      kubectl delete pvc -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME 2>/dev/null
+      let times--
+      sleep 5
+    fi
+  done
+  # create chain
+  echo "create tls-overlord chain"
+  kubectl apply -f test/resource/tls-overlord --recursive
 fi
 
 # check all pod's status is RUNNING

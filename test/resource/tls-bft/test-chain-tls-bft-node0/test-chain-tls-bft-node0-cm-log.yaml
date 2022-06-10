@@ -11,5 +11,5 @@ data:
 metadata:
   labels:
     app.kubernetes.io/chain-name: test-chain-tls-bft
-    app.kubernetes.io/chain-node: test-chain-tls-bft-node1
-  name: test-chain-tls-bft-node1-log
+    app.kubernetes.io/chain-node: test-chain-tls-bft-node0
+  name: test-chain-tls-bft-node0-log

@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+binaryData:
+  private_key: MmU2Yzc5YzczYzNjZjZmMTA3MGIyMTMyNWRhOGQ4NjI2Yzk1Y2U3MWQ1Mjk2MDVkMjM2YmMwNDU0ZTViYjA2MA==
+data:
+  address: b2e4ad527ed6897c4c6b951157f186cbf33ed508
+metadata:
+  labels:
+    app.kubernetes.io/chain-name: test-chain-tls-overlord
+    app.kubernetes.io/chain-node: test-chain-tls-overlord-node3
+  name: test-chain-tls-overlord-node3-account

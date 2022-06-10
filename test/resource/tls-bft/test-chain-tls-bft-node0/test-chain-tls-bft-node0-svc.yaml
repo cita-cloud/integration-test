@@ -4,9 +4,8 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/chain-name: test-chain-tls-bft
-    app.kubernetes.io/chain-node: test-chain-tls-bft-node4
-  name: test-chain-tls-bft-node4-nodeport
-  namespace: cita
+    app.kubernetes.io/chain-node: test-chain-tls-bft-node0
+  name: test-chain-tls-bft-node0-nodeport
 spec:
   ports:
     - name: network
@@ -23,5 +22,5 @@ spec:
       targetPort: 50002
   selector:
     app.kubernetes.io/chain-name: test-chain-tls-bft
-    app.kubernetes.io/chain-node: test-chain-tls-bft-node4
+    app.kubernetes.io/chain-node: test-chain-tls-bft-node0
   type: NodePort

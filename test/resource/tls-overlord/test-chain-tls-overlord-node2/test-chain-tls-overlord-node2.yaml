@@ -3,21 +3,21 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app.kubernetes.io/chain-name: test-chain-tls-raft
-    app.kubernetes.io/chain-node: test-chain-tls-raft-node2
-  name: test-chain-tls-raft-node2
+    app.kubernetes.io/chain-name: test-chain-tls-overlord
+    app.kubernetes.io/chain-node: test-chain-tls-overlord-node2
+  name: test-chain-tls-overlord-node2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/chain-name: test-chain-tls-raft
-      app.kubernetes.io/chain-node: test-chain-tls-raft-node2
+      app.kubernetes.io/chain-name: test-chain-tls-overlord
+      app.kubernetes.io/chain-node: test-chain-tls-overlord-node2
   serviceName: ""
   template:
     metadata:
       labels:
-        app.kubernetes.io/chain-name: test-chain-tls-raft
-        app.kubernetes.io/chain-node: test-chain-tls-raft-node2
+        app.kubernetes.io/chain-name: test-chain-tls-overlord
+        app.kubernetes.io/chain-node: test-chain-tls-overlord-node2
     spec:
       containers:
         - command:
@@ -59,12 +59,10 @@ spec:
               name: node-log
           workingDir: /data
         - command:
-            - consensus
-            - run
+            - /bin/sh
             - "-c"
-            - /etc/cita-cloud/config/config.toml
-            - "--stdout"
-          image: "docker.io/citacloud/consensus_raft:latest"
+            - "if [ ! -f \"/data/private_key\" ]; then cp /mnt/private_key /data;fi; consensus run -c /etc/cita-cloud/config/config.toml -l /etc/cita-cloud/log/consensus-log4rs.yaml"
+          image: "docker.io/citacloud/consensus_overlord:latest"
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -240,13 +238,13 @@ spec:
           workingDir: /data
       volumes:
         - configMap:
-            name: test-chain-tls-raft-node2-account
+            name: test-chain-tls-overlord-node2-account
           name: node-account
         - configMap:
-            name: test-chain-tls-raft-node2-config
+            name: test-chain-tls-overlord-node2-config
           name: node-config
         - configMap:
-            name: test-chain-tls-raft-node2-log
+            name: test-chain-tls-overlord-node2-log
           name: node-log
   volumeClaimTemplates:
     - apiVersion: v1
