@@ -6,7 +6,6 @@ metadata:
     app.kubernetes.io/chain-name: test-chain-tls-bft
     app.kubernetes.io/chain-node: test-chain-tls-bft-node1
   name: test-chain-tls-bft-node1-nodeport
-  namespace: cita
 spec:
   ports:
     - name: network

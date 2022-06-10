@@ -3,22 +3,21 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app.kubernetes.io/chain-name: test-chain-tls-raft
-    app.kubernetes.io/chain-node: test-chain-tls-raft-node4
-  name: test-chain-tls-raft-node4
-  namespace: cita
+    app.kubernetes.io/chain-name: test-chain-tls-overlord
+    app.kubernetes.io/chain-node: test-chain-tls-overlord-node0
+  name: test-chain-tls-overlord-node0
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/chain-name: test-chain-tls-raft
-      app.kubernetes.io/chain-node: test-chain-tls-raft-node4
+      app.kubernetes.io/chain-name: test-chain-tls-overlord
+      app.kubernetes.io/chain-node: test-chain-tls-overlord-node0
   serviceName: ""
   template:
     metadata:
       labels:
-        app.kubernetes.io/chain-name: test-chain-tls-raft
-        app.kubernetes.io/chain-node: test-chain-tls-raft-node4
+        app.kubernetes.io/chain-name: test-chain-tls-overlord
+        app.kubernetes.io/chain-node: test-chain-tls-overlord-node0
     spec:
       containers:
         - command:
@@ -60,12 +59,10 @@ spec:
               name: node-log
           workingDir: /data
         - command:
-            - consensus
-            - run
+            - /bin/sh
             - "-c"
-            - /etc/cita-cloud/config/config.toml
-            - "--stdout"
-          image: "docker.io/citacloud/consensus_raft:latest"
+            - "if [ ! -f \"/data/private_key\" ]; then cp /mnt/private_key /data;fi; consensus run -c /etc/cita-cloud/config/config.toml -l /etc/cita-cloud/log/consensus-log4rs.yaml"
+          image: "docker.io/citacloud/consensus_overlord:latest"
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -207,8 +204,8 @@ spec:
         - command:
             - /bin/sh
             - "-c"
-            - "if [ ! -f \"/data/kms.db\" ]; then cp /mnt/kms.db /data;fi; kms run -c /etc/cita-cloud/config/config.toml -l /etc/cita-cloud/log/kms-log4rs.yaml"
-          image: "docker.io/citacloud/kms_sm:latest"
+            - "if [ ! -f \"/data/private_key\" ]; then cp /mnt/private_key /data;fi; crypto run -c /etc/cita-cloud/config/config.toml -l /etc/cita-cloud/log/crypto-log4rs.yaml"
+          image: "docker.io/citacloud/crypto_sm:latest"
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -217,7 +214,7 @@ spec:
                 - "-addr=127.0.0.1:50005"
             initialDelaySeconds: 30
             periodSeconds: 10
-          name: kms
+          name: crypto
           ports:
             - containerPort: 50005
               name: grpc
@@ -241,13 +238,13 @@ spec:
           workingDir: /data
       volumes:
         - configMap:
-            name: test-chain-tls-raft-node4-account
+            name: test-chain-tls-overlord-node0-account
           name: node-account
         - configMap:
-            name: test-chain-tls-raft-node4-config
+            name: test-chain-tls-overlord-node0-config
           name: node-config
         - configMap:
-            name: test-chain-tls-raft-node4-log
+            name: test-chain-tls-overlord-node0-log
           name: node-log
   volumeClaimTemplates:
     - apiVersion: v1

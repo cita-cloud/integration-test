@@ -6,7 +6,6 @@ metadata:
     app.kubernetes.io/chain-name: test-chain-tls-raft
     app.kubernetes.io/chain-node: test-chain-tls-raft-node1
   name: test-chain-tls-raft-node1-nodeport
-  namespace: cita
 spec:
   ports:
     - name: network

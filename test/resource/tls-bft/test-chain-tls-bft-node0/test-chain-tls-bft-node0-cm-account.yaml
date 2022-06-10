@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+binaryData:
+  private_key: NDJlZTkyMjg1NGRmNzY2ZTk2YjlmMmMzZjk5OTYxNjgxMDM2YjJmMjFkMzA2MTY4OWEyYWU4MDM2NGNlNzcyYQ==
+data:
+  address: b3fe302dc2cb450eeb796bdf03da4da7eab9d481
+metadata:
+  labels:
+    app.kubernetes.io/chain-name: test-chain-tls-bft
+    app.kubernetes.io/chain-node: test-chain-tls-bft-node0
+  name: test-chain-tls-bft-node0-account

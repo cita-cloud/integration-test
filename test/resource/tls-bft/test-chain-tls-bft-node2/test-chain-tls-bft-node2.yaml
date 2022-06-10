@@ -6,7 +6,6 @@ metadata:
     app.kubernetes.io/chain-name: test-chain-tls-bft
     app.kubernetes.io/chain-node: test-chain-tls-bft-node2
   name: test-chain-tls-bft-node2
-  namespace: cita
 spec:
   replicas: 1
   selector:
@@ -208,8 +207,8 @@ spec:
         - command:
             - /bin/sh
             - "-c"
-            - "if [ ! -f \"/data/kms.db\" ]; then cp /mnt/kms.db /data;fi; kms run -c /etc/cita-cloud/config/config.toml -l /etc/cita-cloud/log/kms-log4rs.yaml"
-          image: "docker.io/citacloud/kms_sm:latest"
+            - "if [ ! -f \"/data/private_key\" ]; then cp /mnt/private_key /data;fi; crypto run -c /etc/cita-cloud/config/config.toml -l /etc/cita-cloud/log/crypto-log4rs.yaml"
+          image: "docker.io/citacloud/crypto_sm:latest"
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -218,7 +217,7 @@ spec:
                 - "-addr=127.0.0.1:50005"
             initialDelaySeconds: 30
             periodSeconds: 10
-          name: kms
+          name: crypto
           ports:
             - containerPort: 50005
               name: grpc
