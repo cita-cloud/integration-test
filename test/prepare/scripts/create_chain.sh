@@ -50,7 +50,7 @@ if [ $CHAIN_TYPE == "tls-bft" ]; then
   done
   # create chain
   echo "create tls-bft chain"
-  kubectl apply -f test/resource/tls-bft --recursive
+  kubectl apply -f test/resource/tls-bft -n cita --recursive
 elif [ $CHAIN_TYPE == "tls-raft" ]; then
   # check pod
   times=60
@@ -81,7 +81,7 @@ elif [ $CHAIN_TYPE == "tls-raft" ]; then
   done
   # create chain
   echo "create tls-raft chain"
-  kubectl apply -f test/resource/tls-raft --recursive
+  kubectl apply -f test/resource/tls-raft -n cita --recursive
 elif [ $CHAIN_TYPE == "tls-overlord" ]; then
   # check pod
   times=60
@@ -112,7 +112,7 @@ elif [ $CHAIN_TYPE == "tls-overlord" ]; then
   done
   # create chain
   echo "create tls-overlord chain"
-  kubectl apply -f test/resource/tls-overlord --recursive
+  kubectl apply -f test/resource/tls-overlord -n cita --recursive
 fi
 
 # check all pod's status is RUNNING
