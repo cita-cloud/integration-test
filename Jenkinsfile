@@ -11,7 +11,6 @@ pipeline {
     stage('Print Cli Version') {
       steps {
         container('cli') {
-          sh 'cco-cli version'
           sh 'cldi -V'
         }
       }
