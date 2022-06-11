@@ -15,6 +15,10 @@
 # limitations under the License.
 import subprocess, json, time
 
+import sys
+sys.path.append("test/utils")
+import util
+
 DEFAULT_QUOTA_LIMIT = 1073741824
 NEW_QUOTA_LIMIT = 500000000
 hex_prefix = '0x'
@@ -37,36 +41,32 @@ def get_system_config():
     return json.loads(result)
 
 
-def set_quota_limit():
-    set_cmd = "cldi -c default -u admin admin set-quota-limit {}".format(NEW_QUOTA_LIMIT)
+def set_quota_limit(quota_limit):
+    set_cmd = "cldi -c default -u admin admin set-quota-limit {}".format(quota_limit)
     tx_hash = subprocess.getoutput(set_cmd)
     if not tx_hash.__contains__(hex_prefix) or not len(tx_hash) == len(hex_prefix) + 64:
         print("set-quota-limit failed!")
         exit(20)
-    get_cmd = "cldi -c default get tx {}"
-    cmd_result = subprocess.getoutput(get_cmd.format(tx_hash))
-    if cmd_result.__contains__("Error"):
-        print("get set-quota-limit tx failed")
-        exit(30)
+    util.get_tx(tx_hash)
     return tx_hash
 
 
 if __name__ == "__main__":
     # get system-config
-    old_quota_limit = get_system_config()['quota_limit']
-    if not old_quota_limit == DEFAULT_QUOTA_LIMIT:
-        print("invalid quota limit: ", old_quota_limit)
+    quota_limit = get_system_config()['quota_limit']
+    if not quota_limit == DEFAULT_QUOTA_LIMIT:
+        print("invalid quota limit: ", quota_limit)
         exit(10)
 
     # set quota limit to 500000000
-    tx_hash = set_quota_limit()
+    tx_hash = set_quota_limit(NEW_QUOTA_LIMIT)
 
     time.sleep(6)
 
     # check new quota limit in system-config
     system_config = get_system_config()
-    new_quota_limit = system_config['quota_limit']
-    if not new_quota_limit == NEW_QUOTA_LIMIT:
+    quota_limit = system_config['quota_limit']
+    if not quota_limit == NEW_QUOTA_LIMIT:
         print("quota limit mismatch")
         exit(40)
 
@@ -85,6 +85,22 @@ if __name__ == "__main__":
     result = subprocess.getoutput(send_cmd.format(NEW_QUOTA_LIMIT))
     if result is None or not result.startswith(hex_prefix) or len(result) != len(hex_prefix) + 64:
         print("verify valid quota failed: {}!", result)
-        exit(60)
+        exit(70)
+
+    # restore quota limit to DEFAULT_QUOTA_LIMIT
+    tx_hash = set_quota_limit(DEFAULT_QUOTA_LIMIT)
+
+    time.sleep(6)
+
+    # check new quota limit in system-config
+    system_config = get_system_config()
+    quota_limit = system_config['quota_limit']
+    if not quota_limit == DEFAULT_QUOTA_LIMIT:
+        print("quota limit mismatch")
+        exit(80)
+
+    if system_config['quota_limit_pre_hash'] != tx_hash:
+        print("set-quota-limit tx hash mismatch!")
+        exit(90)
 
     exit(0)
