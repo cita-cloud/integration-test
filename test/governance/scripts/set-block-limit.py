@@ -15,6 +15,10 @@
 # limitations under the License.
 import subprocess, json, time
 
+import sys
+sys.path.append("test/utils")
+import util
+
 DEFAULT_BLOCK_LIMIT = 100
 NEW_BLOCK_LIMIT = 10
 hex_prefix = '0x'
@@ -37,36 +41,32 @@ def get_system_config():
     return json.loads(result)
 
 
-def set_block_limit():
-    set_cmd = "cldi -c default -u admin admin set-block-limit {}".format(NEW_BLOCK_LIMIT)
+def set_block_limit(block_limit):
+    set_cmd = "cldi -c default -u admin admin set-block-limit {}".format(block_limit)
     tx_hash = subprocess.getoutput(set_cmd)
     if not tx_hash.__contains__(hex_prefix) or not len(tx_hash) == len(hex_prefix) + 64:
         print("set-block-limit failed!")
         exit(20)
-    get_cmd = "cldi -c default get tx {}"
-    cmd_result = subprocess.getoutput(get_cmd.format(tx_hash))
-    if cmd_result.__contains__("Error"):
-        print("get set-block-limit tx failed")
-        exit(30)
+    util.get_tx(tx_hash)
     return tx_hash
 
 
 if __name__ == "__main__":
     # get system-config
-    old_quota_limit = get_system_config()['block_limit']
-    if not old_quota_limit == DEFAULT_BLOCK_LIMIT:
-        print("invalid block limit: ", old_quota_limit)
-        exit(10)
+    block_limit = get_system_config()['block_limit']
+    if not block_limit == DEFAULT_BLOCK_LIMIT:
+        print("invalid block limit: ", block_limit)
+        exit(30)
 
     # set block limit to 10
-    tx_hash = set_block_limit()
+    tx_hash = set_block_limit(NEW_BLOCK_LIMIT)
 
     time.sleep(6)
 
     # check new block limit in system-config
     system_config = get_system_config()
-    new_quota_limit = system_config['block_limit']
-    if not new_quota_limit == NEW_BLOCK_LIMIT:
+    block_limit = system_config['block_limit']
+    if not block_limit == NEW_BLOCK_LIMIT:
         print("block limit mismatch")
         exit(40)
 
@@ -74,7 +74,20 @@ if __name__ == "__main__":
         print("set-block-limit tx hash mismatch!")
         exit(50)
 
-    # verify block limit
+    # restore block limit
+    tx_hash = set_block_limit(DEFAULT_BLOCK_LIMIT)
 
+    time.sleep(6)
+
+    # check new block limit in system-config
+    system_config = get_system_config()
+    block_limit = system_config['block_limit']
+    if not block_limit == DEFAULT_BLOCK_LIMIT:
+        print("block limit mismatch")
+        exit(60)
+
+    if system_config['block_limit_pre_hash'] != tx_hash:
+        print("set-block-limit tx hash mismatch!")
+        exit(70)
 
     exit(0)
