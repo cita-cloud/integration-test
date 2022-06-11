@@ -30,7 +30,7 @@ if [ $CHAIN_TYPE == "tls-bft" ]; then
     else
       echo "old chain resource still exists, delete it..."
       # delete command maybe return errors, ignore
-      kubectl delete -f test/resource/tls-bft --recursive 2>/dev/null
+      kubectl delete -f test/resource/tls-bft -n cita --recursive 2>/dev/null
       let times--
       sleep 5
     fi
@@ -61,7 +61,7 @@ elif [ $CHAIN_TYPE == "tls-raft" ]; then
     else
       echo "old chain resource still exists, delete it..."
       # delete command maybe return errors, ignore
-      kubectl delete -f test/resource/tls-raft --recursive 2>/dev/null
+      kubectl delete -f test/resource/tls-raft -n cita --recursive 2>/dev/null
       let times--
       sleep 5
     fi
@@ -92,7 +92,7 @@ elif [ $CHAIN_TYPE == "tls-overlord" ]; then
     else
       echo "old chain resource still exists, delete it..."
       # delete command maybe return errors, ignore
-      kubectl delete -f test/resource/tls-overlord --recursive 2>/dev/null
+      kubectl delete -f test/resource/tls-overlord -n cita --recursive 2>/dev/null
       let times--
       sleep 5
     fi
