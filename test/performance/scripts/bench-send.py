@@ -75,7 +75,7 @@ d826f88f: reset()
 
 
     # bench send
-    cmd = "cldi -c default bench send -t {} -d 0x4f2be91f 50000"
+    cmd = "cldi -c default bench send -t {} -q 80000 -d 0x4f2be91f 50000"
     ret = subprocess.getoutput(cmd.format(contract_addr))
 
     # print tps
