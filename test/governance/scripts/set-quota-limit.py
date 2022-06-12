@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
     # verify quota limit
     time.sleep(30)
-    send_cmd = "send 0xf064e32407b6cc412fe33f6ba55f578ac413ecdc 0x4f2be91f -q {}"
+    send_cmd = "cldi -c default send 0xf064e32407b6cc412fe33f6ba55f578ac413ecdc 0x4f2be91f -q {}"
     result = subprocess.getoutput(send_cmd.format(NEW_QUOTA_LIMIT + 1))
     if result is None or not result.__contains__('QuotaUsedExceed'):
         print("verify invalid quota failed: {}!", result)
