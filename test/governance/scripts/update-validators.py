@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     # fake validator
     if os.getenv("CHAIN_TYPE") == "tls-overlord":
-        fake_validator = "0xb3471e316fe114774e968fb3d71e1975412ad518a7beacd9d522500456b5af9d28078589e0e4d0e8170778e363b3a122"
+        fake_validator = "0xc3471e316fe114774e968fb3d71e1975412ad518a7beacd9d522500456b5af9d28078589e0e4d0e8170778e363b3a122"
     else:
         fake_validator = "0x545055b46b8292a82ba6e2d6e51014df1a2ac230"
     
