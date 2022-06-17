@@ -56,7 +56,7 @@ if __name__ == "__main__":
         print("set-block-interval tx hash mismatch!", system_config)
         exit(50)
     
-    time.sleep(100)
+    time.sleep(150)
 
     # check timestamp in block to verify block interval
     util.check_block_increase()
@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
     latest_block_ret = util.get_block(result)
 
-    pre_block_ret = util.get_block(result - 5)
+    pre_block_ret = util.get_block(result - 6)
 
     latest_block = json.loads(latest_block_ret)
     pre_block = json.loads(pre_block_ret)
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     pre_block_time = datetime.datetime.strptime(pre_block['timestamp'][:19], '%Y-%m-%d %H:%M:%S')
     diff = latest_block_time - pre_block_time
 
-    if diff.seconds / 5 < 8:
+    if diff.seconds / 6 < 5:
         print("block interval incoreect!", diff, pre_block_time, latest_block_time)
         exit(80)        
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         print("set-block-interval tx hash mismatch!", system_config)
         exit(120)
 
-    time.sleep(60)
+    time.sleep(100)
 
     # check timestamp in block to verify block interval
     util.check_block_increase()
@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
     latest_block_ret = util.get_block(result)
 
-    pre_block_ret = util.get_block(result - 5)
+    pre_block_ret = util.get_block(result - 6)
 
     latest_block = json.loads(latest_block_ret)
     pre_block = json.loads(pre_block_ret)
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     pre_block_time = datetime.datetime.strptime(pre_block['timestamp'][:19], '%Y-%m-%d %H:%M:%S')
     diff = latest_block_time - pre_block_time
 
-    if diff.seconds / 5 > 5:
+    if diff.seconds / 6 > 5:
         print("block interval incoreect!", diff, pre_block_time, latest_block_time)
         exit(150)
 
