@@ -20,6 +20,8 @@
 echo 'import admin account'
 cldi account import 0xb2371a70c297106449f89445f20289e6d16942f08f861b5e95cbcf0462e384c1 --name admin --crypto SM
 
+kubectl create namespace cita
+
 if [ $CHAIN_TYPE == "tls-bft" ]; then
   # check pod
   times=60
@@ -132,3 +134,6 @@ done
 # wait half of minute
 echo `date`
 sleep 30
+
+service_name=`kubectl get svc -ncita --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME  | head -n 1 | awk '{print $1}'`
+cldi -r $service_name.cita:50004 -e $service_name.cita:50002 -u default context save default

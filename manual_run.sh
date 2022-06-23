@@ -15,18 +15,8 @@
 # limitations under the License.
 #
 #
-set -o errexit
 
-if [ "`kubectl get deployment cita-cloud-operator -ncita -ojson | jq '.status.availableReplicas'`" == "1" ]; then
-    echo "cita-cloud-operator is running"
-else
-  echo "cita-cloud-operator is not running"
-  exit 1
-fi
-
-if [ "`kubectl get deployment cita-cloud-operator-proxy -ncita -ojson | jq '.status.availableReplicas'`" == "1" ]; then
-    echo "cita-cloud-operator-proxy is running"
-else
-  echo "cita-cloud-operator-proxy is not running"
-  exit 1
-fi
+bash test/basic/startup.sh
+bash test/governance/startup.sh
+bash test/performance/startup.sh
+bash test/reliability/startup.sh
