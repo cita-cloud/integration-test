@@ -27,7 +27,7 @@ spec:
             namespaces:
             - cita
             labelSelectors:
-              app.kubernetes.io/chain-name: test-chain-tls-overlord
+              app.kubernetes.io/chain-name: XXXXXX
     - name: workflow-pod-failure
       templateType: Schedule
       deadline: 100s
@@ -43,7 +43,7 @@ spec:
             namespaces:
             - cita
             labelSelectors:
-              app.kubernetes.io/chain-name: test-chain-tls-overlord
+              app.kubernetes.io/chain-name: XXXXXX
     - name: workflow-contailner-kill
       templateType: Schedule
       deadline: 100s
@@ -58,7 +58,7 @@ spec:
             namespaces:
             - cita
             labelSelectors:
-              app.kubernetes.io/chain-name: test-chain-tls-overlord
+              app.kubernetes.io/chain-name: XXXXXX
           containerNames:
             - consensus
     - name: workflow-stress-test
@@ -70,7 +70,7 @@ spec:
           namespaces:
           - cita
           labelSelectors:
-            app.kubernetes.io/chain-name: test-chain-tls-overlord
+            app.kubernetes.io/chain-name: XXXXXX
         stressors:
           cpu:
             workers: 1

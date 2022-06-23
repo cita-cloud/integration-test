@@ -10,9 +10,6 @@ spec:
         - cat
       tty: true
       imagePullPolicy: Always
-      env:
-        - name: OPERATOR_PROXY_ENDPOINT
-          value: cita-cloud-operator-proxy-cluster-ip.cita:8090
       volumeMounts:
         - name: kube-config
           mountPath: /root/.kube

@@ -26,23 +26,23 @@ delete_cmd = "kubectl delete -f {}"
 
 
 def clean(chain_type):
-    subprocess.getoutput(delete_cmd.format("test/reliability/chaos/{}/network-chaos.yaml".format(chain_type)))
-    subprocess.getoutput(delete_cmd.format("test/reliability/chaos/{}/pod-chaos.yaml".format(chain_type)))
-    subprocess.getoutput(delete_cmd.format("test/reliability/chaos/{}/io-chaos.yaml".format(chain_type)))
+    subprocess.getoutput(delete_cmd.format("test/reliability/chaos/network-chaos.yaml"))
+    subprocess.getoutput(delete_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
+    subprocess.getoutput(delete_cmd.format("test/reliability/chaos/io-chaos.yaml"))
 
 
-def exec_chaos(chain_type):
+def exec_chaos():
     # network chaos test 240s
-    ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/{}/network-chaos.yaml".format(chain_type)))
+    ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/network-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply network chaos test failed!", ret)
-        clean(chain_type)
+        clean()
         exit(10)
 
     time.sleep(300)
 
     # delete network chaos test
-    ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/{}/network-chaos.yaml".format(chain_type)))
+    ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/network-chaos.yaml"))
     if not ret.__contains__("deleted"):
         print("delete network chaos test failed!", ret)
         exit(20)
@@ -51,16 +51,16 @@ def exec_chaos(chain_type):
     util.check_block_increase()
 
     # pod chaos test 400s
-    ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/{}/pod-chaos.yaml".format(chain_type)))
+    ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply pod chaos test failed!", ret)
-        clean(chain_type)
+        clean()
         exit(40)
 
     time.sleep(600)
 
     # delete pod chaos test
-    ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/{}/pod-chaos.yaml".format(chain_type)))
+    ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
     if not ret.__contains__("deleted"):
         print("delete pod chaos test failed!", ret)
         exit(50)
@@ -69,16 +69,16 @@ def exec_chaos(chain_type):
     util.check_block_increase()
 
     # io chaos test 300s
-    ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/{}/io-chaos.yaml".format(chain_type)))
+    ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/io-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply io chaos test failed!", ret)
-        clean(chain_type)
+        clean()
         exit(70)
 
     time.sleep(400)
 
     # delete io chaos test
-    ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/{}/io-chaos.yaml".format(chain_type)))
+    ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/io-chaos.yaml"))
     if not ret.__contains__("deleted"):
         print("delete io chaos test failed!", ret)
         exit(80)
@@ -90,5 +90,6 @@ def exec_chaos(chain_type):
 
 
 if __name__ == "__main__":
-    print("start exec chaos test for {}".format(os.getenv("CHAIN_TYPE")))
-    exec_chaos(os.getenv("CHAIN_TYPE"))
+    print("start exec chaos test for {}".format(os.getenv("CHAIN_NAME")))
+    subprocess.getoutput("sed -i 's/XXXXXX/{}/g'".format(os.getenv("CHAIN_NAME")))
+    exec_chaos()
