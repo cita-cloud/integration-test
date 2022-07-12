@@ -94,7 +94,7 @@ if __name__ == "__main__":
         ret3 = subprocess.getoutput(cmd.format(node3_name))
         if len(ret2) != 0 and len(ret3) != 0:
             break
-        if i == 2:
+        if i == 4:
             print("restore node failed!")
             exit(75)
     
