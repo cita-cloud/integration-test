@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: ConfigMap
 binaryData:
-  private_key: Njg1MGI3YTcwNmEzMDRhODM4YTkzYmFlOWE4Nzk4MTA0YTY4NDhjOWU2MGY2YWI3ZTgzOGMyNzQzYWYxZTQyZQ==
+  private_key: MTczMjkxN2Y4YmYxNGNjMmIzZGM2ZjExMGQ1NjgyYjA2MjEyYTU5YTBjYzgzYzc4Zjk4Yzk0ZDMyZmM3NTQ3Yw==
 data:
-  address: 42572ebbaf3e026ba3c62af9eeb0766d1f93b486
+  address: 4e05795784f22f69e4b969ee950d35c55dbc908d
 metadata:
   labels:
     app.kubernetes.io/chain-name: test-chain-zenoh-overlord
