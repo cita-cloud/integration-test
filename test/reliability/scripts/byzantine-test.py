@@ -48,7 +48,7 @@ if __name__ == "__main__":
         print("stop node failed!", ret)
         exit(30)
 
-    time.sleep(30)
+    time.sleep(60)
     
     # check work well
     util.check_block_increase()
@@ -62,7 +62,7 @@ if __name__ == "__main__":
         print("stop node failed!", ret)
         exit(50)
 
-    time.sleep(30)
+    time.sleep(60)
     
     # check work not well
     pre_block_numbner = util.get_block_number()
