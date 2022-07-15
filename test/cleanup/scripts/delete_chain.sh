@@ -17,7 +17,7 @@
 #
 
 # delete chain resource
-kubectl delete -f test/resource/$CHAIN_NAME -ncita --recursive
+kubectl delete -f test/resource/$CHAIN_TYPE -ncita --recursive
 
 
 kubectl delete pvc -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME
