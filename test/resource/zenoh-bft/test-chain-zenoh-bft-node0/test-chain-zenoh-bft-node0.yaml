@@ -28,7 +28,7 @@ spec:
             - "-l"
             - /etc/cita-cloud/log/network-log4rs.yaml
           image: "docker.io/citacloud/network_zenoh:latest"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           livenessProbe:
             exec:
               command:
@@ -67,7 +67,7 @@ spec:
             - "-l"
             - /etc/cita-cloud/log/consensus-log4rs.yaml
           image: "docker.io/citacloud/consensus_bft:latest"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           livenessProbe:
             exec:
               command:
@@ -105,7 +105,7 @@ spec:
             - "-l"
             - /etc/cita-cloud/log/executor-log4rs.yaml
           image: "docker.io/citacloud/executor_evm:latest"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           livenessProbe:
             exec:
               command:
@@ -141,7 +141,7 @@ spec:
             - "-l"
             - /etc/cita-cloud/log/storage-log4rs.yaml
           image: "docker.io/citacloud/storage_rocksdb:latest"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           livenessProbe:
             exec:
               command:
@@ -177,7 +177,7 @@ spec:
             - "-l"
             - /etc/cita-cloud/log/controller-log4rs.yaml
           image: "docker.io/citacloud/controller:latest"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           livenessProbe:
             exec:
               command:
@@ -210,7 +210,7 @@ spec:
             - "-c"
             - "if [ ! -f \"/data/private_key\" ]; then cp /mnt/private_key /data;fi; crypto run -c /etc/cita-cloud/config/config.toml -l /etc/cita-cloud/log/crypto-log4rs.yaml"
           image: "docker.io/citacloud/crypto_sm:latest"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           livenessProbe:
             exec:
               command:
@@ -230,23 +230,6 @@ spec:
             requests:
               cpu: 10m
               memory: 32Mi
-          volumeMounts:
-            - mountPath: /data
-              name: datadir
-            - mountPath: /etc/cita-cloud/config
-              name: node-config
-            - mountPath: /etc/cita-cloud/log
-              name: node-log
-            - mountPath: /mnt
-              name: node-account
-          workingDir: /data
-        - image: "praqma/network-multitool:latest"
-          imagePullPolicy: IfNotPresent
-          name: debug
-          ports:
-            - containerPort: 9999
-              name: debug
-              protocol: TCP
           volumeMounts:
             - mountPath: /data
               name: datadir
