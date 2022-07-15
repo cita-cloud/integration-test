@@ -17,14 +17,7 @@
 #
 
 # delete chain resource
-if [ $CHAIN_TYPE == "tls-bft" ]; then
-  kubectl delete -f test/resource/tls-bft -ncita --recursive
-elif [ $CHAIN_TYPE == "tls-raft" ]; then
-  kubectl delete -f test/resource/tls-raft -ncita --recursive
-elif [ $CHAIN_TYPE == "tls-overlord" ]; then
-  kubectl delete -f test/resource/tls-overlord -ncita --recursive
-elif [ $CHAIN_TYPE == "zenoh-overlord" ]; then
-  kubectl delete -f test/resource/zenoh-overlord -ncita --recursive
-fi
+kubectl delete -f test/resource/$CHAIN_TYPE -ncita --recursive
+
 
 kubectl delete pvc -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME
