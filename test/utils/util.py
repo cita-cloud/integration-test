@@ -19,6 +19,7 @@ import logging
 import subprocess
 import time
 import sys
+import json
 
 logging.basicConfig(stream=sys.stderr,level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -58,6 +59,9 @@ def get_tx(tx_hash):
     result = subprocess.getoutput(get_tx_fmt.format(tx_hash))
     if result.__contains__("Error"):
         raise Exception('get tx failed!')
+    tx = json.loads(result)
+    if tx['height'] == 18446744073709551615:
+        raise Exception('tx in pool!')
     return result
 
 
