@@ -24,7 +24,7 @@ import util
 
 if __name__ == "__main__":
     # raft chain don't need to execute this test
-    if os.getenv("CHAIN_TYPE") == "tls-raft" or os.getenv("CHAIN_TYPE") == "zenoh-raft":
+    if os.getenv("CHAIN_TYPE") == "zenoh-raft":
         print("raft chain don't need to execute byzantine test")
         exit(0)
 
