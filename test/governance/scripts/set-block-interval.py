@@ -70,8 +70,8 @@ if __name__ == "__main__":
     latest_block = json.loads(latest_block_ret)
     pre_block = json.loads(pre_block_ret)
 
-    latest_block_time = datetime.datetime.strptime(latest_block['timestamp'][:19], '%Y-%m-%d %H:%M:%S')
-    pre_block_time = datetime.datetime.strptime(pre_block['timestamp'][:19], '%Y-%m-%d %H:%M:%S')
+    latest_block_time = datetime.datetime.strptime(latest_block['time'][:19], '%Y-%m-%d %H:%M:%S')
+    pre_block_time = datetime.datetime.strptime(pre_block['time'][:19], '%Y-%m-%d %H:%M:%S')
     diff = latest_block_time - pre_block_time
 
     if diff.seconds / 6 < 5:
@@ -119,8 +119,8 @@ if __name__ == "__main__":
     latest_block = json.loads(latest_block_ret)
     pre_block = json.loads(pre_block_ret)
 
-    latest_block_time = datetime.datetime.strptime(latest_block['timestamp'][:19], '%Y-%m-%d %H:%M:%S')
-    pre_block_time = datetime.datetime.strptime(pre_block['timestamp'][:19], '%Y-%m-%d %H:%M:%S')
+    latest_block_time = datetime.datetime.strptime(latest_block['time'][:19], '%Y-%m-%d %H:%M:%S')
+    pre_block_time = datetime.datetime.strptime(pre_block['time'][:19], '%Y-%m-%d %H:%M:%S')
     diff = latest_block_time - pre_block_time
 
     if diff.seconds / 6 > 5:
