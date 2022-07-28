@@ -34,7 +34,7 @@ if __name__ == "__main__":
     print("validators_arg: ", validators_arg)
 
     # fake validator
-    if os.getenv("CHAIN_TYPE") == "tls-overlord" or os.getenv("CHAIN_TYPE") == "zenoh-overlord":
+    if os.getenv("CHAIN_TYPE") == "zenoh-overlord":
         fake_validator = "0x84f20fca860ba24a7873de628f845873d72fbdeb0d344c6df1ace20a25651cd7a99f3474dac8f6f2f8704ed79ef83b22"
     else:
         fake_validator = "0x545055b46b8292a82ba6e2d6e51014df1a2ac230"
