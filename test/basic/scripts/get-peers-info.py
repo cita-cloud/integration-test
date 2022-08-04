@@ -28,8 +28,7 @@ if __name__ == "__main__":
                 exit(0)
             else:
                 node_0 = node_list[0]
-                if len(node_0) == 5 and isinstance(node_0['address'], str) and isinstance(node_0['host'], str) \
-                        and isinstance(node_0['origin'], int) and isinstance(node_0['port'], int):
+                if isinstance(node_0['address'], str) and len(node_0['address']) == 16:
                     exit(0)
     except ValueError:
         pass
