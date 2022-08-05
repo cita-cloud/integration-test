@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+binaryData:
+  private_key: NjQ5MjZiNDc0ZjBjMDU3MmUxZGIzY2E5Zjg4ZjVjNmUyYjczZTYzMDY3MzEyYTc5ZTJhYTVkNmRmMTE5OTk1Mg==
+data:
+  address: d6caa02b2bd62e8ff65c851a141e71b5ad961a4c
+metadata:
+  labels:
+    app.kubernetes.io/chain-name: test-chain-zenoh-raft
+    app.kubernetes.io/chain-node: test-chain-zenoh-raft-node3
+  name: test-chain-zenoh-raft-node3-account
