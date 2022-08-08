@@ -7,17 +7,22 @@ spec:
   templates:
     - name: container-entry
       templateType: Serial
-      deadline: 400s
+      deadline: 900s
       children:
         - workflow-pod-failure
         - workflow-pod-kill
-        - workflow-contailner-kill
+        - workflow-consensus-kill
+        - workflow-controller-kill
+        - workflow-executor-kill
+        - workflow-storage-kill
+        - workflow-crypto-kill
+        - workflow-network-kill
         - workflow-stress-test
     - name: workflow-pod-kill
       templateType: Schedule
       deadline: 100s
       schedule:
-        schedule: "@every 90s"
+        schedule: "@every 60s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
@@ -32,7 +37,7 @@ spec:
       templateType: Schedule
       deadline: 100s
       schedule:
-        schedule: "@every 90s"
+        schedule: "@every 60s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
@@ -44,11 +49,11 @@ spec:
             - cita
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
-    - name: workflow-contailner-kill
+    - name: workflow-consensus-kill
       templateType: Schedule
       deadline: 100s
       schedule:
-        schedule: "@every 90s"
+        schedule: "@every 40s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
@@ -61,6 +66,91 @@ spec:
               app.kubernetes.io/chain-name: XXXXXX
           containerNames:
             - consensus
+    - name: workflow-controller-kill
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 40s"
+        concurrencyPolicy: Allow
+        type: PodChaos
+        podChaos:
+          action: container-kill
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: XXXXXX
+          containerNames:
+            - controller
+    - name: workflow-executor-kill
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 40s"
+        concurrencyPolicy: Allow
+        type: PodChaos
+        podChaos:
+          action: container-kill
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: XXXXXX
+          containerNames:
+            - executor
+    - name: workflow-storage-kill
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 40s"
+        concurrencyPolicy: Allow
+        type: PodChaos
+        podChaos:
+          action: container-kill
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: XXXXXX
+          containerNames:
+            - storage
+    - name: workflow-crypto-kill
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 40s"
+        concurrencyPolicy: Allow
+        type: PodChaos
+        podChaos:
+          action: container-kill
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: XXXXXX
+          containerNames:
+            - crypto
+    - name: workflow-network-kill
+      templateType: Schedule
+      deadline: 100s
+      schedule:
+        schedule: "@every 40s"
+        concurrencyPolicy: Allow
+        type: PodChaos
+        podChaos:
+          action: container-kill
+          mode: one
+          selector:
+            namespaces:
+            - cita
+            labelSelectors:
+              app.kubernetes.io/chain-name: XXXXXX
+          containerNames:
+            - network
     - name: workflow-stress-test
       templateType: StressChaos
       deadline: 100s

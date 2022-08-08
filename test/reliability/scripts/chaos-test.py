@@ -33,6 +33,7 @@ def clean(chain_type):
 
 def exec_chaos():
     # network chaos test 240s
+    print("start network chaos test!")
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/network-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply network chaos test failed!", ret)
@@ -47,17 +48,19 @@ def exec_chaos():
         print("delete network chaos test failed!", ret)
         exit(20)
 
-        # check work well
+    # check work well
     util.check_block_increase()
+    print("network chaos test OK!")
 
-    # pod chaos test 400s
+    # pod chaos test 600s
+    print("start pod chaos test!")
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply pod chaos test failed!", ret)
         clean()
         exit(40)
 
-    time.sleep(600)
+    time.sleep(1000)
 
     # delete pod chaos test
     ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
@@ -67,8 +70,10 @@ def exec_chaos():
 
     # check work well
     util.check_block_increase()
+    print("pod chaos test OK!")
 
     # io chaos test 300s
+    print("start io chaos test!")
     ret = subprocess.getoutput(apply_cmd.format("test/reliability/chaos/io-chaos.yaml"))
     if not ret.__contains__("created"):
         print("apply io chaos test failed!", ret)
@@ -85,11 +90,14 @@ def exec_chaos():
 
     # check work well
     util.check_block_increase()
+    print("io chaos test OK!")
 
     exit(0)
 
 
 if __name__ == "__main__":
     print("start exec chaos test for {}".format(os.getenv("CHAIN_NAME")))
-    subprocess.getoutput("sed -i 's/XXXXXX/{}/g'".format(os.getenv("CHAIN_NAME")))
+    subprocess.getoutput("sed -i 's/XXXXXX/{}/g' test/reliability/chaos/network-chaos.yaml".format(os.getenv("CHAIN_NAME")))
+    subprocess.getoutput("sed -i 's/XXXXXX/{}/g' test/reliability/chaos/pod-chaos.yaml".format(os.getenv("CHAIN_NAME")))
+    subprocess.getoutput("sed -i 's/XXXXXX/{}/g' test/reliability/chaos/io-chaos.yaml".format(os.getenv("CHAIN_NAME")))
     exec_chaos()

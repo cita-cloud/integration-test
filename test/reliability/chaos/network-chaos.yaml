@@ -51,7 +51,7 @@ spec:
       deadline: 80s
       networkChaos:
         action: netem
-        mode: one
+        mode: all
         selector:
           namespaces:
           - cita
