@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+binaryData:
+  private_key: NWVlYzM3ODhlNWE3NmY3OWYwZTk4NWQ2N2ZkOWI0MGRkNDYwYjBkZTIzZGE3MWRhNDc5Y2E2M2RmOWU1NjZiOA==
+data:
+  address: d33aa250c8592522403566e9ae04738e1a326c8c
+metadata:
+  labels:
+    app.kubernetes.io/chain-name: test-chain-zenoh-bft
+    app.kubernetes.io/chain-node: test-chain-zenoh-bft-node4
+  name: test-chain-zenoh-bft-node4-account

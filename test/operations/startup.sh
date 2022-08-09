@@ -18,11 +18,24 @@
 
 pwd=`pwd`
 dir=`dirname $0`
-path=$pwd/$dir/scripts
+path=$pwd/$dir/scripts/sh
 
 for file in `ls "$path"`; do
   echo `date`
   bash "$path/$file"
+  ret=$?
+  if [ "$ret" = "0" ]; then
+    echo "exec $file successful"
+  else
+    echo "exec $file failed ret = $ret"
+    exit 1
+  fi
+done
+
+path=$pwd/$dir/scripts/py
+for file in `ls "$path"`; do
+  echo `date`
+  python "$path/$file"
   ret=$?
   if [ "$ret" = "0" ]; then
     echo "exec $file successful"

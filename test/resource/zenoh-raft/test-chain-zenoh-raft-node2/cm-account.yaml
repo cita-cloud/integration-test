@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: ConfigMap
 binaryData:
-  private_key: MWE5MDEyMDU0MzY1OTUxYzVlYTRkM2IxN2EzZWQ0OTU0ZDI4YzVkMDVlNzU2MGEzZTdlOGYwM2RlZmZmZmVkZg==
+  private_key: MTUwY2QxMzUwY2I4OGQ4NDM5MDExYjZmZjRiZmM0YWQ0MGIxNGJkZjBjNGI3MjJhYWI0N2YxMDQ1NjZmZWMxMg==
 data:
-  address: e1d5028f8acf6f1af1a789ff6d22ca06b4c172cc
+  address: df136ca6d542b08a0876e297d8e6bebe483534a7
 metadata:
   labels:
     app.kubernetes.io/chain-name: test-chain-zenoh-raft
