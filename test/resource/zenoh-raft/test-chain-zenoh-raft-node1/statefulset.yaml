@@ -27,7 +27,7 @@ spec:
             - /etc/cita-cloud/config/config.toml
             - "-l"
             - /etc/cita-cloud/log/network-log4rs.yaml
-          image: "docker.io/citacloud/network_zenoh:latest"
+          image: "registry.devops.rivtower.com/cita-cloud/network_zenoh:latest"
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -65,7 +65,7 @@ spec:
             - "-c"
             - /etc/cita-cloud/config/config.toml
             - "--stdout"
-          image: "docker.io/citacloud/consensus_raft:latest"
+          image: "registry.devops.rivtower.com/cita-cloud/consensus_raft:latest"
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -103,7 +103,7 @@ spec:
             - /etc/cita-cloud/config/config.toml
             - "-l"
             - /etc/cita-cloud/log/executor-log4rs.yaml
-          image: "docker.io/citacloud/executor_evm:latest"
+          image: "registry.devops.rivtower.com/cita-cloud/executor_evm:latest"
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -139,7 +139,7 @@ spec:
             - /etc/cita-cloud/config/config.toml
             - "-l"
             - /etc/cita-cloud/log/storage-log4rs.yaml
-          image: "docker.io/citacloud/storage_rocksdb:latest"
+          image: "registry.devops.rivtower.com/cita-cloud/storage_rocksdb:latest"
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -175,7 +175,7 @@ spec:
             - /etc/cita-cloud/config/config.toml
             - "-l"
             - /etc/cita-cloud/log/controller-log4rs.yaml
-          image: "docker.io/citacloud/controller:latest"
+          image: "registry.devops.rivtower.com/cita-cloud/controller:latest"
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -213,7 +213,7 @@ spec:
             - /etc/cita-cloud/log/controller-log4rs.yaml
             - "-p"
             - /mnt/private_key
-          image: "docker.io/citacloud/crypto_sm:latest"
+          image: "registry.devops.rivtower.com/cita-cloud/crypto_sm:latest"
           imagePullPolicy: Always
           livenessProbe:
             exec:
