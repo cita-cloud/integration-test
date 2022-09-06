@@ -33,16 +33,14 @@ if __name__ == "__main__":
         validators_arg += " "
     print("validators_arg: ", validators_arg)
 
-    # fake validator
-    if os.getenv("CHAIN_TYPE") == "zenoh-overlord":
-        fake_validator = "0x84f20fca860ba24a7873de628f845873d72fbdeb0d344c6df1ace20a25651cd7a99f3474dac8f6f2f8704ed79ef83b22"
-    else:
-        fake_validator = "0x545055b46b8292a82ba6e2d6e51014df1a2ac230"
+    # last validator
+    last_validator = validators[3]
+    validators_without_last_arg = validators_arg.removesuffix(last_validator)
     
 
-    # append validator
+    # remove last validator
     cmd = "cldi -c default -u admin admin update-validators {}"
-    tx_hash = subprocess.getoutput(cmd.format(validators_arg + fake_validator))
+    tx_hash = subprocess.getoutput(cmd.format(validators_without_last_arg))
     
     print("update-validators ret:", tx_hash)
 
@@ -57,8 +55,8 @@ if __name__ == "__main__":
     cmd_result = subprocess.getoutput(cmd)
     system_config = json.loads(cmd_result)
 
-    if not system_config['validators'].__contains__(fake_validator):
-        print("validators mismatch!", system_config)
+    if system_config['validators'].__contains__(last_validator):
+        print("last validator is not deleted!", system_config)
         exit(30)
 
     if system_config['validators_pre_hash'] != tx_hash:
@@ -83,7 +81,7 @@ if __name__ == "__main__":
     cmd_result = subprocess.getoutput(cmd)
     system_config = json.loads(cmd_result)
 
-    if system_config['validators'].__contains__(fake_validator):
+    if not system_config['validators'].__contains__(last_validator):
         print("validators mismatch!", system_config)
         exit(70)
 
