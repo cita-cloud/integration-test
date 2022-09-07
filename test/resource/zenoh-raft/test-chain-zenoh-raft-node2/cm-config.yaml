@@ -1,8 +1,133 @@
----
 apiVersion: v1
 kind: ConfigMap
 data:
-  config.toml: "[network_zenoh]\nca_cert = \"\"\"\n-----BEGIN CERTIFICATE-----\\r\nMIIBazCCARKgAwIBAgIIfYfl7rDbG6swCgYIKoZIzj0EAwIwITEfMB0GA1UEAwwW\\r\ncmNnZW4gc2VsZiBzaWduZWQgY2VydDAgFw03NTAxMDEwMDAwMDBaGA80MDk2MDEw\\r\nMTAwMDAwMFowITEfMB0GA1UEAwwWcmNnZW4gc2VsZiBzaWduZWQgY2VydDBZMBMG\\r\nByqGSM49AgEGCCqGSM49AwEHA0IABLuqvePf9IubmqVgwQEe6USHkcU5SCHfPr+2\\r\nu1nQ5C0dc0a89GvOepcJ+GE+7acUajGfRlDZd/aC0Z7rdLpC+smjMjAwMB0GA1Ud\\r\nDgQWBBSrG9uw7uWHfWeJXTVp5svyO/FCsjAPBgNVHRMBAf8EBTADAQH/MAoGCCqG\\r\nSM49BAMCA0cAMEQCIE25iODn1NYo/jWAUW4rfFhf+7MoxQybDKZMyHfb5k6jAiAp\\r\n2TaywCk8ng3mrE9ed7hR4V2epTxgOWJefg9r/y+Vlg==\\r\n-----END CERTIFICATE-----\\r\n\"\"\"\ncert = \"\"\"\n-----BEGIN CERTIFICATE-----\\r\nMIIBZDCCAQqgAwIBAgIIMha6gepat2gwCgYIKoZIzj0EAwIwITEfMB0GA1UEAwwW\\r\ncmNnZW4gc2VsZiBzaWduZWQgY2VydDAgFw03NTAxMDEwMDAwMDBaGA80MDk2MDEw\\r\nMTAwMDAwMFowITEfMB0GA1UEAwwWcmNnZW4gc2VsZiBzaWduZWQgY2VydDBZMBMG\\r\nByqGSM49AgEGCCqGSM49AwEHA0IABBsDZX3dqk/hUe6WYgC4qYxmE1AcWD7KQ9zw\\r\n0jJJ6XVgEh3hC4pnOCP1I2/VaqRIjrM7h25O3zFsaR+N9DC9e3ujKjAoMCYGA1Ud\\r\nEQQfMB2CG3Rlc3QtY2hhaW4temVub2gtcmFmdC1ub2RlMjAKBggqhkjOPQQDAgNI\\r\nADBFAiBGUdTUsVNpLIywpGqvTV3qZQbg/U891adgZA/WvT9esQIhAKgn3c5gyCxF\\r\n4buV/WfKMpysN9bVcXJfHJT0u6ZQCTVr\\r\n-----END CERTIFICATE-----\\r\n\"\"\"\nchain_id = 'eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e'\ndomain = 'test-chain-zenoh-raft-node2'\ngrpc_port = 50000\nnode_address = 'df136ca6d542b08a0876e297d8e6bebe483534a7'\nport = 40000\npriv_key = \"\"\"\n-----BEGIN PRIVATE KEY-----\\r\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgjTlBr9rBthjMYd3P\\r\na8XcM9yzT4k9etgyHUm5RKIY6/mhRANCAAQbA2V93apP4VHulmIAuKmMZhNQHFg+\\r\nykPc8NIySel1YBId4QuKZzgj9SNv1WqkSI6zO4duTt8xbGkfjfQwvXt7\\r\n-----END PRIVATE KEY-----\\r\n\"\"\"\nprotocol = 'quic'\nvalidator_address = 'df136ca6d542b08a0876e297d8e6bebe483534a7'\n\n[[network_zenoh.modules]]\nhostname = '127.0.0.1'\nmodule_name = 'consensus'\nport = 50001\n\n[[network_zenoh.modules]]\nhostname = '127.0.0.1'\nmodule_name = 'controller'\nport = 50004\n\n[[network_zenoh.peers]]\ndomain = 'test-chain-zenoh-raft-node0'\nport = 40000\nprotocol = 'quic'\n\n[[network_zenoh.peers]]\ndomain = 'test-chain-zenoh-raft-node1'\nport = 40000\nprotocol = 'quic'\n\n[[network_zenoh.peers]]\ndomain = 'test-chain-zenoh-raft-node3'\nport = 40000\nprotocol = 'quic'\n\n[[network_zenoh.peers]]\ndomain = 'test-chain-zenoh-raft-node4'\nport = 40000\nprotocol = 'quic'\n\n[consensus_raft]\ncontroller_port = 50004\ngrpc_listen_port = 50001\nnetwork_port = 50000\nnode_addr = 'df136ca6d542b08a0876e297d8e6bebe483534a7'\n\n[executor_evm]\nexecutor_port = 50002\n\n[storage_rocksdb]\ncrypto_port = 50005\nstorage_port = 50003\n\n[genesis_block]\nprevhash = '0x0000000000000000000000000000000000000000000000000000000000000000'\ntimestamp = 1660047928756\n\n[system_config]\nadmin = '9bab5858df4a9e84ff3958884a01a4fce5e07edb'\nblock_interval = 3\nblock_limit = 100\nchain_id = 'eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e'\nquota_limit = 1073741824\nvalidators = [\n    '224745469b18deb343db8a0c51becd6e5812d32b',\n    'c9f149759c5ad6574f7536afff8a1f6cd1fd25af',\n    'df136ca6d542b08a0876e297d8e6bebe483534a7',\n    '9ce8106f81300a2974726a505e0d9f80e20e35db',\n]\nversion = 0\n\n[controller]\nconsensus_port = 50001\ncontroller_port = 50004\ncrypto_port = 50005\nexecutor_port = 50002\nnetwork_port = 50000\nnode_address = 'df136ca6d542b08a0876e297d8e6bebe483534a7'\nstorage_port = 50003\nvalidator_address_len = 20\n\n[crypto_sm]\ncrypto_port = 50005\n\n"
+  config.toml: |+
+    [network_zenoh]
+    ca_cert = """
+    -----BEGIN CERTIFICATE-----\r
+    MIIBaDCCAQ6gAwIBAgIIFAkn9q6jM38wCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
+    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
+    MDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMFkwEwYHKoZI\r
+    zj0CAQYIKoZIzj0DAQcDQgAETaXxD+QVImqUOvery8YnW17gm9b/LKFufWjOA7jf\r
+    248M4ocwHBk9argKtQGSiRsMWsnQVqLwZlCN27PBue6o3aMyMDAwHQYDVR0OBBYE\r
+    FH8zo672JwkUkFGB7k4dPnuyCF3KMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
+    AwIDSAAwRQIhAIxAqiyO9xA7xAHVgsr1XYiWxWQ1N2hRZ43Rx+RpNFZ4AiB/wHi3\r
+    EAEInumfH7TTjfZybLET8pRimUEqJ4jMHSGKqA==\r
+    -----END CERTIFICATE-----\r
+    """
+    cert = """
+    -----BEGIN CERTIFICATE-----\r
+    MIIBejCCAR+gAwIBAgIIC4kijhvD1j8wCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
+    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
+    MDAwMDBaMDgxEDAOBgNVBAoMB0NJVEFIdWIxJDAiBgNVBAMTG3Rlc3QtY2hhaW4t\r
+    emVub2gtcmFmdC1ub2RlMjBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABBc7CYYy\r
+    1CaLAhnBgXM8g9Oe3u/ZYqgwsu2A0f1UzelU9FUOv/ubqBmASJ1HUtM8gQJA5RSg\r
+    OtahMgMSxC9J3DajKjAoMCYGA1UdEQQfMB2CG3Rlc3QtY2hhaW4temVub2gtcmFm\r
+    dC1ub2RlMjAKBggqhkjOPQQDAgNJADBGAiEA25o224i2JO6msnX9XHWtHF1yUwzO\r
+    /HGWZnUYKhPPzWMCIQDQQ/8g2YpTee3G4ugZsMUFor5vK4KkvhDrptuEdj1MFA==\r
+    -----END CERTIFICATE-----\r
+    """
+    chain_id = 'eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e'
+    domain = 'test-chain-zenoh-raft-node2'
+    enable_metrics = true
+    grpc_port = 50000
+    metrics_port = 60000
+    node_address = '89de0bfed5efce0e8bf1e9cddfb623721bf124e4'
+    port = 40000
+    priv_key = """
+    -----BEGIN PRIVATE KEY-----\r
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQglRZ/INP852EkYXAs\r
+    DhZ+8k+eFfp73PJ8/rqylSgMyAOhRANCAAQXOwmGMtQmiwIZwYFzPIPTnt7v2WKo\r
+    MLLtgNH9VM3pVPRVDr/7m6gZgEidR1LTPIECQOUUoDrWoTIDEsQvSdw2\r
+    -----END PRIVATE KEY-----\r
+    """
+    protocol = 'quic'
+    validator_address = '89de0bfed5efce0e8bf1e9cddfb623721bf124e4'
+
+    [[network_zenoh.modules]]
+    hostname = '127.0.0.1'
+    module_name = 'consensus'
+    port = 50001
+
+    [[network_zenoh.modules]]
+    hostname = '127.0.0.1'
+    module_name = 'controller'
+    port = 50004
+
+    [[network_zenoh.peers]]
+    domain = 'test-chain-zenoh-raft-node0'
+    port = 40000
+    protocol = 'quic'
+
+    [[network_zenoh.peers]]
+    domain = 'test-chain-zenoh-raft-node1'
+    port = 40000
+    protocol = 'quic'
+
+    [[network_zenoh.peers]]
+    domain = 'test-chain-zenoh-raft-node3'
+    port = 40000
+    protocol = 'quic'
+
+    [[network_zenoh.peers]]
+    domain = 'test-chain-zenoh-raft-node4'
+    port = 40000
+    protocol = 'quic'
+
+    [consensus_raft]
+    controller_port = 50004
+    enable_metrics = true
+    grpc_listen_port = 50001
+    metrics_port = 60001
+    network_port = 50000
+    node_addr = '89de0bfed5efce0e8bf1e9cddfb623721bf124e4'
+
+    [executor_evm]
+    enable_metrics = true
+    executor_port = 50002
+    metrics_port = 60002
+
+    [storage_rocksdb]
+    crypto_port = 50005
+    enable_metrics = true
+    metrics_port = 60003
+    storage_port = 50003
+
+    [genesis_block]
+    prevhash = '0x0000000000000000000000000000000000000000000000000000000000000000'
+    timestamp = 1662537584827
+
+    [system_config]
+    admin = '9bab5858df4a9e84ff3958884a01a4fce5e07edb'
+    block_interval = 3
+    block_limit = 100
+    chain_id = 'eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e'
+    quota_limit = 1073741824
+    validators = [
+        '2de3601f4458c2a71326561a92bd448e5e49c890',
+        'c697ead80c05ee447e8aaa10cf0f3dc4bf6f5c73',
+        '89de0bfed5efce0e8bf1e9cddfb623721bf124e4',
+        '603528f97990ecbaaa0901178cab58e5ced1e6fd',
+    ]
+    version = 0
+
+    [controller]
+    consensus_port = 50001
+    controller_port = 50004
+    crypto_port = 50005
+    enable_metrics = true
+    executor_port = 50002
+    metrics_port = 60004
+    network_port = 50000
+    node_address = '89de0bfed5efce0e8bf1e9cddfb623721bf124e4'
+    storage_port = 50003
+    validator_address_len = 20
+
+    [crypto_sm]
+    crypto_port = 50005
+    enable_metrics = true
+    metrics_port = 60005
+
 metadata:
   labels:
     app.kubernetes.io/chain-name: test-chain-zenoh-raft

@@ -1,8 +1,134 @@
----
 apiVersion: v1
 kind: ConfigMap
 data:
-  config.toml: "[network_zenoh]\nca_cert = \"\"\"\n-----BEGIN CERTIFICATE-----\\r\nMIIBbTCCAROgAwIBAgIJALkEA3Uj7ly7MAoGCCqGSM49BAMCMCExHzAdBgNVBAMM\\r\nFnJjZ2VuIHNlbGYgc2lnbmVkIGNlcnQwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAx\\r\nMDEwMDAwMDBaMCExHzAdBgNVBAMMFnJjZ2VuIHNlbGYgc2lnbmVkIGNlcnQwWTAT\\r\nBgcqhkjOPQIBBggqhkjOPQMBBwNCAAS4hoiBAKO3JV0MEau2MP2bHH9l8B2r8MQx\\r\nGrUyIbANPLoBahvkTLNFnoUNKBVVtBHJkB+mk5IwEOS+Ji5ZjRGAozIwMDAdBgNV\\r\nHQ4EFgQUu1zuI3UDBLnsLpsiKKdu5swBh94wDwYDVR0TAQH/BAUwAwEB/zAKBggq\\r\nhkjOPQQDAgNIADBFAiA0X0fsoHUka8OgREcbIcUBLjc61OlLDfz/xB98wlwrAQIh\\r\nALiT/KcvRuGZBO1nGgD4ub9RJVrwXfUOT05phWYhhHxn\\r\n-----END CERTIFICATE-----\\r\n\"\"\"\ncert = \"\"\"\n-----BEGIN CERTIFICATE-----\\r\nMIIBaDCCAQ+gAwIBAgIJAK5FpB9xC9g2MAoGCCqGSM49BAMCMCExHzAdBgNVBAMM\\r\nFnJjZ2VuIHNlbGYgc2lnbmVkIGNlcnQwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAx\\r\nMDEwMDAwMDBaMCExHzAdBgNVBAMMFnJjZ2VuIHNlbGYgc2lnbmVkIGNlcnQwWTAT\\r\nBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQMH8FAR/k7fdeY/+LRHJfZvos3oXx2MkGk\\r\n0j60UXi8WLPLNpWglf2HyQ6lSFj/7RYtdad6kmIX+cBfctcx5leyoy4wLDAqBgNV\\r\nHREEIzAhgh90ZXN0LWNoYWluLXplbm9oLW92ZXJsb3JkLW5vZGU0MAoGCCqGSM49\\r\nBAMCA0cAMEQCIHeJyI3rURHoGdtuxvZrtj6KVLCTOigyw1j3ggpojB3gAiBtVvsS\\r\n+O4/zbmEY9UM8oOrEJFW6gvU/J36VfSYLgLpzQ==\\r\n-----END CERTIFICATE-----\\r\n\"\"\"\nchain_id = '5f267c2f9aa5ff8200452d21c2f5e870046727f66501be4f32e18d1bf8e55111'\ndomain = 'test-chain-zenoh-overlord-node4'\ngrpc_port = 50000\nnode_address = '7564f73b31d41eaa1d88c3254ebd8aea87477b66'\nport = 40000\npriv_key = \"\"\"\n-----BEGIN PRIVATE KEY-----\\r\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg1u6UpqmTyP0W2CMM\\r\nj7KWY5dgCyU/7FlT62Zd8BzFitehRANCAAQMH8FAR/k7fdeY/+LRHJfZvos3oXx2\\r\nMkGk0j60UXi8WLPLNpWglf2HyQ6lSFj/7RYtdad6kmIX+cBfctcx5ley\\r\n-----END PRIVATE KEY-----\\r\n\"\"\"\nprotocol = 'quic'\nvalidator_address = 'b4e2872df35b79df704a26a5a9842aa15fb18e80371eb84c27ac2fe914f933ec7ba5179a21b0def48151c6bf3ee2e25e'\n\n[[network_zenoh.modules]]\nhostname = '127.0.0.1'\nmodule_name = 'consensus'\nport = 50001\n\n[[network_zenoh.modules]]\nhostname = '127.0.0.1'\nmodule_name = 'controller'\nport = 50004\n\n[[network_zenoh.peers]]\ndomain = 'test-chain-zenoh-overlord-node0'\nport = 40000\nprotocol = 'quic'\n\n[[network_zenoh.peers]]\ndomain = 'test-chain-zenoh-overlord-node1'\nport = 40000\nprotocol = 'quic'\n\n[[network_zenoh.peers]]\ndomain = 'test-chain-zenoh-overlord-node2'\nport = 40000\nprotocol = 'quic'\n\n[[network_zenoh.peers]]\ndomain = 'test-chain-zenoh-overlord-node3'\nport = 40000\nprotocol = 'quic'\n\n[consensus_overlord]\nconsensus_port = 50001\ncontroller_port = 50004\nnetwork_port = 50000\nnode_address = 'b4e2872df35b79df704a26a5a9842aa15fb18e80371eb84c27ac2fe914f933ec7ba5179a21b0def48151c6bf3ee2e25e'\n\n[executor_evm]\nexecutor_port = 50002\n\n[storage_rocksdb]\ncrypto_port = 50005\nstorage_port = 50003\n\n[genesis_block]\nprevhash = '0x0000000000000000000000000000000000000000000000000000000000000000'\ntimestamp = 1660032945521\n\n[system_config]\nadmin = '9bab5858df4a9e84ff3958884a01a4fce5e07edb'\nblock_interval = 3\nblock_limit = 100\nchain_id = '5f267c2f9aa5ff8200452d21c2f5e870046727f66501be4f32e18d1bf8e55111'\nquota_limit = 1073741824\nvalidators = [\n    'a3620d9022c55fbaf9e0c6655ed2ed057b127ed37e5ad8809620c3e1cc163f3d09f54cfb3ac3faf04f0936fb682216f3',\n    '832ac1366f36fc60d6af7b949d3f09876a0baf9b2012944579e9b906ea46b25113469833f551816b34a20570b6079a73',\n    '8f50833ed40544966dfd41269b502f6c1673ed720c4fe06d2cdf4acd5c9f3d79115eede35eaa4c662a2907aa56539b86',\n    'b3e1d53d91b3ea9acc2c64656f90c15c94a4dae52ffb72428baa3e0189fa263f0192f57327e9dc6412922aab7d31a6fb',\n]\nversion = 0\n\n[controller]\nconsensus_port = 50001\ncontroller_port = 50004\ncrypto_port = 50005\nexecutor_port = 50002\nnetwork_port = 50000\nnode_address = '7564f73b31d41eaa1d88c3254ebd8aea87477b66'\nstorage_port = 50003\nvalidator_address_len = 48\n\n[crypto_sm]\ncrypto_port = 50005\n\n"
+  config.toml: |+
+    [network_zenoh]
+    ca_cert = """
+    -----BEGIN CERTIFICATE-----\r
+    MIIBaDCCAQ6gAwIBAgIIazAme9W9ttMwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
+    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
+    MDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMFkwEwYHKoZI\r
+    zj0CAQYIKoZIzj0DAQcDQgAEK2uAgvD4sAvTYSBqzdcPtCCajdRZdRRuJqnzdtr7\r
+    QdmduMBOlUla+gl7OPB5ZqKseOceoTDSTkac1GAdKI31mqMyMDAwHQYDVR0OBBYE\r
+    FNO2vdV7JjBrryn8itXfxeQhIyX+MA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
+    AwIDSAAwRQIgP7ERXqcGbsp1CAtlIm38E/V5Ui3zKwdW8NU5vtjWJaoCIQDmCN1H\r
+    pi/i1hC1pq6IBONqrcP0zIIyMKJKTeMzwZAmFg==\r
+    -----END CERTIFICATE-----\r
+    """
+    cert = """
+    -----BEGIN CERTIFICATE-----\r
+    MIIBgjCCASegAwIBAgIIImgz9RHCHz4wCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
+    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
+    MDAwMDBaMDwxEDAOBgNVBAoMB0NJVEFIdWIxKDAmBgNVBAMTH3Rlc3QtY2hhaW4t\r
+    emVub2gtb3ZlcmxvcmQtbm9kZTQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQm\r
+    ZRYIbw6gKAmKxdpvEaN22PO42UFjfyrZsvoVOc8fRXRi7hMQQ5Rb0VME5JkZjtg7\r
+    ERbd4liQHxftz89oz54ioy4wLDAqBgNVHREEIzAhgh90ZXN0LWNoYWluLXplbm9o\r
+    LW92ZXJsb3JkLW5vZGU0MAoGCCqGSM49BAMCA0kAMEYCIQDEUH38KAly4LlH33DX\r
+    l9Sf7tb7vWgkeCSnPMyCQSawKQIhAO3fbfQQMrWBOpxRsdWeVf1fWAAYPQx2WpWq\r
+    09oUZoxJ\r
+    -----END CERTIFICATE-----\r
+    """
+    chain_id = '5f267c2f9aa5ff8200452d21c2f5e870046727f66501be4f32e18d1bf8e55111'
+    domain = 'test-chain-zenoh-overlord-node4'
+    enable_metrics = true
+    grpc_port = 50000
+    metrics_port = 60000
+    node_address = '6d6f16260525d6dcb59b4f9c24bed2f23456a0d3'
+    port = 40000
+    priv_key = """
+    -----BEGIN PRIVATE KEY-----\r
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgA05CZoDZkPkLPnKv\r
+    ms/UvyBnflAcz8lQDSCNMkLvjW6hRANCAAQmZRYIbw6gKAmKxdpvEaN22PO42UFj\r
+    fyrZsvoVOc8fRXRi7hMQQ5Rb0VME5JkZjtg7ERbd4liQHxftz89oz54i\r
+    -----END PRIVATE KEY-----\r
+    """
+    protocol = 'quic'
+    validator_address = 'a56486ad421ff6ce754416a3cd1ac7525dd3fd8a0e66e780361a404e1861a361d8862b2f96aa8ad5ba6a83515b98619b'
+
+    [[network_zenoh.modules]]
+    hostname = '127.0.0.1'
+    module_name = 'consensus'
+    port = 50001
+
+    [[network_zenoh.modules]]
+    hostname = '127.0.0.1'
+    module_name = 'controller'
+    port = 50004
+
+    [[network_zenoh.peers]]
+    domain = 'test-chain-zenoh-overlord-node0'
+    port = 40000
+    protocol = 'quic'
+
+    [[network_zenoh.peers]]
+    domain = 'test-chain-zenoh-overlord-node1'
+    port = 40000
+    protocol = 'quic'
+
+    [[network_zenoh.peers]]
+    domain = 'test-chain-zenoh-overlord-node2'
+    port = 40000
+    protocol = 'quic'
+
+    [[network_zenoh.peers]]
+    domain = 'test-chain-zenoh-overlord-node3'
+    port = 40000
+    protocol = 'quic'
+
+    [consensus_overlord]
+    consensus_port = 50001
+    controller_port = 50004
+    enable_metrics = true
+    metrics_port = 60001
+    network_port = 50000
+    node_address = 'a56486ad421ff6ce754416a3cd1ac7525dd3fd8a0e66e780361a404e1861a361d8862b2f96aa8ad5ba6a83515b98619b'
+
+    [executor_evm]
+    enable_metrics = true
+    executor_port = 50002
+    metrics_port = 60002
+
+    [storage_rocksdb]
+    crypto_port = 50005
+    enable_metrics = true
+    metrics_port = 60003
+    storage_port = 50003
+
+    [genesis_block]
+    prevhash = '0x0000000000000000000000000000000000000000000000000000000000000000'
+    timestamp = 1662537573831
+
+    [system_config]
+    admin = '9bab5858df4a9e84ff3958884a01a4fce5e07edb'
+    block_interval = 3
+    block_limit = 100
+    chain_id = '5f267c2f9aa5ff8200452d21c2f5e870046727f66501be4f32e18d1bf8e55111'
+    quota_limit = 1073741824
+    validators = [
+        'a4f40e8b875106fac48ff7905bd6416959109d50b0f10b7d1dc2c1e76faf7e0c513f2ee4418caf7c98270f7d2fd01a9e',
+        'a17a80ff9a9d865f2e4e8fdd3a8b1a4bfa6a47d71831b0d1243647c2cf521a02e25b30769b65ef0aafbed79159132418',
+        '80954fe3d650413473b0c84f4ec045198384abf7ef95f72cee9ed128aa8dab7468ed810a6453c555bdc801c7a8d2070f',
+        '961ed9d8c096b8e9a8b40473ec75f2023f3ca72965c5e405787e9aeaa1e647f6954d1cd54f357cb98619c683f18dd95f',
+    ]
+    version = 0
+
+    [controller]
+    consensus_port = 50001
+    controller_port = 50004
+    crypto_port = 50005
+    enable_metrics = true
+    executor_port = 50002
+    metrics_port = 60004
+    network_port = 50000
+    node_address = '6d6f16260525d6dcb59b4f9c24bed2f23456a0d3'
+    storage_port = 50003
+    validator_address_len = 48
+
+    [crypto_sm]
+    crypto_port = 50005
+    enable_metrics = true
+    metrics_port = 60005
+
 metadata:
   labels:
     app.kubernetes.io/chain-name: test-chain-zenoh-overlord
