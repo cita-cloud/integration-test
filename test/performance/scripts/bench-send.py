@@ -16,6 +16,8 @@
 
 
 import subprocess, sys, json, time
+sys.path.append("test/utils")
+import util
 
 if __name__ == "__main__":
     # deploy test contract
@@ -80,6 +82,34 @@ d826f88f: reset()
 
     # print tps
     print(ret.split('\n')[-1])
+
+    # check quota used
+    n = util.get_block_number()
+
+    for i in range(n - 10, n):
+        ret = util.get_block(i)
+        block = json.loads(ret)
+        tx_len = len(block['tx_hashes'])
+        if tx_len > 1:
+            print("check tx quota used in block ", i)
+            ret = util.get_receipt(block['tx_hashes'][tx_len - 2])
+            pre_tx_receipt = json.loads(ret)
+            pre_tx_cumulative_quota_used = int(pre_tx_receipt['cumulative_quota_used'], 16)
+            pre_tx_quota_used = int(pre_tx_receipt['quota_used'], 16)
+
+            ret = util.get_receipt(block['tx_hashes'][tx_len - 1])
+            next_tx_receipt = json.loads(ret)
+            next_tx_cumulative_quota_used = int(next_tx_receipt['cumulative_quota_used'], 16)
+            next_tx_quota_used = int(next_tx_receipt['quota_used'], 16)
+
+            if pre_tx_quota_used == 0 or next_tx_quota_used == 0:
+                print("quota_used is 0!")
+                exit(50)
+
+            if pre_tx_cumulative_quota_used + pre_tx_quota_used != next_tx_cumulative_quota_used:
+                print("cumulative_quota_used is wrong!")
+                exit(60)
+            break
 
     time.sleep(30)
 
