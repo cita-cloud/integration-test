@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     # last validator
     last_validator = validators[3]
-    validators_without_last_arg = validators_arg.removesuffix(last_validator)
+    validators_without_last_arg = validators_arg.removesuffix(last_validator + " ")
     
 
     # remove last validator
