@@ -14,4 +14,5 @@ RUN install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # install modules
 RUN pip install tenacity
+RUN pip install PyYaml
 

@@ -18,6 +18,7 @@ import subprocess, json, os
 import sys, time
 sys.path.append("test/utils")
 import util
+import yaml
 
 if __name__ == "__main__":
     # get system-config
@@ -34,9 +35,10 @@ if __name__ == "__main__":
     print("validators_arg: ", validators_arg)
 
     # add sync node address
-    sync_node_account_path = "test/operations/resource/" + os.getenv("CHAIN_TYPE") + "/" + os.getenv("CHAIN_NAME") + "-" + os.getenv("CHAIN_TYPE") + "-node4/cm-account.yaml"
+    sync_node_account_path = "test/operations/resource/" + os.getenv("CHAIN_TYPE") + "/" + os.getenv("CHAIN_NAME") + "-node4/cm-account.yaml"
     with open(sync_node_account_path, "r") as sync_node_config:
-        sync_node_addr = validators[3]
+        temp = yaml.load(sync_node_config.read())
+        sync_node_addr = temp['data']['node_address']
         validators_arg += sync_node_addr
     
 
