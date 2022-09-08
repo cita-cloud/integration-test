@@ -6,7 +6,7 @@ RUN /bin/sh -c set -eux;\
     apt-get update;\
     apt-get install -y jq curl
 # install cldi
-COPY --from=citacloud/cloud-cli:latest /usr/bin/cldi /usr/local/bin/
+COPY --from=registry.devops.rivtower.com/cita-cloud/cloud-cli:latest /usr/bin/cldi /usr/local/bin/
 
 # install kubectl
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
