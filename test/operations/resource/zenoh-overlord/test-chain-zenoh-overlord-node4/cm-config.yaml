@@ -5,27 +5,27 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBaDCCAQ6gAwIBAgIIazAme9W9ttMwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
-    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
-    MDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMFkwEwYHKoZI\r
-    zj0CAQYIKoZIzj0DAQcDQgAEK2uAgvD4sAvTYSBqzdcPtCCajdRZdRRuJqnzdtr7\r
-    QdmduMBOlUla+gl7OPB5ZqKseOceoTDSTkac1GAdKI31mqMyMDAwHQYDVR0OBBYE\r
-    FNO2vdV7JjBrryn8itXfxeQhIyX+MA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
-    AwIDSAAwRQIgP7ERXqcGbsp1CAtlIm38E/V5Ui3zKwdW8NU5vtjWJaoCIQDmCN1H\r
-    pi/i1hC1pq6IBONqrcP0zIIyMKJKTeMzwZAmFg==\r
+    MIIBaTCCAQ+gAwIBAgIJAN1EKt8xarnLMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
+    B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
+    MDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQDEwJDQTBZMBMGByqG\r
+    SM49AgEGCCqGSM49AwEHA0IABGqJjQV5Kunc8ij6SYA4cHe7D6WLoTanwl52lLbN\r
+    hGsa5dnQ17RQbTzWLmNxuwFkZx/Oafx3WYo1Ok4Ay+59pqujMjAwMB0GA1UdDgQW\r
+    BBTLuWox3ypE3SRID0XkE43jqj+NMDAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49\r
+    BAMCA0gAMEUCIAfPk/k/GUUmVByQ9SBM9dvxlshlCmhwkp/iR0FuJhk6AiEAzd/m\r
+    HF9cgnjP/UY03DVhYf+NhtCNkwGcyGlHGQSFO1g=\r
     -----END CERTIFICATE-----\r
     """
     cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBgjCCASegAwIBAgIIImgz9RHCHz4wCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
+    MIIBgTCCASegAwIBAgIIPFbhZDpxoggwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
     Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
     MDAwMDBaMDwxEDAOBgNVBAoMB0NJVEFIdWIxKDAmBgNVBAMTH3Rlc3QtY2hhaW4t\r
-    emVub2gtb3ZlcmxvcmQtbm9kZTQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQm\r
-    ZRYIbw6gKAmKxdpvEaN22PO42UFjfyrZsvoVOc8fRXRi7hMQQ5Rb0VME5JkZjtg7\r
-    ERbd4liQHxftz89oz54ioy4wLDAqBgNVHREEIzAhgh90ZXN0LWNoYWluLXplbm9o\r
-    LW92ZXJsb3JkLW5vZGU0MAoGCCqGSM49BAMCA0kAMEYCIQDEUH38KAly4LlH33DX\r
-    l9Sf7tb7vWgkeCSnPMyCQSawKQIhAO3fbfQQMrWBOpxRsdWeVf1fWAAYPQx2WpWq\r
-    09oUZoxJ\r
+    emVub2gtb3ZlcmxvcmQtbm9kZTQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASq\r
+    WuiQzLrjiNJLlYPSzscEhmh7EjoLZQC8hqOfGYI23Djqj9eTRJbG/+XKDogWGaCL\r
+    DXu4fZ3xQj/EJa4hj5rIoy4wLDAqBgNVHREEIzAhgh90ZXN0LWNoYWluLXplbm9o\r
+    LW92ZXJsb3JkLW5vZGU0MAoGCCqGSM49BAMCA0gAMEUCIQDpMFv8F3jpXzVvgy0C\r
+    qolPoh/t5ReUfM1FTHgcK9d0CQIgedI3k8GYzPu+XrOTfOMD/Y13TMn9lc6keDWT\r
+    JtqzjBM=\r
     -----END CERTIFICATE-----\r
     """
     chain_id = '5f267c2f9aa5ff8200452d21c2f5e870046727f66501be4f32e18d1bf8e55111'
@@ -33,17 +33,17 @@ data:
     enable_metrics = true
     grpc_port = 50000
     metrics_port = 60000
-    node_address = '6d6f16260525d6dcb59b4f9c24bed2f23456a0d3'
+    node_address = '/mnt/node_address'
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----\r
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgA05CZoDZkPkLPnKv\r
-    ms/UvyBnflAcz8lQDSCNMkLvjW6hRANCAAQmZRYIbw6gKAmKxdpvEaN22PO42UFj\r
-    fyrZsvoVOc8fRXRi7hMQQ5Rb0VME5JkZjtg7ERbd4liQHxftz89oz54i\r
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQggdAIFLpiRr+BMzIg\r
+    j6Z5TmOTKKODP+ZNJYOzjixKsTahRANCAASqWuiQzLrjiNJLlYPSzscEhmh7EjoL\r
+    ZQC8hqOfGYI23Djqj9eTRJbG/+XKDogWGaCLDXu4fZ3xQj/EJa4hj5rI\r
     -----END PRIVATE KEY-----\r
     """
     protocol = 'quic'
-    validator_address = 'a56486ad421ff6ce754416a3cd1ac7525dd3fd8a0e66e780361a404e1861a361d8862b2f96aa8ad5ba6a83515b98619b'
+    validator_address = '/mnt/validator_address'
 
     [[network_zenoh.modules]]
     hostname = '127.0.0.1'
@@ -81,7 +81,6 @@ data:
     enable_metrics = true
     metrics_port = 60001
     network_port = 50000
-    node_address = 'a56486ad421ff6ce754416a3cd1ac7525dd3fd8a0e66e780361a404e1861a361d8862b2f96aa8ad5ba6a83515b98619b'
 
     [executor_evm]
     enable_metrics = true
@@ -96,7 +95,7 @@ data:
 
     [genesis_block]
     prevhash = '0x0000000000000000000000000000000000000000000000000000000000000000'
-    timestamp = 1662537573831
+    timestamp = 1662622874606
 
     [system_config]
     admin = '9bab5858df4a9e84ff3958884a01a4fce5e07edb'
@@ -105,10 +104,10 @@ data:
     chain_id = '5f267c2f9aa5ff8200452d21c2f5e870046727f66501be4f32e18d1bf8e55111'
     quota_limit = 1073741824
     validators = [
-        'a4f40e8b875106fac48ff7905bd6416959109d50b0f10b7d1dc2c1e76faf7e0c513f2ee4418caf7c98270f7d2fd01a9e',
-        'a17a80ff9a9d865f2e4e8fdd3a8b1a4bfa6a47d71831b0d1243647c2cf521a02e25b30769b65ef0aafbed79159132418',
-        '80954fe3d650413473b0c84f4ec045198384abf7ef95f72cee9ed128aa8dab7468ed810a6453c555bdc801c7a8d2070f',
-        '961ed9d8c096b8e9a8b40473ec75f2023f3ca72965c5e405787e9aeaa1e647f6954d1cd54f357cb98619c683f18dd95f',
+        '90e48c9b9ecd03a5215ce89c83273516eda1981c90129d2711ebcb4a463276fa26a34028963190db37cf68386ad9a111',
+        'b82d7e354c6bd0740ad4ab25668e4d48109940344be94c515bab324344986517199a9fcf570b54d8eae60abff4768c8f',
+        '949bc8565dc642aa8a5cf95ef501b3cb750fd0f18ef29aea81e841313fdd85e150ad04f1eddf87a915a36205fea8b420',
+        '960b37884fc1ee6d3d34445a9cee49951a6b9c23dd374b5f6ac568bf906f702f2c84db50834ff49ecd05bf6da102b0e6',
     ]
     version = 0
 
@@ -120,7 +119,7 @@ data:
     executor_port = 50002
     metrics_port = 60004
     network_port = 50000
-    node_address = '6d6f16260525d6dcb59b4f9c24bed2f23456a0d3'
+    node_address = '/mnt/node_address'
     storage_port = 50003
     validator_address_len = 48
 

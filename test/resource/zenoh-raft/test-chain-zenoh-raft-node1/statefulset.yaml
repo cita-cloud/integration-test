@@ -69,6 +69,8 @@ spec:
           name: node-config
         - mountPath: /etc/cita-cloud/log
           name: node-log
+        - mountPath: /mnt
+          name: node-account
         workingDir: /data
       - command:
         - consensus
@@ -214,6 +216,8 @@ spec:
           name: node-config
         - mountPath: /etc/cita-cloud/log
           name: node-log
+        - mountPath: /mnt
+          name: node-account
         workingDir: /data
       - command:
         - crypto
