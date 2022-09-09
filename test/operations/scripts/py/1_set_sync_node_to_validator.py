@@ -37,7 +37,7 @@ if __name__ == "__main__":
     sync_node_account_path = "test/operations/resource/" + os.getenv("CHAIN_TYPE") + "/" + os.getenv("CHAIN_NAME") + "-node4/cm-account.yaml"
     with open(sync_node_account_path, "r") as sync_node_config:
         temp = yaml.load(sync_node_config.read(), Loader=yaml.FullLoader)
-        sync_node_addr = "0x" + temp['data']['node_address']
+        sync_node_addr = "0x" + temp['data']['validator_address']
         validators_arg += sync_node_addr
     print("validators_arg: ", validators_arg)
     
