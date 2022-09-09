@@ -37,7 +37,7 @@ if __name__ == "__main__":
     sync_node_account_path = "test/operations/resource/" + os.getenv("CHAIN_TYPE") + "/" + os.getenv("CHAIN_NAME") + "-node4/cm-account.yaml"
     with open(sync_node_account_path, "r") as sync_node_config:
         temp = yaml.load(sync_node_config.read(), Loader=yaml.FullLoader)
-        sync_node_addr = "0x" + temp['data']['node_address']
+        sync_node_addr = "0x" + temp['data']['validator_address']
         validators_arg += sync_node_addr
     print("validators_arg: ", validators_arg)
     
@@ -51,6 +51,8 @@ if __name__ == "__main__":
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
         print("update-validators failed!")
         exit(50)
+
+    time.sleep(6)
 
     util.get_tx(tx_hash)
 
