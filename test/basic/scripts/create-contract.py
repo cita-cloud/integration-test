@@ -50,7 +50,7 @@ if __name__ == "__main__":
     print("create_result: ", create_result)
     if not create_result.startswith(hex_prefix) or not len(create_result) == 2 + 64:
         exit(10)
-    bad_receipt = util.exec(get_receipt_fmt.format(bad_hash))
+    bad_receipt = util.exec_bad(get_receipt_fmt.format(bad_hash))
     if not bad_receipt.__contains__(no_receipt_message):
         exit(20)
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     if not code.startswith(hex_prefix):
         exit(32)
 
-    if util.exec(get_abi_fmt.format(bad_contract_addr)) != '':
+    if util.exec_bad(get_abi_fmt.format(bad_contract_addr)) != '':
         exit(34)
     
     store_abi_result = util.exec(store_abi_fmt.format(contract_addr, abi))
