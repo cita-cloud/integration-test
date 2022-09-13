@@ -62,9 +62,9 @@ if __name__ == "__main__":
 
     # check emergency_brake with send tx
     cmd = "cldi -c default create 6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a7230582046766cd5070278ffbc2c4e4c4440283d2f56a8ffb73b0f93eb52fc092a6fa15a0029"
-    result = util.exec(cmd)
-    if not result.__contains__("Error"):
-        print("emergency-brake is also off!", result)
+    bad_result = util.exec_bad(cmd)
+    if not bad_result.__contains__("Error"):
+        print("emergency-brake is also off!", bad_result)
         exit(80)
 
     # turn off emergency-brake
