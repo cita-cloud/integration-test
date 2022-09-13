@@ -105,8 +105,11 @@ def get_system_config(node):
 
 
 @retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
-def exec(cmd):
+def exec_retry(cmd):
     result = subprocess.getoutput(cmd)
     if result.__contains__("Error"):
         raise Exception("exec failed: {}".format(cmd))
     return result
+
+def exec(cmd):
+    return subprocess.getoutput(cmd)

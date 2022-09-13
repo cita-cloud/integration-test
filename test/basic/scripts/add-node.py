@@ -18,7 +18,7 @@ sys.path.append("test/utils")
 import util
 
 if __name__ == "__main__":
-    result = util.exec('cldi -c default rpc add-node 60000 localhost')
+    result = util.exec_retry('cldi -c default rpc add-node 60000 localhost')
     if result != 'Success':
         print("add-node error: ", result)
         exit(1)

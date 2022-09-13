@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     # update validators
     cmd = "cldi -c node4 -u admin admin update-validators {}"
-    tx_hash = util.exec(cmd.format(validators_arg))
+    tx_hash = util.exec_retry(cmd.format(validators_arg))
     
     print("update-validators ret:", tx_hash)
 
@@ -55,7 +55,7 @@ if __name__ == "__main__":
 
     # check new validators in system-config
     cmd = "cldi -c node4 get system-config"
-    cmd_result = util.exec(cmd)
+    cmd_result = util.exec_retry(cmd)
     system_config = json.loads(cmd_result)
 
     if not system_config['validators'].__contains__(sync_node_addr):

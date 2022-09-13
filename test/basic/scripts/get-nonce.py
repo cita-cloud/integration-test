@@ -25,7 +25,7 @@ if __name__ == "__main__":
     good_addr = hex_prefix + ''.join(['0' for i in range(40)])
     bad_addr = hex_prefix + ''.join(['0' for j in range(39)])
     get_nonce_fmt = "cldi -c default get nonce {}"
-    good_result = util.exec(get_nonce_fmt.format(good_addr))
+    good_result = util.exec_retry(get_nonce_fmt.format(good_addr))
     pprint.pprint("get nonce good_result: {good_result}".format(good_result=good_result), indent=4)
     bad_result = util.exec(get_nonce_fmt.format(bad_addr))
     pprint.pprint("get nonce bad_result: {bad_result}".format(bad_result=bad_result), indent=4)

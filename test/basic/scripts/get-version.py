@@ -27,7 +27,7 @@ def is_version(result):
 
 
 if __name__ == "__main__":
-    result = util.exec("cldi -c default get version")
+    result = util.exec_retry("cldi -c default get version")
     pprint.pprint("get cldi version: {result}".format(result=result), indent=4)
     if is_version(result):
         exit(0)

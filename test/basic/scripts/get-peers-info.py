@@ -20,7 +20,7 @@ sys.path.append("test/utils")
 import util
 
 if __name__ == "__main__":
-    result = util.exec("cldi -c default get peers-info")
+    result = util.exec_retry("cldi -c default get peers-info")
     pprint.pprint("get peers-info: {result}".format(result=result), indent=4)
     try:
         json_obj = json.loads(result)

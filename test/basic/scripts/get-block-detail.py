@@ -24,7 +24,7 @@ if __name__ == "__main__":
     bad_height = sys.maxsize
     bad_hash = '0x' + ''.join(['0' for i in range(64)])
     cmd = "cldi -c default get block -d {}"
-    height_good_result = util.exec(cmd.format(1))
+    height_good_result = util.exec_retry(cmd.format(1))
     pprint.pprint("height_good_result: {height_good_result}".format(height_good_result=height_good_result))
     height_bad_result = util.exec(cmd.format(sys.maxsize))
     pprint.pprint("height_bad_result: {height_bad_result}".format(height_bad_result=height_bad_result))
@@ -37,9 +37,9 @@ if __name__ == "__main__":
     if not height_bad_result.__contains__("Error: current_height:"):
         exit(30)
 
-    good_hash = util.exec("cldi -c default get block-hash {}".format(good_height))
+    good_hash = util.exec_retry("cldi -c default get block-hash {}".format(good_height))
     pprint.pprint("good_hash: {good_hash}".format(good_hash=good_hash))
-    hash_good_result = util.exec(cmd.format(good_hash))
+    hash_good_result = util.exec_retry(cmd.format(good_hash))
     pprint.pprint("hash_good_result: {hash_good_result}".format(hash_good_result=hash_good_result))
     hash_bad_result = util.exec(cmd.format(bad_hash))
     pprint.pprint("hash_bad_result: {hash_bad_result}".format(hash_bad_result=hash_bad_result))
