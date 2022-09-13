@@ -26,7 +26,7 @@ if __name__ == "__main__":
     cmd = "cldi -c default get block {}"
     height_good_result = util.exec(cmd.format(1))
     pprint.pprint("height_good_result: {height_good_result}".format(height_good_result=height_good_result))
-    height_bad_result = util.exec(cmd.format(sys.maxsize))
+    height_bad_result = util.exec_bad(cmd.format(sys.maxsize))
     pprint.pprint("height_bad_result: {height_bad_result}".format(height_bad_result=height_bad_result))
     try:
         result = json.loads(height_good_result)
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     pprint.pprint("good_hash: {good_hash}".format(good_hash=good_hash))
     hash_good_result = util.exec(cmd.format(good_hash))
     pprint.pprint("hash_good_result: {hash_good_result}".format(hash_good_result=hash_good_result))
-    hash_bad_result = util.exec(cmd.format(bad_hash))
+    hash_bad_result = util.exec_bad(cmd.format(bad_hash))
     pprint.pprint("hash_bad_result: {hash_bad_result}".format(hash_bad_result=hash_bad_result))
 
     try:
