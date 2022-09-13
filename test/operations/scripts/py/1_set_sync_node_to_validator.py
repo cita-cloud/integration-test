@@ -13,17 +13,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import subprocess, json, os
+import json, os
 
-import sys, time
+import sys
 sys.path.append("test/utils")
 import util
 import yaml
 
 if __name__ == "__main__":
     # get system-config
-    cmd = "cldi -c node4 get system-config"
-    cmd_result = subprocess.getoutput(cmd)
+    cmd_result = util.get_system_config("node4")
     system_config = json.loads(cmd_result)
 
     # get current validator list
@@ -44,7 +43,7 @@ if __name__ == "__main__":
 
     # update validators
     cmd = "cldi -c node4 -u admin admin update-validators {}"
-    tx_hash = subprocess.getoutput(cmd.format(validators_arg))
+    tx_hash = util.exec(cmd.format(validators_arg))
     
     print("update-validators ret:", tx_hash)
 
@@ -56,7 +55,7 @@ if __name__ == "__main__":
 
     # check new validators in system-config
     cmd = "cldi -c node4 get system-config"
-    cmd_result = subprocess.getoutput(cmd)
+    cmd_result = util.exec(cmd)
     system_config = json.loads(cmd_result)
 
     if not system_config['validators'].__contains__(sync_node_addr):
@@ -67,11 +66,6 @@ if __name__ == "__main__":
         print("update-validators tx hash mismatch!", system_config)
         exit(80)
 
-    old = int(subprocess.getoutput("cldi -c node4 get block-number"))
-    time.sleep(30)
-    new = int(subprocess.getoutput("cldi -c node4 get block-number"))
-    if new == old:
-        print("sync validator node4 not increase!")
-        exit(90)
+    util.check_node_block_increase("node4")
 
     exit(0)

@@ -14,9 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import pprint
-import subprocess
+import sys
+sys.path.append("test/utils")
+import util
 
-result = subprocess.getoutput("cldi -c default get block-number")
+result = util.exec("cldi -c default get block-number")
 pprint.pprint("get block-number: {result}".format(result=result), indent=4)
 if result.isdigit():
     exit(0)

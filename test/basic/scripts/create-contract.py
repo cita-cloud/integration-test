@@ -16,7 +16,6 @@
 
 # creat contract get receipt get code
 import json
-import subprocess
 
 import sys
 sys.path.append("test/utils")
@@ -47,15 +46,15 @@ abi = '[]'
 if __name__ == "__main__":
     util.check_block_increase()
 
-    create_result = subprocess.getoutput(create_fmt.format(contract_code))
+    create_result = util.exec(create_fmt.format(contract_code))
     print("create_result: ", create_result)
     if not create_result.startswith(hex_prefix) or not len(create_result) == 2 + 64:
         exit(10)
-    bad_receipt = subprocess.getoutput(get_receipt_fmt.format(bad_hash))
+    bad_receipt = util.exec(get_receipt_fmt.format(bad_hash))
     if not bad_receipt.__contains__(no_receipt_message):
         exit(20)
 
-    if hex_prefix != subprocess.getoutput(get_code_fmt.format(bad_contract_addr)):
+    if hex_prefix != util.exec(get_code_fmt.format(bad_contract_addr)):
         exit(30)
 
     result = util.get_receipt(create_result)
@@ -63,14 +62,14 @@ if __name__ == "__main__":
     json_obj = json.loads(result)
     contract_addr = json_obj['contract_addr']
 
-    code = subprocess.getoutput(get_code_fmt.format(contract_addr))
+    code = util.exec(get_code_fmt.format(contract_addr))
     if not code.startswith(hex_prefix):
         exit(32)
 
-    if subprocess.getoutput(get_abi_fmt.format(bad_contract_addr)) != '':
+    if util.exec(get_abi_fmt.format(bad_contract_addr)) != '':
         exit(34)
     
-    store_abi_result = subprocess.getoutput(store_abi_fmt.format(contract_addr, abi))
+    store_abi_result = util.exec(store_abi_fmt.format(contract_addr, abi))
     print("store_abi_result: ", store_abi_result)
     if not store_abi_result.startswith(hex_prefix):
         exit(33)

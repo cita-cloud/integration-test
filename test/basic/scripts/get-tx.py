@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import json
-import subprocess
 
 import sys
 sys.path.append("test/utils")
@@ -34,6 +33,6 @@ def check(result):
 
 
 if __name__ == "__main__":
-    send_result = subprocess.getoutput("cldi -c default send {} 0x".format('0x' + ''.join(['0' for i in range(40)])))
+    send_result = util.exec("cldi -c default send {} 0x".format('0x' + ''.join(['0' for i in range(40)])))
     result = util.get_tx(send_result)
     check(result)
