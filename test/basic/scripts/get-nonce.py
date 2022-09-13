@@ -27,7 +27,7 @@ if __name__ == "__main__":
     get_nonce_fmt = "cldi -c default get nonce {}"
     good_result = util.exec(get_nonce_fmt.format(good_addr))
     pprint.pprint("get nonce good_result: {good_result}".format(good_result=good_result), indent=4)
-    bad_result = util.exec(get_nonce_fmt.format(bad_addr))
+    bad_result = util.exec_bad(get_nonce_fmt.format(bad_addr))
     pprint.pprint("get nonce bad_result: {bad_result}".format(bad_result=bad_result), indent=4)
     if good_result.startswith(hex_prefix) \
             and len(good_result) == 64 + len(hex_prefix) and bad_result.__contains__('invalid hex input'):

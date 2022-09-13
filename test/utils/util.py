@@ -110,3 +110,6 @@ def exec(cmd):
     if result.__contains__("Error"):
         raise Exception("exec failed: {}".format(cmd))
     return result
+
+def exec_bad(cmd):
+    return subprocess.getoutput(cmd)
