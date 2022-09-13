@@ -23,7 +23,7 @@ if __name__ == "__main__":
     # emergency-brake default is off
     # check it with send tx
     cmd = "cldi -c default create 6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a7230582046766cd5070278ffbc2c4e4c4440283d2f56a8ffb73b0f93eb52fc092a6fa15a0029"
-    tx_hash = util.exec(cmd)
+    tx_hash = util.exec_retry(cmd)
     print("send tx ret: ", tx_hash)
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
         print("send tx failed!")
@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     # turn on emergency-brake
     cmd = "cldi -c default -u admin admin emergency-brake on"
-    tx_hash = util.exec(cmd)
+    tx_hash = util.exec_retry(cmd)
     print("turn on emergency-brake ret:", tx_hash)
 
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
     # check emergency_brake in system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = util.exec(cmd)
+    cmd_result = util.exec_retry(cmd)
     system_config = json.loads(cmd_result)
     
     if system_config['emergency_brake'] == False:
@@ -62,14 +62,14 @@ if __name__ == "__main__":
 
     # check emergency_brake with send tx
     cmd = "cldi -c default create 6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a7230582046766cd5070278ffbc2c4e4c4440283d2f56a8ffb73b0f93eb52fc092a6fa15a0029"
-    bad_result = util.exec_bad(cmd)
+    bad_result = util.exec(cmd)
     if not bad_result.__contains__("Error"):
         print("emergency-brake is also off!", bad_result)
         exit(80)
 
     # turn off emergency-brake
     cmd = "cldi -c default -u admin admin emergency-brake off"
-    tx_hash = util.exec(cmd)
+    tx_hash = util.exec_retry(cmd)
     print("turn off emergency-brake ret:", tx_hash)
 
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
     # check emergency_brake in system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = util.exec(cmd)
+    cmd_result = util.exec_retry(cmd)
     system_config = json.loads(cmd_result)
     
     if system_config['emergency_brake'] == True:
@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
     # check with send tx
     cmd = "cldi -c default create 6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a7230582046766cd5070278ffbc2c4e4c4440283d2f56a8ffb73b0f93eb52fc092a6fa15a0029"
-    tx_hash = util.exec(cmd)
+    tx_hash = util.exec_retry(cmd)
     print("send tx ret: ", tx_hash)
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
         print("send tx failed!")

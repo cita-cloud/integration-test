@@ -22,7 +22,7 @@ import util
 if __name__ == "__main__":
     # get system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = util.exec(cmd)
+    cmd_result = util.exec_retry(cmd)
     system_config = json.loads(cmd_result)
     old_block_interval = system_config['block_interval']
     if not old_block_interval == 3:
@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     # set block interval to 10
     cmd = "cldi -c default -u admin admin set-block-interval 10"
-    tx_hash = util.exec(cmd)
+    tx_hash = util.exec_retry(cmd)
     
     print("set-block-interval ret:", tx_hash)
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     # check new block interval in system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = util.exec(cmd)
+    cmd_result = util.exec_retry(cmd)
     system_config = json.loads(cmd_result)
 
     if not system_config['block_interval'] == 10:
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
     # reset old block interval
     cmd = "cldi -c default -u admin admin set-block-interval 3"
-    tx_hash = util.exec(cmd)
+    tx_hash = util.exec_retry(cmd)
     
     print("set-block-interval ret:", tx_hash)
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
     # check new block interval in system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = util.exec(cmd)
+    cmd_result = util.exec_retry(cmd)
     system_config = json.loads(cmd_result)
 
     if not system_config['block_interval'] == 3:

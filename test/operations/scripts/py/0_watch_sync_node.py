@@ -21,13 +21,13 @@ sys.path.append("test/utils")
 import util
 
 def watch_bn():
-    bn = util.exec("cldi -c default get block-number")
+    bn = util.exec_retry("cldi -c default get block-number")
     if not bn.isdigit():
         exit(2)
-    result = util.exec("cldi -c node4 get block-number")
+    result = util.exec_retry("cldi -c node4 get block-number")
     while result <= bn:
         time.sleep(10)
-        result = util.exec("cldi -c node4 get block-number")
+        result = util.exec_retry("cldi -c node4 get block-number")
         if not result.isdigit():
             exit(3)
     pprint.pprint("sync node block-number: {result} > {bn}".format(result=result, bn=bn), indent=4)

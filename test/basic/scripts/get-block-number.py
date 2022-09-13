@@ -18,7 +18,7 @@ import sys
 sys.path.append("test/utils")
 import util
 
-result = util.exec("cldi -c default get block-number")
+result = util.exec_retry("cldi -c default get block-number")
 pprint.pprint("get block-number: {result}".format(result=result), indent=4)
 if result.isdigit():
     exit(0)

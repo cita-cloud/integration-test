@@ -20,7 +20,7 @@ import util
 
 if __name__ == "__main__":
     hex_prefix = '0x'
-    result = util.exec("cldi -c default get block-hash 1")
+    result = util.exec_retry("cldi -c default get block-hash 1")
     pprint.pprint("get block-hash 1: {result}".format(result=result), indent=4)
     if result.startswith(hex_prefix) and len(result) == len(hex_prefix) + 64:
         exit(0)

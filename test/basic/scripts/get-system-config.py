@@ -30,7 +30,7 @@ def is_json(res):
 
 
 if __name__ == "__main__":
-    result = util.exec("cldi -c default get system-config")
+    result = util.exec_retry("cldi -c default get system-config")
     pprint.pprint("get system-config: {result}".format(result=result), indent=4)
     if is_json(result):
         exit(0)

@@ -18,7 +18,7 @@ import sys
 sys.path.append("test/utils")
 import util
 
-result = util.exec("cldi -c default get peer-count")
+result = util.exec_retry("cldi -c default get peer-count")
 pprint.pprint("get peer-count: {result}".format(result=result), indent=4)
 if result.isdigit():
     exit(0)
