@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import subprocess, json, os
+import json, os
 
 import sys
 sys.path.append("test/utils")
@@ -22,7 +22,7 @@ import util
 if __name__ == "__main__":
     # get system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = subprocess.getoutput(cmd)
+    cmd_result = util.exec(cmd)
     system_config = json.loads(cmd_result)
 
     # get current validator list
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     # remove last validator
     cmd = "cldi -c default -u admin admin update-validators {}"
-    tx_hash = subprocess.getoutput(cmd.format(validators_without_last_arg))
+    tx_hash = util.exec(cmd.format(validators_without_last_arg))
     
     print("update-validators ret:", tx_hash)
 
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     # check new validators in system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = subprocess.getoutput(cmd)
+    cmd_result = util.exec(cmd)
     system_config = json.loads(cmd_result)
 
     if system_config['validators'].__contains__(last_validator):
@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     # reset old validators
     cmd = "cldi -c default -u admin admin update-validators {}"
-    tx_hash = subprocess.getoutput(cmd.format(validators_arg))
+    tx_hash = util.exec(cmd.format(validators_arg))
     
     print("update-validators ret:", tx_hash)
 
@@ -78,7 +78,7 @@ if __name__ == "__main__":
 
     # check new validators in system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = subprocess.getoutput(cmd)
+    cmd_result = util.exec(cmd)
     system_config = json.loads(cmd_result)
 
     if not system_config['validators'].__contains__(last_validator):

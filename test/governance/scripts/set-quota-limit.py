@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import subprocess, json, time
+import json, time
 
 import sys
 sys.path.append("test/utils")
@@ -34,7 +34,7 @@ def is_json(res):
 
 def get_system_config():
     # get system-config
-    result = subprocess.getoutput("cldi -c default get system-config")
+    result = util.exec("cldi -c default get system-config")
     if not is_json(result):
         print("get system-config failed: {}", result)
         exit(10)
@@ -43,7 +43,7 @@ def get_system_config():
 
 def set_quota_limit(quota_limit):
     set_cmd = "cldi -c default -u admin admin set-quota-limit {}".format(quota_limit)
-    tx_hash = subprocess.getoutput(set_cmd)
+    tx_hash = util.exec(set_cmd)
     if not tx_hash.__contains__(hex_prefix) or not len(tx_hash) == len(hex_prefix) + 64:
         print("set-quota-limit failed!")
         exit(20)
@@ -77,12 +77,12 @@ if __name__ == "__main__":
     # verify quota limit
     time.sleep(30)
     send_cmd = "cldi -c default send 0xf064e32407b6cc412fe33f6ba55f578ac413ecdc 0x4f2be91f -q {}"
-    result = subprocess.getoutput(send_cmd.format(NEW_QUOTA_LIMIT + 1))
+    result = util.exec(send_cmd.format(NEW_QUOTA_LIMIT + 1))
     if result is None or not result.__contains__('QuotaUsedExceed'):
         print("verify invalid quota failed: {}!", result)
         exit(60)
 
-    result = subprocess.getoutput(send_cmd.format(NEW_QUOTA_LIMIT))
+    result = util.exec(send_cmd.format(NEW_QUOTA_LIMIT))
     if result is None or not result.startswith(hex_prefix) or len(result) != len(hex_prefix) + 64:
         print("verify valid quota failed: {}!", result)
         exit(70)

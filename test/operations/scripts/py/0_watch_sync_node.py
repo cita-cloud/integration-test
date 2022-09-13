@@ -14,18 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import pprint
-import subprocess
 import threading
 import time
+import sys
+sys.path.append("test/utils")
+import util
 
 def watch_bn():
-    bn = subprocess.getoutput("cldi -c default get block-number")
+    bn = util.exec("cldi -c default get block-number")
     if not bn.isdigit():
         exit(2)
-    result = subprocess.getoutput("cldi -c node4 get block-number")
+    result = util.exec("cldi -c node4 get block-number")
     while result <= bn:
         time.sleep(10)
-        result = subprocess.getoutput("cldi -c node4 get block-number")
+        result = util.exec("cldi -c node4 get block-number")
         if not result.isdigit():
             exit(3)
     pprint.pprint("sync node block-number: {result} > {bn}".format(result=result, bn=bn), indent=4)

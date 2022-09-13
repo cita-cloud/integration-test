@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-import subprocess, sys, json, time
+import sys, json, time
 sys.path.append("test/utils")
 import util
 
@@ -51,7 +51,7 @@ Function signatures:
 d826f88f: reset()
     '''
     cmd = "cldi -c default create 608060405234801561001057600080fd5b5060f58061001f6000396000f3006080604052600436106053576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806306661abd1460585780634f2be91f146080578063d826f88f146094575b600080fd5b348015606357600080fd5b50606a60a8565b6040518082815260200191505060405180910390f35b348015608b57600080fd5b50609260ae565b005b348015609f57600080fd5b5060a660c0565b005b60005481565b60016000808282540192505081905550565b600080819055505600a165627a7a72305820a841f5848c8c68bc957103089b41e192a79aed7ac2aebaf35ae1e36469bd44d90029"
-    tx_hash = subprocess.getoutput(cmd)
+    tx_hash = util.exec(cmd)
     print("create test contract ret: ", tx_hash)
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
         print("create test contract failed!")
@@ -60,7 +60,7 @@ d826f88f: reset()
     time.sleep(9)
 
     cmd = "cldi -c default get receipt {}"
-    ret = subprocess.getoutput(cmd.format(tx_hash))
+    ret = util.exec(cmd.format(tx_hash))
     if ret.__contains__("Error"):
         print("get receipt failed!")
         exit(20)  
@@ -78,7 +78,7 @@ d826f88f: reset()
 
     # bench send
     cmd = "cldi -c default bench send -t {} -q 80000 -d 0x4f2be91f -c 20"
-    ret = subprocess.getoutput(cmd.format(contract_addr))
+    ret = util.exec(cmd.format(contract_addr))
 
     # print tps
     print(ret.split('\n')[-1])

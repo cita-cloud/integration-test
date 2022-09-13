@@ -47,6 +47,21 @@ def check_block_increase():
 
 
 @retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+def get_node_block_number(node):
+    get_node_block_fmt = 'cldi -c {} get block-number'
+    return int(subprocess.getoutput(get_node_block_fmt.format(node)))
+
+        
+@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+def check_node_block_increase(node):
+    old = get_node_block_number(node)
+    time.sleep(30)
+    new = get_node_block_number(node)
+    if new == old:
+        raise Exception('{} block not increase!'.format(node))
+
+
+@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
 def get_receipt(tx_hash):
     result = subprocess.getoutput(get_receipt_fmt.format(tx_hash))
     if result.__contains__("Error"):
@@ -72,9 +87,26 @@ def get_abi(contract_addr):
         raise Exception('get abi failed!')
     return result
 
+
 @retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
 def get_block(block):
     block_ret = subprocess.getoutput(get_block_fmt.format(block))
     if block_ret.__contains__("Error"):
         raise Exception("get block failed!")
     return block_ret
+
+
+@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+def get_system_config(node):
+    result = subprocess.getoutput("cldi -c {} get system-config".format(node))
+    if result.__contains__("Error"):
+        raise Exception("get system-config failed!")
+    return result
+
+
+@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+def exec(cmd):
+    result = subprocess.getoutput(cmd)
+    if result.__contains__("Error"):
+        raise Exception("exec failed: {}".format(cmd))
+    return result

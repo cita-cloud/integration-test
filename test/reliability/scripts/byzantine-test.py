@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-import subprocess, time
+import time
 
 import sys
 import os
@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     # now we have 4 node
     cmd = "kubectl get pod -ncita --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME | wc -l"
-    node_count = int(subprocess.getoutput(cmd))
+    node_count = int(util.exec(cmd))
     if node_count != 4:
         print("There are no 4 node, can't fault tolerance!", node_count)
         exit(10)
@@ -41,9 +41,9 @@ if __name__ == "__main__":
     # for BFT we can Fault Tolerance 1
     # shutdown 1 node is ok
     cmd = "kubectl get sts -ncita --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME | tail -n 1 | awk '{print $1}'"
-    node3_name = subprocess.getoutput(cmd)
+    node3_name = util.exec(cmd)
     cmd = "kubectl scale sts {} --replicas=0 -ncita"
-    ret = subprocess.getoutput(cmd.format(node3_name))
+    ret = util.exec(cmd.format(node3_name))
     if not ret.__contains__("scaled"):
         print("stop node failed!", ret)
         exit(30)
@@ -55,9 +55,9 @@ if __name__ == "__main__":
 
     # shutdown 2 node is not ok
     cmd = "kubectl get sts -ncita --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME | tail -n 2 | head -n 1 | awk '{print $1}'"
-    node2_name = subprocess.getoutput(cmd)
+    node2_name = util.exec(cmd)
     cmd = "kubectl scale sts {} --replicas=0 -ncita"
-    ret = subprocess.getoutput(cmd.format(node2_name))
+    ret = util.exec(cmd.format(node2_name))
     if not ret.__contains__("scaled"):
         print("stop node failed!", ret)
         exit(50)
@@ -77,12 +77,12 @@ if __name__ == "__main__":
 
     # restore 2 node, chain will be ok
     cmd = "kubectl scale sts {} --replicas=1 -ncita"
-    ret = subprocess.getoutput(cmd.format(node3_name))
+    ret = util.exec(cmd.format(node3_name))
     if not ret.__contains__("scaled"):
         print("start node failed!", ret)
         exit(70)
     
-    ret = subprocess.getoutput(cmd.format(node2_name))
+    ret = util.exec(cmd.format(node2_name))
     if not ret.__contains__("scaled"):
         print("start node failed!", ret)
         exit(71)
@@ -90,8 +90,8 @@ if __name__ == "__main__":
     for i in range(5):
         time.sleep(60)
         cmd = "kubectl get pod -ncita --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME | grep {} | grep Running"
-        ret2 = subprocess.getoutput(cmd.format(node2_name))
-        ret3 = subprocess.getoutput(cmd.format(node3_name))
+        ret2 = util.exec(cmd.format(node2_name))
+        ret3 = util.exec(cmd.format(node3_name))
         if len(ret2) != 0 and len(ret3) != 0:
             break
         if i == 4:

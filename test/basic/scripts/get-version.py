@@ -15,7 +15,9 @@
 # limitations under the License.
 import pprint
 import re
-import subprocess
+import sys
+sys.path.append("test/utils")
+import util
 
 pattern = r'\d+\.(?:\d+\.)\d+'
 
@@ -25,7 +27,7 @@ def is_version(result):
 
 
 if __name__ == "__main__":
-    result = subprocess.getoutput("cldi -c default get version")
+    result = util.exec("cldi -c default get version")
     pprint.pprint("get cldi version: {result}".format(result=result), indent=4)
     if is_version(result):
         exit(0)

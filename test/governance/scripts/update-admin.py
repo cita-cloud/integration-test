@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import subprocess, json, time
+import json
 
 import sys
 sys.path.append("test/utils")
@@ -21,7 +21,7 @@ import util
 
 if __name__ == "__main__":
     cmd = "cldi account list"
-    cmd_result = subprocess.getoutput(cmd)
+    cmd_result = util.exec(cmd)
     account_list = json.loads(cmd_result)
 
     # find admin account
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     
     # check admin in system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = subprocess.getoutput(cmd)
+    cmd_result = util.exec(cmd)
     system_config = json.loads(cmd_result)
     admin = system_config['admin']
     admin_hash = system_config['admin_pre_hash']
@@ -44,15 +44,15 @@ if __name__ == "__main__":
         exit(10)
 
     # create new admin account 
-    subprocess.getoutput("cldi account delete -y new_admin")
+    util.exec("cldi account delete -y new_admin")
     cmd = "cldi account generate --name new_admin"
-    cmd_result = subprocess.getoutput(cmd)
+    cmd_result = util.exec(cmd)
     new_admin = json.loads(cmd_result)
     new_admin_addr = new_admin['address']
 
     # set new admin account
     cmd = "cldi -c default -u admin admin update-admin {}"
-    tx_hash = subprocess.getoutput(cmd.format(new_admin_addr))
+    tx_hash = util.exec(cmd.format(new_admin_addr))
     print("update-admin ret:", tx_hash)
 
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     # check admin in system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = subprocess.getoutput(cmd)
+    cmd_result = util.exec(cmd)
     system_config = json.loads(cmd_result)
     admin = system_config['admin']
     admin_hash = system_config['admin_pre_hash']
@@ -78,7 +78,7 @@ if __name__ == "__main__":
 
     # reset to old admin account
     cmd = "cldi -c default -u new_admin admin update-admin {}"
-    tx_hash = subprocess.getoutput(cmd.format(admin_addr))
+    tx_hash = util.exec(cmd.format(admin_addr))
     print("update-admin ret:", tx_hash)
 
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
     # check admin in system-config
     cmd = "cldi -c default get system-config"
-    cmd_result = subprocess.getoutput(cmd)
+    cmd_result = util.exec(cmd)
     system_config = json.loads(cmd_result)
     admin = system_config['admin']
     admin_hash = system_config['admin_pre_hash']

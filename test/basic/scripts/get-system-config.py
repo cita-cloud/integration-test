@@ -16,7 +16,9 @@
 
 import json
 import pprint
-import subprocess
+import sys
+sys.path.append("test/utils")
+import util
 
 
 def is_json(res):
@@ -28,7 +30,7 @@ def is_json(res):
 
 
 if __name__ == "__main__":
-    result = subprocess.getoutput("cldi -c default get system-config")
+    result = util.exec("cldi -c default get system-config")
     pprint.pprint("get system-config: {result}".format(result=result), indent=4)
     if is_json(result):
         exit(0)
