@@ -16,7 +16,7 @@
 
 # creat contract get receipt get code
 import json
-
+import pprint
 import sys
 sys.path.append("test/utils")
 import util
@@ -47,11 +47,12 @@ if __name__ == "__main__":
     util.check_block_increase()
 
     create_result = util.exec_retry(create_fmt.format(contract_code))
-    print("create_result: ", create_result)
+    pprint.pprint("create_result: {create_result}".format(create_result=create_result))
     if not create_result.startswith(hex_prefix) or not len(create_result) == 2 + 64:
         exit(10)
     bad_receipt = util.exec(get_receipt_fmt.format(bad_hash))
     if not bad_receipt.__contains__(no_receipt_message):
+        pprint.pprint("bad_receipt: {bad_receipt}".format(bad_receipt=bad_receipt))
         exit(20)
 
     if hex_prefix != util.exec_retry(get_code_fmt.format(bad_contract_addr)):
@@ -70,7 +71,7 @@ if __name__ == "__main__":
         exit(34)
     
     store_abi_result = util.exec_retry(store_abi_fmt.format(contract_addr, abi))
-    print("store_abi_result: ", store_abi_result)
+    pprint.pprint("store_abi_result: {store_abi_result}".format(store_abi_result=store_abi_result))
     if not store_abi_result.startswith(hex_prefix):
         exit(33)
 
@@ -78,7 +79,7 @@ if __name__ == "__main__":
 
     result = util.get_abi(contract_addr)    
     if  result!= abi:
-        print("abi not correct!", result)
+        pprint.pprint("abi not correct!: {result}".format(result=result))
         exit(35)
     
     exit(0)
