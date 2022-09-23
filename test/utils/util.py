@@ -81,6 +81,17 @@ def get_tx(tx_hash):
 
 
 @retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+def get_node_tx(node, tx_hash):
+    result = subprocess.getoutput('cldi -c {} get tx {}'.format(node, tx_hash))
+    if result.__contains__("Error"):
+        raise Exception('get tx failed!')
+    tx = json.loads(result)
+    if tx['height'] == 18446744073709551615:
+        raise Exception('tx in pool!')
+    return result
+
+
+@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
 def get_abi(contract_addr):
     result = subprocess.getoutput(get_abi_fmt.format(contract_addr))
     if result.__contains__("Error"):
