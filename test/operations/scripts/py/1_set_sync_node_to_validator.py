@@ -51,7 +51,7 @@ if __name__ == "__main__":
         print("update-validators failed!")
         exit(50)
 
-    util.get_tx(tx_hash)
+    util.get_node_tx("node4", tx_hash)
 
     # check new validators in system-config
     cmd = "cldi -c node4 get system-config"
