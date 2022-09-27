@@ -89,4 +89,58 @@ if __name__ == "__main__":
         print("update-validators tx hash mismatch!", system_config)
         exit(80)
 
+    # raft chain need to execute next test, Others don't need
+    if os.getenv("CHAIN_TYPE") != "zenoh-raft":
+        exit(0)
+
+    # Only keep one validator
+    cmd = "cldi -c default -u admin admin update-validators {}"
+    tx_hash = util.exec_retry(cmd.format(validators[0]))
+    
+    print("update-validators ret:", tx_hash)
+
+    if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
+        print("update-validators failed!")
+        exit(10)
+
+    util.get_tx(tx_hash)
+
+    # check new validators in system-config
+    cmd = "cldi -c default get system-config"
+    cmd_result = util.exec_retry(cmd)
+    system_config = json.loads(cmd_result)
+
+    if not system_config['validators'].__contains__(validators[0]):
+        print("validators mismatch!", system_config)
+        exit(30)
+
+    if system_config['validators_pre_hash'] != tx_hash:
+        print("update-validators tx hash mismatch!", system_config)
+        exit(40)
+
+    # reset old validators
+    cmd = "cldi -c default -u admin admin update-validators {}"
+    tx_hash = util.exec_retry(cmd.format(validators_arg))
+    
+    print("update-validators ret:", tx_hash)
+
+    if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):
+        print("update-validators failed!")
+        exit(50)
+
+    util.get_tx(tx_hash)
+
+    # check new validators in system-config
+    cmd = "cldi -c default get system-config"
+    cmd_result = util.exec_retry(cmd)
+    system_config = json.loads(cmd_result)
+
+    if not system_config['validators'].__contains__(last_validator):
+        print("validators mismatch!", system_config)
+        exit(70)
+
+    if system_config['validators_pre_hash'] != tx_hash:
+        print("update-validators tx hash mismatch!", system_config)
+        exit(80)
+
     exit(0)
