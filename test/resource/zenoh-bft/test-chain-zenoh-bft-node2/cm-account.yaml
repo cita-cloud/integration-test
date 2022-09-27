@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 binaryData:
-  private_key: MDZhOWY1MDY5NmZiNjg1NTE0MjJmMzliZjQ5ZjNiODM3NjcyY2Y5YTMyOTY2M2Q5MTc4NzM4NTQ3MDhmNDI0Ng==
+  private_key: NGExYWU1YWJmZDRhODUyMmY0ODhiNWM5NmQ1Mzg0NzYxYWQwNWE0MWM4MDBlN2MxOGEzMTVhZWZjZjIwMGUzNg==
 data:
-  node_address: a3b908942da7ae6b98e2bede425b79bf7fe3c4f2
-  validator_address: a3b908942da7ae6b98e2bede425b79bf7fe3c4f2
+  node_address: f7f184b354658ab88a035820309eebcc599e9842
+  validator_address: f7f184b354658ab88a035820309eebcc599e9842
 metadata:
   labels:
     app.kubernetes.io/chain-name: test-chain-zenoh-bft

@@ -5,26 +5,26 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBaDCCAQ6gAwIBAgIIE8T9T3pj47kwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
+    MIIBaDCCAQ6gAwIBAgIIDGJxdLzJ+2cwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
     Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
     MDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMFkwEwYHKoZI\r
-    zj0CAQYIKoZIzj0DAQcDQgAEmD4sMkQxkc8rqptRZb9gg6lYMpqD1PqI2W5sqQu6\r
-    C1QIqlrOpNouDo5XnFuymQTHJOb1jnyfgVrSYJOSoC74HaMyMDAwHQYDVR0OBBYE\r
-    FLnjY3pP/cQTcdS3jy3Zl4uySiqsMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
-    AwIDSAAwRQIgV7Vaw0BuRSaILhRAfpF/gwefrEuzhVR6xcBmXLb2C9QCIQCjez79\r
-    lEgOiLRdslwclsGDbzky210nqXC3jxWoXGydBQ==\r
+    zj0CAQYIKoZIzj0DAQcDQgAEMtNw+OqJMpYO4Kto08bJxtjQXWfCuxfziwzfRh7r\r
+    MNnNLfGfihfhG7Jaju47e65782KYx2pZQfxjP8BxazB7oKMyMDAwHQYDVR0OBBYE\r
+    FGf7ybx0cWIMYYvWYPIWwh7lRGLkMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
+    AwIDSAAwRQIgA3OfoaDcSsUlnHjsezViVl8oCm1JUJHY6Q5uTzceUVYCIQCZcJ76\r
+    AdSfiK9QShD1qbvuVQer+m0Bel8eFXLr78YwRA==\r
     -----END CERTIFICATE-----\r
     """
     cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBdjCCAR2gAwIBAgIITzlB4O72kjkwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
+    MIIBeDCCAR2gAwIBAgIINIRijgARX54wCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
     Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
     MDAwMDBaMDcxEDAOBgNVBAoMB0NJVEFIdWIxIzAhBgNVBAMTGnRlc3QtY2hhaW4t\r
-    emVub2gtYmZ0LW5vZGUxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEDZB1wtZY\r
-    ms5nuwZGZrrevFO25Y0MR1rZZ5BHEhJCwYFWWb1QGMyf4RayZgygmBYtbWyxU6C9\r
-    3qTmp6l7oNzrjKMpMCcwJQYDVR0RBB4wHIIadGVzdC1jaGFpbi16ZW5vaC1iZnQt\r
-    bm9kZTEwCgYIKoZIzj0EAwIDRwAwRAIgbyfrXHeEZtfp+Igi8K8vdtuqIJ8Yypie\r
-    VhykLWgt9UICIF6ms+4X/7HcicnM6xD2rfxgVHAah24YzvWweQ6cxFMb\r
+    emVub2gtYmZ0LW5vZGUxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEip9PdaON\r
+    GZ5QhEgTfovBvP5MQEn1+uKs6KnzNcU7FD4218IwI0NusYkInIdotAgnuW9CyLUi\r
+    Abp+Udoz/VoSmqMpMCcwJQYDVR0RBB4wHIIadGVzdC1jaGFpbi16ZW5vaC1iZnQt\r
+    bm9kZTEwCgYIKoZIzj0EAwIDSQAwRgIhAPyqGDQ5g3OsuVi1HIxSMsLVEpgirtmF\r
+    Ga16dqZKaRCfAiEA84VdRluTvUS6hEl9GzQPdK1SXQ/qHTZDi2MG1rdP4HU=\r
     -----END CERTIFICATE-----\r
     """
     chain_id = '0d35b5c9202935db3cc14cb21ccf96aee4c6c1c9af124074a583b5d0abaf37fd'
@@ -36,9 +36,9 @@ data:
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----\r
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgVPUofkSvLw9zt+R9\r
-    Ud5Zx8li7vEy5Z2zj9fqkUhwEpqhRANCAAQNkHXC1liazme7BkZmut68U7bljQxH\r
-    WtlnkEcSEkLBgVZZvVAYzJ/hFrJmDKCYFi1tbLFToL3epOanqXug3OuM\r
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgX99P0zOtL4mqz1xZ\r
+    nkhstH317jqLnX+LQaBgYqzXlu2hRANCAASKn091o40ZnlCESBN+i8G8/kxASfX6\r
+    4qzoqfM1xTsUPjbXwjAjQ26xiQich2i0CCe5b0LItSIBun5R2jP9WhKa\r
     -----END PRIVATE KEY-----\r
     """
     protocol = 'quic'
@@ -96,7 +96,7 @@ data:
 
     [genesis_block]
     prevhash = '0x0000000000000000000000000000000000000000000000000000000000000000'
-    timestamp = 1662622880715
+    timestamp = 1664260951405
 
     [system_config]
     admin = '9bab5858df4a9e84ff3958884a01a4fce5e07edb'
@@ -105,10 +105,10 @@ data:
     chain_id = '0d35b5c9202935db3cc14cb21ccf96aee4c6c1c9af124074a583b5d0abaf37fd'
     quota_limit = 1073741824
     validators = [
-        'fe899ac432a17359be8b82ed19d3bcc7ff00085b',
-        '164f74e29409c704d5467b6ee6825d4c23828c4c',
-        'a3b908942da7ae6b98e2bede425b79bf7fe3c4f2',
-        '154ca41d3b9ca678e16a98197d5cd93f16a03967',
+        'efbb0a6f99f2060a5b62dec66aaf3fc108d2dd3b',
+        'facdeb92ed4b447cd6e637aa441afe0eff5e76b3',
+        'f7f184b354658ab88a035820309eebcc599e9842',
+        '4d6dd7ba39a7f0eb05f28a86865e84d8571329f0',
     ]
     version = 0
 

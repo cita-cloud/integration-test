@@ -263,6 +263,10 @@ spec:
       - hostnames:
         - test-chain-zenoh-raft-node3
         ip: 0.0.0.0
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsUser: 1000
       volumes:
       - configMap:
           name: test-chain-zenoh-raft-node3-account
