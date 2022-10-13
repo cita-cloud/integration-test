@@ -32,61 +32,61 @@ pipeline {
       }
     }
 
-    stage('Governance Test') {
-      steps {
-        container('cli') {
-          sh 'test/governance/startup.sh'
-        }
-      }
-    }
-
-    stage('Performance Test') {
-      steps {
-        container('cli') {
-          sh 'test/performance/startup.sh'
-        }
-      }
-    }
-
-    stage('Reliability Test') {
-      steps {
-        container('cli') {
-          sh 'test/reliability/startup.sh'
-        }
-      }
-    }
-
-    stage('Security Test') {
-      steps {
-        container('cli') {
-          sh 'test/security/startup.sh'
-        }
-      }
-    }
-
-    stage('Compatibility Test') {
-      steps {
-        container('cli') {
-          sh 'test/compatibility/startup.sh'
-        }
-      }
-    }
-
-    stage('Operations Test') {
-      steps {
-        container('cli') {
-          sh 'test/operations/startup.sh'
-        }
-      }
-    }
-//
-//     stage('K8s Operator Test') {
+//     stage('Governance Test') {
 //       steps {
 //         container('cli') {
-//           sh 'test/operator/startup.sh'
+//           sh 'test/governance/startup.sh'
 //         }
 //       }
 //     }
+//
+//     stage('Performance Test') {
+//       steps {
+//         container('cli') {
+//           sh 'test/performance/startup.sh'
+//         }
+//       }
+//     }
+//
+//     stage('Reliability Test') {
+//       steps {
+//         container('cli') {
+//           sh 'test/reliability/startup.sh'
+//         }
+//       }
+//     }
+//
+//     stage('Security Test') {
+//       steps {
+//         container('cli') {
+//           sh 'test/security/startup.sh'
+//         }
+//       }
+//     }
+//
+//     stage('Compatibility Test') {
+//       steps {
+//         container('cli') {
+//           sh 'test/compatibility/startup.sh'
+//         }
+//       }
+//     }
+//
+//     stage('Operations Test') {
+//       steps {
+//         container('cli') {
+//           sh 'test/operations/startup.sh'
+//         }
+//       }
+//     }
+
+    stage('K8s Operator Test') {
+      steps {
+        container('cli') {
+          sh 'test/operator/startup.sh'
+        }
+      }
+    }
   }
 
   post {
