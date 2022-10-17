@@ -16,12 +16,18 @@
 #
 #
 
-# delete chain resource
-kubectl delete -f test/resource/$CHAIN_TYPE -ncita --recursive
-kubectl delete -f test/operations/resource/$CHAIN_TYPE -ncita --recursive
+pwd=`pwd`
+dir=`dirname $0`
+path=$pwd/$dir/scripts
 
-
-kubectl delete pvc -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME
-
-# delete cita-node-operator
-helm uninstall cita-node-operator -ncita
+for file in `ls "$path"`; do
+  echo `date`
+  python "$path/$file"
+  ret=$?
+  if [ "$ret" = "0" ]; then
+    echo "exec $file successful"
+  else
+    echo "exec $file failed, ret = $ret"
+    exit 1
+  fi
+done

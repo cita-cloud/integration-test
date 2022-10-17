@@ -25,7 +25,7 @@ apply_cmd = "kubectl apply -f {}"
 delete_cmd = "kubectl delete -f {}"
 
 
-def clean(chain_type):
+def clean():
     subprocess.getoutput(delete_cmd.format("test/reliability/chaos/network-chaos.yaml"))
     subprocess.getoutput(delete_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
     subprocess.getoutput(delete_cmd.format("test/reliability/chaos/io-chaos.yaml"))
@@ -96,6 +96,7 @@ def exec_chaos():
 
 
 if __name__ == "__main__":
+    clean()
     print("start exec chaos test for {}".format(os.getenv("CHAIN_NAME")))
     subprocess.getoutput("sed -i 's/XXXXXX/{}/g' test/reliability/chaos/network-chaos.yaml".format(os.getenv("CHAIN_NAME")))
     subprocess.getoutput("sed -i 's/XXXXXX/{}/g' test/reliability/chaos/pod-chaos.yaml".format(os.getenv("CHAIN_NAME")))

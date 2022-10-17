@@ -79,6 +79,14 @@ pipeline {
         }
       }
     }
+//
+//     stage('K8s Operator Test') {
+//       steps {
+//         container('cli') {
+//           sh 'test/operator/startup.sh'
+//         }
+//       }
+//     }
   }
 
   post {
