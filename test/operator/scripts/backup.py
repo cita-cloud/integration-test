@@ -1,9 +1,10 @@
 import os
-import subprocess
+import sys
+from pprint import pprint
 
 from kubernetes import client, config
-from pprint import pprint
 from tenacity import retry, stop_after_attempt, wait_fixed
+
 sys.path.append("test/utils")
 import util
 
@@ -39,7 +40,6 @@ def create_backup(name, namespace):
 
     try:
         status = wait_job_complete("backups", name, namespace)
-        pprint("the backup[{}]'s status is {}".format(name, status))
         if status == "Failed":
             pprint("backup exec failed")
             exit(10)
@@ -49,6 +49,7 @@ def create_backup(name, namespace):
 
     # check work well
     util.check_block_increase()
+    pprint("create backup for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
 
 
 @retry(stop=stop_after_attempt(30), wait=wait_fixed(2))
@@ -69,7 +70,46 @@ def wait_job_complete(crd, cr_name, namespace):
     return resource.get('status').get('status')
 
 
+def create_restore(name, namespace, backup_name):
+    config.load_kube_config()
+    api = client.CustomObjectsApi()
+    resource_body = {
+        "apiVersion": "citacloud.rivtower.com/v1",
+        "kind": "Restore",
+        "metadata": {"name": name},
+        "spec": {
+            "chain": "{}".format(os.getenv("CHAIN_NAME")),
+            "node": "{}-node0".format(os.getenv("CHAIN_NAME")),
+            "deployMethod": "cloud-config",
+            "backup": backup_name,
+            "pullPolicy": "Always",
+            "image": "registry.devops.rivtower.com/cita-cloud/cita-node-job:v0.0.2",
+            "podAffinityFlag": True,
+        },
+    }
+    # create a cluster scoped resource
+    api.create_namespaced_custom_object(
+        group="citacloud.rivtower.com",
+        version="v1",
+        namespace=namespace,
+        plural="restores",
+        body=resource_body,
+    )
+
+    try:
+        status = wait_job_complete("restores", name, namespace)
+        if status == "Failed":
+            pprint("backup exec failed")
+            exit(30)
+    except Exception as e:
+        pprint(e)
+        exit(40)
+
+    # check work well
+    util.check_block_increase()
+    pprint("create restore for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
+
+
 if __name__ == "__main__":
-    # exec_backup()
-    # create_backup()
     create_backup(name="sample-backup", namespace="cita")
+    create_restore(name="sample-restore", namespace="cita", backup_name="sample-backup")
