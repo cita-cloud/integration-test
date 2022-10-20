@@ -26,30 +26,6 @@ fi
 if [ 1 == `echo "${res}" | grep cita-node-operator | wc -l` ]; then
   echo "cita-node-operator has installed"
 else
-  # install cita-node-operator
-  echo "installing cita-node-operator..."
-  helm install cita-node-operator cita-node-operator/cita-node-operator -n=cita
-
-  # check cita-node-operator pod running
-  times=300
-  while [ $times -ge 0 ]
-  do
-    pod_res=`kubectl get pod --no-headers=true -ncita -l app.kubernetes.io/name=cita-node-operator --request-timeout=10s`
-    if [ $? -ne 0 ]; then
-      let times--
-      continue
-    fi
-    if [ 1 == `echo "${pod_res}" | grep Running | wc -l` ]; then
-      break
-    else
-      echo "cita-node-operator pod's status is not Running, waiting..."
-      let times--
-      sleep 3
-    fi
-  done
-  if [ $times -lt 0 ]; then
-    echo "waiting cita-node-operator timeout."
-    exit 2
-  fi
-  echo "cita-node-operator has installed."
+  echo "please install cita-node-operator first"
+  exit 2
 fi

@@ -22,6 +22,3 @@ kubectl delete -f test/operations/resource/$CHAIN_TYPE -ncita --recursive
 
 
 kubectl delete pvc -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME
-
-# delete cita-node-operator
-helm uninstall cita-node-operator -ncita
