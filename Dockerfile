@@ -20,4 +20,5 @@ RUN ./get_helm.sh
 # install modules
 RUN pip install tenacity
 RUN pip install PyYaml
+RUN pip install kubernetes
 
