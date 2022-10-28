@@ -17,7 +17,7 @@ class Switchover(object):
         self.created = False
 
     def create(self, chain, source_node, dest_node,
-               image="registry.devops.rivtower.com/cita-cloud/cita-node-job:v0.0.2",
+               image="registry.devops.rivtower.com/cita-cloud/cita-node-job:latest",
                pull_policy="Always",
                ttl=30):
         resource_body = {

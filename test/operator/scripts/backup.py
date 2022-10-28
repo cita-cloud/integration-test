@@ -23,7 +23,7 @@ class Backup(object):
                deploy_method="cloud-config",
                storage_class="nas-client-provisioner",
                action="StopAndStart",
-               image="registry.devops.rivtower.com/cita-cloud/cita-node-job:v0.0.2",
+               image="registry.devops.rivtower.com/cita-cloud/cita-node-job:latest",
                pull_policy="Always",
                ttl=30,
                pod_affinity_flag=True):
