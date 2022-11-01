@@ -1,7 +1,6 @@
 import os
 import sys
 import time
-from pprint import pprint
 
 from kubernetes import client, config
 
@@ -9,6 +8,7 @@ from restore import Restore
 
 sys.path.append("test/utils")
 import util
+from logger import logger
 
 
 class Backup(object):
@@ -68,51 +68,64 @@ class Backup(object):
 
 
 if __name__ == "__main__":
-    backup = Backup(name="sample-backup", namespace="cita")
-    restore = Restore(name="sample-restore-for-backup", namespace="cita")
+    backup = Backup(name="backup-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    restore = Restore(name="restore-for-backup-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
     try:
         # get block number when backup
         bn_with_backup = util.get_block_number()
-        pprint("current block number is: {}".format(bn_with_backup))
+        logger.info("the block number before backup is: {}".format(bn_with_backup))
         # create backup job
+        logger.info("create backup job...")
         backup.create(chain=os.getenv("CHAIN_NAME"),
                       node="{}-node0".format(os.getenv("CHAIN_NAME")))
         status = backup.wait_job_complete()
         if status == "Failed":
             raise Exception("backup exec failed")
+        logger.info("the backup job has been completed")
         # check work well
         util.check_block_increase()
-        pprint("create backup for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
+        logger.info(
+            "create backup for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
 
         # when difference > 200
         while True:
-            if util.get_block_number() - bn_with_backup > 100:
+            now_bn = util.get_block_number()
+            if now_bn - bn_with_backup > 200:
                 break
-            pprint("waiting and exceeds the 100 block height at the time of backup...")
+            logger.info(
+                "waiting and exceeds the 200 block height at the time of backup, current block number: {}...".format(
+                    now_bn))
             time.sleep(2)
         # latest block number
         bn_with_latest = util.get_block_number()
+        logger.info("the latest block number after waiting is: {}".format(bn_with_latest))
 
         # create restore job
+        logger.info("create restore job for backup...")
         restore.create_for_backup(chain=os.getenv("CHAIN_NAME"),
                                   node="{}-node0".format(os.getenv("CHAIN_NAME")),
-                                  backup="sample-backup")
+                                  backup=backup.name)
         status = restore.wait_job_complete()
         if status == "Failed":
             raise Exception("restore for backup exec failed")
+        logger.info("the restore job for backup has been completed")
 
         util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace="cita")
 
         # check work well
         bn_with_recover = util.check_block_increase(retry_times=30, retry_wait=1, interval=2)
+        logger.info("the block number after restore is: {}".format(bn_with_recover))
 
         if bn_with_recover > bn_with_latest:
             raise Exception("restore not excepted block number: bn_with_recover is {}, bn_with_latest is {}".
                             format(bn_with_recover, bn_with_latest))
-        pprint("create restore for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
+        logger.info(
+            "create restore for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
 
+        # wait for the consensus block to determine whether the node is ok
+        util.wait_block_number_exceed_specified_height(specified_height=bn_with_latest, retry_times=100, retry_wait=2)
     except Exception as e:
-        pprint(e)
+        logger.exception(e)
         exit(10)
     finally:
         if restore.created:

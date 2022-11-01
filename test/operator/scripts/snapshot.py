@@ -1,7 +1,6 @@
 import os
 import sys
 import time
-from pprint import pprint
 
 from kubernetes import client, config
 
@@ -9,6 +8,7 @@ from restore import Restore
 
 sys.path.append("test/utils")
 import util
+from logger import logger
 
 
 class Snapshot(object):
@@ -67,10 +67,11 @@ class Snapshot(object):
 
 
 if __name__ == "__main__":
-    snapshot = Snapshot(name="sample-snapshot", namespace="cita")
-    restore = Restore(name="sample-restore-for-snapshot", namespace="cita")
+    snapshot = Snapshot(name="snapshot-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    restore = Restore(name="restore-for-snapshot-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
     try:
         # create snapshot job
+        logger.info("create snapshot job...")
         snapshot.create(chain=os.getenv("CHAIN_NAME"),
                         node="{}-node0".format(os.getenv("CHAIN_NAME")),
                         block_height=5,
@@ -78,39 +79,50 @@ if __name__ == "__main__":
         status = snapshot.wait_job_complete()
         if status == "Failed":
             raise Exception("snapshot exec failed")
+        logger.info("the snapshot job has been completed")
         # check work well
         util.check_block_increase()
-        pprint("create snapshot for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
+        logger.info(
+            "create snapshot for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
 
         # util current block number > 150, continue
         while True:
-            if util.get_block_number() > 150:
+            now_bn = util.get_block_number()
+            if now_bn > 150:
                 break
-            pprint("waiting for the current block height to be 150...")
+            logger.info("waiting for the current block height to be 150, current block number: {}...".format(now_bn))
             time.sleep(2)
 
         # latest block number
         bn_with_latest = util.get_block_number()
+        logger.info("the latest block number after waiting is: {}".format(bn_with_latest))
 
         # create restore job
+        logger.info("create restore job for snapshot...")
         restore.create_for_snapshot(chain=os.getenv("CHAIN_NAME"),
                                     node="{}-node0".format(os.getenv("CHAIN_NAME")),
-                                    snapshot="sample-snapshot")
+                                    snapshot=snapshot.name)
         status = restore.wait_job_complete()
         if status == "Failed":
             raise Exception("restore for snapshot exec failed")
+        logger.info("the restore job for snapshot has been completed")
 
         util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace="cita")
 
         # check work well
         bn_with_recover = util.check_block_increase(retry_times=30, retry_wait=1, interval=2)
+        logger.info("the block number after restore is: {}".format(bn_with_recover))
         if bn_with_recover > bn_with_latest:
             raise Exception("snapshot not excepted block number: bn_with_recover is {}, bn_with_latest is {}".format(
                 bn_with_recover, bn_with_latest))
-        pprint("create restore for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
+        logger.info(
+            "create restore for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
+
+        # wait for the consensus block to determine whether the node is ok
+        util.wait_block_number_exceed_specified_height(specified_height=bn_with_latest, retry_times=100, retry_wait=2)
 
     except Exception as e:
-        pprint(e)
+        logger.exception(e)
         exit(30)
     finally:
         if restore.created:

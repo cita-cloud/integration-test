@@ -1,11 +1,11 @@
 import os
 import sys
-from pprint import pprint
 
 from kubernetes import client, config
 
 sys.path.append("test/utils")
 import util
+from logger import logger
 
 
 class Switchover(object):
@@ -70,14 +70,16 @@ def check_node_account_switched(namespace, name, wanted_account_name):
 
 
 if __name__ == "__main__":
-    sw = Switchover(name="switchover-sample", namespace="cita")
+    sw = Switchover(name="switchover-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
     try:
+        logger.info("create switchover job...")
         sw.create(chain=os.getenv("CHAIN_NAME"),
                   source_node="{}-node0".format(os.getenv("CHAIN_NAME")),
                   dest_node="{}-node1".format(os.getenv("CHAIN_NAME")))
         status = sw.wait_job_complete()
         if status == "Failed":
             raise Exception("switchover exec failed")
+        logger.info("the switchover job has been completed")
         if not check_node_account_switched(namespace="cita",
                                            name="test-chain-zenoh-overlord-node0",
                                            wanted_account_name="test-chain-zenoh-overlord-node1-account") or not \
@@ -87,13 +89,10 @@ if __name__ == "__main__":
             raise Exception("account configmap haven't switched")
         # check work well
         util.check_block_increase()
-        pprint(
-            "create switchover for {}-node0 && {}-node1 and check block increase successful".format(
-                os.getenv("CHAIN_NAME"),
-                os.getenv(
-                    "CHAIN_NAME")))
+        logger.info("create switchover for {}-node0 && {}-node1 and check block increase successful".format(
+            os.getenv("CHAIN_NAME"), os.getenv("CHAIN_NAME")))
     except Exception as e:
-        pprint(e)
+        logger.exception(e)
         exit(40)
     finally:
         if sw.created:
