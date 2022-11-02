@@ -17,14 +17,12 @@
 import json
 import logging
 import subprocess
-import sys
 import time
 
 from kubernetes import client, config
 from tenacity import retry, stop_after_attempt, wait_fixed, after_log
 
-logging.basicConfig(stream=sys.stderr,level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+from logger import logger
 
 retry_times = 5
 DEFAULT_RETRY_TIMES = 5
@@ -42,6 +40,7 @@ def get_block_number(retry_times=DEFAULT_RETRY_TIMES, retry_wait=DEFAULT_RETRY_W
     @retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
     def inner_func():
         return int(subprocess.getoutput("cldi -c default get block-number"))
+
     return inner_func()
 
 
@@ -54,16 +53,17 @@ def check_block_increase(retry_times=DEFAULT_RETRY_TIMES, retry_wait=DEFAULT_RET
         if new == old:
             raise Exception('block not increase!')
         return new
+
     return inner_func()
 
 
-@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_node_block_number(node):
     get_node_block_fmt = 'cldi -c {} get block-number'
     return int(subprocess.getoutput(get_node_block_fmt.format(node)))
 
-        
-@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def check_node_block_increase(node):
     old = get_node_block_number(node)
     time.sleep(30)
@@ -72,7 +72,7 @@ def check_node_block_increase(node):
         raise Exception('{} block not increase!'.format(node))
 
 
-@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_receipt(tx_hash):
     result = subprocess.getoutput(get_receipt_fmt.format(tx_hash))
     if result.__contains__("Error"):
@@ -80,7 +80,7 @@ def get_receipt(tx_hash):
     return result
 
 
-@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_tx(tx_hash):
     result = subprocess.getoutput(get_tx_fmt.format(tx_hash))
     if result.__contains__("Error"):
@@ -91,7 +91,7 @@ def get_tx(tx_hash):
     return result
 
 
-@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_node_tx(node, tx_hash):
     result = subprocess.getoutput('cldi -c {} get tx {}'.format(node, tx_hash))
     if result.__contains__("Error"):
@@ -102,7 +102,7 @@ def get_node_tx(node, tx_hash):
     return result
 
 
-@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_abi(contract_addr):
     result = subprocess.getoutput(get_abi_fmt.format(contract_addr))
     if result.__contains__("Error"):
@@ -110,7 +110,7 @@ def get_abi(contract_addr):
     return result
 
 
-@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_block(block):
     block_ret = subprocess.getoutput(get_block_fmt.format(block))
     if block_ret.__contains__("Error"):
@@ -118,7 +118,7 @@ def get_block(block):
     return block_ret
 
 
-@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_system_config(node):
     result = subprocess.getoutput("cldi -c {} get system-config".format(node))
     if result.__contains__("Error"):
@@ -126,7 +126,7 @@ def get_system_config(node):
     return result
 
 
-@retry(stop=stop_after_attempt(retry_times),wait=wait_fixed(retry_wait),after=after_log(logger,logging.DEBUG))
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def exec_retry(cmd):
     result = subprocess.getoutput(cmd)
     if result.__contains__("Error"):
@@ -138,7 +138,7 @@ def exec(cmd):
     return subprocess.getoutput(cmd)
 
 
-@retry(stop=stop_after_attempt(30), wait=wait_fixed(2))
+@retry(stop=stop_after_attempt(30), wait=wait_fixed(2), after=after_log(logger, logging.DEBUG))
 def wait_job_complete(crd, cr_name, namespace):
     config.load_kube_config()
     api = client.CustomObjectsApi()
@@ -156,10 +156,21 @@ def wait_job_complete(crd, cr_name, namespace):
     return resource.get('status').get('status')
 
 
-@retry(stop=stop_after_attempt(60), wait=wait_fixed(5))
+@retry(stop=stop_after_attempt(60), wait=wait_fixed(5), after=after_log(logger, logging.DEBUG))
 def check_node_running(name, namespace):
     config.load_kube_config()
     apps_v1 = client.AppsV1Api()
     node_sts = apps_v1.read_namespaced_stateful_set(name=name, namespace=namespace)
     if node_sts.status.ready_replicas != 1:
         raise Exception("chain node is not ready")
+
+
+# wait for the block height to exceed the specified height
+def wait_block_number_exceed_specified_height(specified_height, retry_times=DEFAULT_RETRY_TIMES, retry_wait=DEFAULT_RETRY_WAIT):
+    @retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
+    def inner_func():
+        current_bn = get_block_number(retry_times=retry_times, retry_wait=retry_wait)
+        if current_bn < specified_height:
+            raise Exception("not exceed specified height")
+
+    return inner_func()
