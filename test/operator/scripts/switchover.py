@@ -81,11 +81,12 @@ if __name__ == "__main__":
             raise Exception("switchover exec failed")
         logger.info("the switchover job has been completed")
         if not check_node_account_switched(namespace="cita",
-                                           name="test-chain-zenoh-overlord-node0",
-                                           wanted_account_name="test-chain-zenoh-overlord-node1-account") or not \
+                                           name="{}-node0".format(os.getenv("CHAIN_NAME")),
+                                           wanted_account_name="{}-node1-account".format(
+                                               os.getenv("CHAIN_NAME"))) or not \
                 check_node_account_switched(namespace="cita",
-                                            name="test-chain-zenoh-overlord-node1",
-                                            wanted_account_name="test-chain-zenoh-overlord-node0-account"):
+                                            name="{}-node1".format(os.getenv("CHAIN_NAME")),
+                                            wanted_account_name="{}-node0-account".format(os.getenv("CHAIN_NAME"))):
             raise Exception("account configmap haven't switched")
         # check work well
         util.check_block_increase()
