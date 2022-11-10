@@ -138,7 +138,7 @@ def exec(cmd):
     return subprocess.getoutput(cmd)
 
 
-@retry(stop=stop_after_attempt(30), wait=wait_fixed(2), after=after_log(logger, logging.DEBUG))
+@retry(stop=stop_after_attempt(60), wait=wait_fixed(2), after=after_log(logger, logging.DEBUG))
 def wait_job_complete(crd, cr_name, namespace):
     config.load_kube_config()
     api = client.CustomObjectsApi()
@@ -152,7 +152,7 @@ def wait_job_complete(crd, cr_name, namespace):
     if not resource.get('status'):
         raise Exception("no status")
     if resource.get('status').get('status') == 'Active':
-        raise Exception("status not complete")
+        raise Exception("the job's status is still Active")
     return resource.get('status').get('status')
 
 
