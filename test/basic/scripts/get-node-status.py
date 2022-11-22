@@ -20,17 +20,17 @@ sys.path.append("test/utils")
 import util
 
 if __name__ == "__main__":
-    result = util.exec_retry("cldi -c default get peers-info")
-    pprint.pprint("get peers-info: {result}".format(result=result), indent=4)
+    result = util.exec_retry("cldi -c default get node-status")
+    pprint.pprint("get node-status: {result}".format(result=result), indent=4)
     try:
         json_obj = json.loads(result)
-        node_list = json_obj['nodes']
+        node_list = json_obj['peer_status']
         if isinstance(node_list, list):
             if len(node_list) == 0:
                 exit(0)
             else:
                 node_0 = node_list[0]
-                if isinstance(node_0['address'], str) and len(node_0['address']) == 16:
+                if isinstance(node_0['address'], str) and len(node_0['address']) == 42:
                     exit(0)
     except ValueError:
         pass
