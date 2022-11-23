@@ -70,13 +70,14 @@ def check_node_account_switched(namespace, name, wanted_account_name):
 
 
 if __name__ == "__main__":
-    sw = Switchover(name="switchover-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    sw0 = Switchover(name="switchover-{}-0".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    sw1 = Switchover(name="switchover-{}-1".format(os.getenv("CHAIN_TYPE")), namespace="cita")
     try:
-        logger.info("create switchover job...")
-        sw.create(chain=os.getenv("CHAIN_NAME"),
-                  source_node="{}-node0".format(os.getenv("CHAIN_NAME")),
-                  dest_node="{}-node1".format(os.getenv("CHAIN_NAME")))
-        status = sw.wait_job_complete()
+        logger.info("create switchover job, [node0 update to node1-account, node1 update to node0-account]...")
+        sw0.create(chain=os.getenv("CHAIN_NAME"),
+                   source_node="{}-node0".format(os.getenv("CHAIN_NAME")),
+                   dest_node="{}-node1".format(os.getenv("CHAIN_NAME")))
+        status = sw0.wait_job_complete()
         if status == "Failed":
             raise Exception("switchover exec failed")
         logger.info("the switchover job has been completed")
@@ -90,11 +91,36 @@ if __name__ == "__main__":
             raise Exception("account configmap haven't switched")
         # check work well
         util.check_block_increase()
-        logger.info("create switchover for {}-node0 && {}-node1 and check block increase successful".format(
-            os.getenv("CHAIN_NAME"), os.getenv("CHAIN_NAME")))
+        logger.info(
+            "create switchover for [node0 update to node1-account && node1 update to node0-account] "
+            "and check block increase successful")
+
+        logger.info("create switchover job, [node0 update to node0-account, node1 update to node1-account]...")
+        sw1.create(chain=os.getenv("CHAIN_NAME"),
+                   source_node="{}-node0".format(os.getenv("CHAIN_NAME")),
+                   dest_node="{}-node1".format(os.getenv("CHAIN_NAME")))
+        status = sw1.wait_job_complete()
+        if status == "Failed":
+            raise Exception("switchover exec failed")
+        logger.info("the switchover job has been completed")
+        if not check_node_account_switched(namespace="cita",
+                                           name="{}-node0".format(os.getenv("CHAIN_NAME")),
+                                           wanted_account_name="{}-node0-account".format(
+                                               os.getenv("CHAIN_NAME"))) or not \
+                check_node_account_switched(namespace="cita",
+                                            name="{}-node1".format(os.getenv("CHAIN_NAME")),
+                                            wanted_account_name="{}-node1-account".format(os.getenv("CHAIN_NAME"))):
+            raise Exception("account configmap haven't switched")
+        # check work well
+        util.check_block_increase()
+        logger.info(
+            "create switchover for [node0 update to node0-account && node1 update to node1-account] "
+            "and check block increase successful")
     except Exception as e:
         logger.exception(e)
         exit(40)
     finally:
-        if sw.created:
-            sw.delete()
+        if sw0.created:
+            sw0.delete()
+        if sw1.created:
+            sw1.delete()
