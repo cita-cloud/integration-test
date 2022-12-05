@@ -52,7 +52,7 @@ def check_block_increase(retry_times=DEFAULT_RETRY_TIMES, retry_wait=DEFAULT_RET
         new = get_block_number(retry_times=retry_times, retry_wait=retry_wait)
         if new == old:
             raise Exception('block not increase!')
-        return new
+        return old
 
     return inner_func()
 
