@@ -70,6 +70,11 @@ def check_node_account_switched(namespace, name, wanted_account_name):
 
 
 if __name__ == "__main__":
+    # raft chain skip switchover
+    if os.getenv("CHAIN_TYPE") == "zenoh-raft":
+        print("raft chain skip switchover")
+        exit(0)
+
     sw0 = Switchover(name="switchover-{}-0".format(os.getenv("CHAIN_TYPE")), namespace="cita")
     sw1 = Switchover(name="switchover-{}-1".format(os.getenv("CHAIN_TYPE")), namespace="cita")
     try:
