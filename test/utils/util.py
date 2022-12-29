@@ -57,6 +57,19 @@ def check_block_increase(retry_times=DEFAULT_RETRY_TIMES, retry_wait=DEFAULT_RET
     return inner_func()
 
 
+def get_node_syncing_status(retry_times=DEFAULT_RETRY_TIMES, retry_wait=DEFAULT_RETRY_WAIT):
+    @retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
+    def inner_func():
+        result = subprocess.getoutput("cldi get node-status")
+        if result.__contains__("Error"):
+            raise Exception('get tx failed!')
+        node_status = json.loads(result)
+        if not node_status["is_sync"]:
+            raise Exception("the node status is not sync")
+        return node_status
+    return inner_func()
+
+
 @retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_node_block_number(node):
     get_node_block_fmt = 'cldi -c {} get block-number'

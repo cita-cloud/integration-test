@@ -78,9 +78,11 @@ if __name__ == "__main__":
         # check work well
         util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace="cita")
 
-        bn_with_bhf = util.check_block_increase(retry_times=30, retry_wait=1, interval=2)
-        logger.info("the block number after fallback is: {}".format(bn_with_bhf))
+        node_syncing_status = util.get_node_syncing_status(retry_times=30, retry_wait=3)
+        logger.debug("node status after fallback is: {}".format(node_syncing_status))
 
+        bn_with_bhf = node_syncing_status["self_status"]["height"]
+        logger.info("the block number after fallback is: {}".format(bn_with_bhf))
         if bn_with_bhf >= old_bn:
             raise Exception(
                 "block height fallback not excepted block number: bn_with_bhf is {}, old_bn is {}".format(bn_with_bhf,
