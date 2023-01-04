@@ -109,12 +109,15 @@ if __name__ == "__main__":
 
         util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace="cita")
 
-        # check work well
-        bn_with_recover = util.check_block_increase(retry_times=30, retry_wait=1, interval=2)
-        logger.info("the block number after restore is: {}".format(bn_with_recover))
+        node_syncing_status = util.get_node_syncing_status(retry_times=30, retry_wait=3)
+        logger.debug("node status after snapshot restore is: {}".format(node_syncing_status))
+
+        bn_with_recover = node_syncing_status["self_status"]["height"]
+        logger.info("the block number after snapshot restore is: {}".format(bn_with_recover))
         if bn_with_recover > bn_with_latest:
             raise Exception("snapshot not excepted block number: bn_with_recover is {}, bn_with_latest is {}".format(
                 bn_with_recover, bn_with_latest))
+
         logger.info(
             "create restore for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
 
