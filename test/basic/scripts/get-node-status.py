@@ -24,7 +24,7 @@ if __name__ == "__main__":
     pprint.pprint("get node-status: {result}".format(result=result), indent=4)
     try:
         json_obj = json.loads(result)
-        node_list = json_obj['peer_status']
+        node_list = json_obj['peers_status']
         if isinstance(node_list, list):
             if len(node_list) == 0:
                 exit(0)
