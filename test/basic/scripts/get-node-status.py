@@ -17,21 +17,18 @@ import json
 import pprint
 import sys
 sys.path.append("test/utils")
-import util
 
 if __name__ == "__main__":
     result = util.exec_retry("cldi -c default get node-status")
     pprint.pprint("get node-status: {result}".format(result=result), indent=4)
     try:
         json_obj = json.loads(result)
-        node_list = json_obj['peers_status']
-        if isinstance(node_list, list):
-            if len(node_list) == 0:
-                exit(0)
-            else:
-                node_0 = node_list[0]
-                if isinstance(node_0['address'], str) and len(node_0['address']) == 42:
-                    exit(0)
+        is_sync = json_obj['is_sync']
+        peers_count = json_obj['peers_count']
+        peers_status = json_obj['peers_status']
+        version = json_obj['version']
+        if isinstance(is_sync, bool) and isinstance(peers_status, list) and isinstance(peers_count, int) and isinstance(version, str):
+            exit(0)
     except ValueError:
         pass
     exit(1)
