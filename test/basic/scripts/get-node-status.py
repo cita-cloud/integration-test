@@ -17,6 +17,7 @@ import json
 import pprint
 import sys
 sys.path.append("test/utils")
+import util
 
 if __name__ == "__main__":
     result = util.exec_retry("cldi -c default get node-status")
