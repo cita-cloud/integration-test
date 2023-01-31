@@ -62,7 +62,7 @@ def get_node_syncing_status(retry_times=DEFAULT_RETRY_TIMES, retry_wait=DEFAULT_
     def inner_func():
         result = subprocess.getoutput("cldi get node-status")
         if result.__contains__("Error"):
-            raise Exception('get tx failed!')
+            raise Exception('get node status failed!')
         node_status = json.loads(result)
         if not node_status["is_sync"]:
             raise Exception("the node status is not sync")
