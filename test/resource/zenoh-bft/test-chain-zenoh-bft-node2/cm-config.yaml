@@ -5,26 +5,26 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBaDCCAQ6gAwIBAgIIDGJxdLzJ+2cwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
-    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
-    MDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMFkwEwYHKoZI\r
-    zj0CAQYIKoZIzj0DAQcDQgAEMtNw+OqJMpYO4Kto08bJxtjQXWfCuxfziwzfRh7r\r
-    MNnNLfGfihfhG7Jaju47e65782KYx2pZQfxjP8BxazB7oKMyMDAwHQYDVR0OBBYE\r
-    FGf7ybx0cWIMYYvWYPIWwh7lRGLkMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
-    AwIDSAAwRQIgA3OfoaDcSsUlnHjsezViVl8oCm1JUJHY6Q5uTzceUVYCIQCZcJ76\r
-    AdSfiK9QShD1qbvuVQer+m0Bel8eFXLr78YwRA==\r
+    MIIBaTCCAQ+gAwIBAgIJAOe8hhyiJIEjMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
+    B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
+    MDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQDEwJDQTBZMBMGByqG\r
+    SM49AgEGCCqGSM49AwEHA0IABC8+qTu0i2sAVOxdNtl1mdXCSoL5qixOb6QUgVen\r
+    P3JRQ531wXMN1vgDkXEvhHcZMWzxJb/KBtA5gm2VsfD/ONGjMjAwMB0GA1UdDgQW\r
+    BBQjgSSiHIa8556BQ1J6ic6G3yytdzAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49\r
+    BAMCA0gAMEUCIQCDlkKlRsyjG2iK+a8bwUR1I6K8OK3X4mwPdgPCA52TmgIgKC3K\r
+    IdCIVpvKuy5rx9W8D411ZtdB7JredX1aSjJmaLI=\r
     -----END CERTIFICATE-----\r
     """
     cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBdzCCAR2gAwIBAgIISrIXs69a7pUwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
-    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
-    MDAwMDBaMDcxEDAOBgNVBAoMB0NJVEFIdWIxIzAhBgNVBAMTGnRlc3QtY2hhaW4t\r
-    emVub2gtYmZ0LW5vZGUyMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEAlgA61Bm\r
-    gS5tQIi55TDAYGqwgfmsAy7JjbpSMokeKqOHOMm0ynOvu5MLpwf396QM3TqndJfa\r
-    QVg2DwhY/nbJlKMpMCcwJQYDVR0RBB4wHIIadGVzdC1jaGFpbi16ZW5vaC1iZnQt\r
-    bm9kZTIwCgYIKoZIzj0EAwIDSAAwRQIhAN3XwPxDsXPO8tV1yGcmv4fvgCmotzse\r
-    +yp4wzs75xcxAiAgXmDt6xDSf4RlMZVkvkfVlUZOjdNPrkHaTUHoCLXfFw==\r
+    MIIBeDCCAR6gAwIBAgIJANii9FK2A6L1MAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
+    B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
+    MDAwMDAwWjA3MRAwDgYDVQQKDAdDSVRBSHViMSMwIQYDVQQDExp0ZXN0LWNoYWlu\r
+    LXplbm9oLWJmdC1ub2RlMjBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABOKKkKuE\r
+    b4iLSVl4P0sC/ewY9h8EDVFpV2sAbyVSBsY00k3tiUGFNdP43MVKwGTRd5QW1noG\r
+    vimls3PEPnKMWGOjKTAnMCUGA1UdEQQeMByCGnRlc3QtY2hhaW4temVub2gtYmZ0\r
+    LW5vZGUyMAoGCCqGSM49BAMCA0gAMEUCIG8FbuirWUWDFXQoJq5hs6xWzKpJgKFm\r
+    wA3FfIzfSJ22AiEAzKFU5bp7870yloiRVx2LkisLEEKtkDn9ZdkhxTqJ47E=\r
     -----END CERTIFICATE-----\r
     """
     chain_id = '0d35b5c9202935db3cc14cb21ccf96aee4c6c1c9af124074a583b5d0abaf37fd'
@@ -36,9 +36,9 @@ data:
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----\r
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgy67gWlkfW0q3Ay5I\r
-    JNLB0HVfO0cIx+ww2g2b6J/SB96hRANCAAQCWADrUGaBLm1AiLnlMMBgarCB+awD\r
-    LsmNulIyiR4qo4c4ybTKc6+7kwunB/f3pAzdOqd0l9pBWDYPCFj+dsmU\r
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgDeiJQgJJH1SvOqR6\r
+    EjLmM33ykgNTBWFf2/cZqnnMMY+hRANCAATiipCrhG+Ii0lZeD9LAv3sGPYfBA1R\r
+    aVdrAG8lUgbGNNJN7YlBhTXT+NzFSsBk0XeUFtZ6Br4ppbNzxD5yjFhj\r
     -----END PRIVATE KEY-----\r
     """
     protocol = 'quic'
@@ -96,7 +96,7 @@ data:
 
     [genesis_block]
     prevhash = '0x0000000000000000000000000000000000000000000000000000000000000000'
-    timestamp = 1664260951405
+    timestamp = 1675218316765
 
     [system_config]
     admin = '9bab5858df4a9e84ff3958884a01a4fce5e07edb'
@@ -105,10 +105,10 @@ data:
     chain_id = '0d35b5c9202935db3cc14cb21ccf96aee4c6c1c9af124074a583b5d0abaf37fd'
     quota_limit = 1073741824
     validators = [
-        'efbb0a6f99f2060a5b62dec66aaf3fc108d2dd3b',
-        'facdeb92ed4b447cd6e637aa441afe0eff5e76b3',
-        'f7f184b354658ab88a035820309eebcc599e9842',
-        '4d6dd7ba39a7f0eb05f28a86865e84d8571329f0',
+        'dc454c5253a832950ca0f2baf6904f67462b2d5c',
+        '1fd420fcd1ec8b20b5536829291fe4f04924532e',
+        'bedd2e2390fff609d283c8a7dc3eff16a632d47f',
+        '48b99f784b7607b4b2d8fd1bca079a364ba2c245',
     ]
     version = 0
 
@@ -122,7 +122,7 @@ data:
     network_port = 50000
     node_address = '/mnt/node_address'
     storage_port = 50003
-    validator_address_len = 20
+    validator_address = '/mnt/validator_address'
 
     [crypto_sm]
     crypto_port = 50005
