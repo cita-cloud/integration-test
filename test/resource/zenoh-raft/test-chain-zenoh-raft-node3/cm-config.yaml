@@ -5,26 +5,26 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBaDCCAQ6gAwIBAgIIQGmWh55HRg4wCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
-    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
-    MDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMFkwEwYHKoZI\r
-    zj0CAQYIKoZIzj0DAQcDQgAE7DDJhEqEnFQz9rcZzbNJnnhk4o1aWzfp/USYUkK8\r
-    0lfugdcL4mFktIQOeMHnOWmUM5ndI56mmU7a9n+rgRa0e6MyMDAwHQYDVR0OBBYE\r
-    FA5GR56HlmlAeITNRJgEsn8qM01VMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
-    AwIDSAAwRQIhAPvPDqivInsMkoi3OtYrZIKZLloxjR8G7PcFv5Y217LHAiB2XIh8\r
-    jF4VGckPj1QJZoS2U7BzY58XyviJr1L/rIgxkw==\r
+    MIIBaTCCAQ+gAwIBAgIJAJbaBsyGiXdSMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
+    B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
+    MDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQDEwJDQTBZMBMGByqG\r
+    SM49AgEGCCqGSM49AwEHA0IABEEKFddDc8e15HPdHxSxI+6toq8tUF+Ikp8YRlfz\r
+    bFThmB5J8r0CAt3EgiXm9Ib59Zey+B0lVLk4x5s/AW0bM+2jMjAwMB0GA1UdDgQW\r
+    BBRSd4mGzAbalrRv0w+E0ubSIKl3gjAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49\r
+    BAMCA0gAMEUCIQDfV8cN9KoNTFlfdfjgELxTo32J+LMwZwBVxmCWYKeI0QIgNnGF\r
+    YmMohMHJlH7lMHhRDrWYz05xf3NJoimDUFYExG8=\r
     -----END CERTIFICATE-----\r
     """
     cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBejCCASCgAwIBAgIJAKtKrmRpShwgMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
+    MIIBezCCASCgAwIBAgIJAOxAplCkc7skMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
     B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
     MDAwMDAwWjA4MRAwDgYDVQQKDAdDSVRBSHViMSQwIgYDVQQDExt0ZXN0LWNoYWlu\r
-    LXplbm9oLXJhZnQtbm9kZTMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAS7LODp\r
-    gm2fdIevEiXSw7d1TsTc2qXboEy0ygYUEL+hNXTsA6/Zlu8dxurrPCvezwqufEl8\r
-    zIQpoC/8RyC+FNBRoyowKDAmBgNVHREEHzAdght0ZXN0LWNoYWluLXplbm9oLXJh\r
-    ZnQtbm9kZTMwCgYIKoZIzj0EAwIDSAAwRQIhAMkyg/AZZMtlgRXivnnOV5jnPNGa\r
-    255thzjsxp2NW33uAiBS6IL8XA9+9BMiqeHKEOaULuo7XipxhfdjYSuY0lXVGA==\r
+    LXplbm9oLXJhZnQtbm9kZTMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARhb0J1\r
+    H67KWb/G7XayrJ6Nm2uvoUW8A9a11E1Sl/5QpWxH3cRBNo3VvPxTrn1vNExqhQuR\r
+    5y5R+vNK/fHFMxYHoyowKDAmBgNVHREEHzAdght0ZXN0LWNoYWluLXplbm9oLXJh\r
+    ZnQtbm9kZTMwCgYIKoZIzj0EAwIDSQAwRgIhAINw3ZYEYA+1C29Y9/Xvn6Y68KNZ\r
+    JA55vDdzu+LO1dI+AiEA0p7cb4wMAULM3NmEFu0XR08dNYcQ5uxh2d7+mmDl7Z4=\r
     -----END CERTIFICATE-----\r
     """
     chain_id = 'eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e'
@@ -36,9 +36,9 @@ data:
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----\r
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgTqQd1xQVsdIgBekU\r
-    f/Cx9oFGFDNHvV5od+ila9DQE0mhRANCAAS7LODpgm2fdIevEiXSw7d1TsTc2qXb\r
-    oEy0ygYUEL+hNXTsA6/Zlu8dxurrPCvezwqufEl8zIQpoC/8RyC+FNBR\r
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgbVqr+iUIHe9jBwaV\r
+    51PM+1o+RRwqfMu10S5VPNcBEu+hRANCAARhb0J1H67KWb/G7XayrJ6Nm2uvoUW8\r
+    A9a11E1Sl/5QpWxH3cRBNo3VvPxTrn1vNExqhQuR5y5R+vNK/fHFMxYH\r
     -----END PRIVATE KEY-----\r
     """
     protocol = 'quic'
@@ -95,7 +95,7 @@ data:
 
     [genesis_block]
     prevhash = '0x0000000000000000000000000000000000000000000000000000000000000000'
-    timestamp = 1664260957024
+    timestamp = 1675218326041
 
     [system_config]
     admin = '9bab5858df4a9e84ff3958884a01a4fce5e07edb'
@@ -104,10 +104,10 @@ data:
     chain_id = 'eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e'
     quota_limit = 1073741824
     validators = [
-        'd7e9f403f49a5dbe39a635f3647226b9b18766fa',
-        '9879403a4117d46226eab20113d164b6f72bcfb4',
-        '8291560a09e9de270ddb430c8a8002c6aaa11f4c',
-        'd1f3cf96d4a92862afc3a6edce5d82811b76ddac',
+        '72836cb6ef3317002c5b2a495e04c504ed88ae17',
+        '0de4b2a8f4f527ab3646842f38d516a760c893f7',
+        'adf84b9edc14d242ba77fa2e354456df6b857031',
+        'e09a04ced71f64b1d20aa51de1416502ab5ef604',
     ]
     version = 0
 
@@ -121,7 +121,7 @@ data:
     network_port = 50000
     node_address = '/mnt/node_address'
     storage_port = 50003
-    validator_address_len = 20
+    validator_address = '/mnt/validator_address'
 
     [crypto_sm]
     crypto_port = 50005
