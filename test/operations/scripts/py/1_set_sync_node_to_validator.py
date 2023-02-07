@@ -16,6 +16,7 @@
 import json, os
 
 import sys
+
 sys.path.append("test/utils")
 import util
 import yaml
@@ -33,18 +34,18 @@ if __name__ == "__main__":
         validators_arg += " "
 
     # add sync node address
-    sync_node_account_path = "test/operations/resource/" + os.getenv("CHAIN_TYPE") + "/" + os.getenv("CHAIN_NAME") + "-node4/cm-account.yaml"
+    sync_node_account_path = "test/operations/resource/" + os.getenv("CHAIN_TYPE") + "/" + os.getenv(
+        "CHAIN_NAME") + "-node4/cm-account.yaml"
     with open(sync_node_account_path, "r") as sync_node_config:
         temp = yaml.load(sync_node_config.read(), Loader=yaml.FullLoader)
         sync_node_addr = "0x" + temp['data']['validator_address']
         validators_arg += sync_node_addr
     print("validators_arg: ", validators_arg)
-    
 
     # update validators
     cmd = "cldi -c node4 -u admin admin update-validators {}"
     tx_hash = util.exec_retry(cmd.format(validators_arg))
-    
+
     print("update-validators ret:", tx_hash)
 
     if not len(tx_hash) == 66 or not tx_hash.__contains__("0x"):

@@ -5,74 +5,74 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBaTCCAQ+gAwIBAgIJAJbaBsyGiXdSMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
+    MIIBaTCCAQ+gAwIBAgIJAJyScufgR4s2MAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
     B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
     MDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQDEwJDQTBZMBMGByqG\r
-    SM49AgEGCCqGSM49AwEHA0IABEEKFddDc8e15HPdHxSxI+6toq8tUF+Ikp8YRlfz\r
-    bFThmB5J8r0CAt3EgiXm9Ib59Zey+B0lVLk4x5s/AW0bM+2jMjAwMB0GA1UdDgQW\r
-    BBRSd4mGzAbalrRv0w+E0ubSIKl3gjAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49\r
-    BAMCA0gAMEUCIQDfV8cN9KoNTFlfdfjgELxTo32J+LMwZwBVxmCWYKeI0QIgNnGF\r
-    YmMohMHJlH7lMHhRDrWYz05xf3NJoimDUFYExG8=\r
+    SM49AgEGCCqGSM49AwEHA0IABMXKFIUN+c28fpD4G3p/eSbCEPWSOpPhFqb8CZIa\r
+    OT249g1UbuA3njISOJlFO6o5OfTGn7mxSgoP8hTWeqIdLgSjMjAwMB0GA1UdDgQW\r
+    BBQ2i0fg53KSnBKpttmmOm3saEdzWjAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49\r
+    BAMCA0gAMEUCIQC3bHDkPvavoS0Z6AIzUrRRkWOmv3U0mCpHyuq0xoLULwIgDu2S\r
+    /CnFZXNPbJLygq4cquNRd8UB9TvxczAgIqW2z58=\r
     -----END CERTIFICATE-----\r
     """
     cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBejCCAR+gAwIBAgIIR8g9LwlwJTAwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
-    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
-    MDAwMDBaMDgxEDAOBgNVBAoMB0NJVEFIdWIxJDAiBgNVBAMTG3Rlc3QtY2hhaW4t\r
-    emVub2gtcmFmdC1ub2RlMjBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJMwj/FR\r
-    oYnsisx9kfhw9pSbEqESCYUjb6BjnFJnhEHKER3KgsAZtUoaUNfxATOQMXXqEq2t\r
-    /YHW+PrFh8tS0gajKjAoMCYGA1UdEQQfMB2CG3Rlc3QtY2hhaW4temVub2gtcmFm\r
-    dC1ub2RlMjAKBggqhkjOPQQDAgNJADBGAiEAuNJPza3SniGbBxIjPn0EpHk54dml\r
-    fpBYw81uCBknxyQCIQDVOdwMK8C17+KJghzQ8PrazpgIryAjNlQbdV+5MeaADQ==\r
+    MIIBejCCASCgAwIBAgIJAPEO87W2jXBGMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
+    B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
+    MDAwMDAwWjA4MRAwDgYDVQQKDAdDSVRBSHViMSQwIgYDVQQDExt0ZXN0LWNoYWlu\r
+    LXplbm9oLXJhZnQtbm9kZTIwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATbYP2k\r
+    gLKqVfAU21KiPvUm3LpSHjfdXOIWAcOcKIVJ9xHrbKr0D/VEEWj8+dRsN+gXl4m0\r
+    QHb8+1cOjLRqPMIvoyowKDAmBgNVHREEHzAdght0ZXN0LWNoYWluLXplbm9oLXJh\r
+    ZnQtbm9kZTIwCgYIKoZIzj0EAwIDSAAwRQIgD0LI0Ugcfqwnm6H0h7Cpywo04jr5\r
+    84fEZftorQATLj8CIQDZ26Sx193NMk6rbZScUZgZFRFxlTeOg9izAlp/olA0jw==\r
     -----END CERTIFICATE-----\r
     """
-    chain_id = 'eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e'
-    domain = 'test-chain-zenoh-raft-node2'
+    chain_id = "eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e"
+    domain = "test-chain-zenoh-raft-node2"
     enable_metrics = true
     grpc_port = 50000
     metrics_port = 60000
-    node_address = '/mnt/node_address'
+    node_address = "/mnt/node_address"
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----\r
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg+grjtizxAhuxSSlt\r
-    5wQtUC84y/O9G7k14MFMOXIAEWehRANCAASTMI/xUaGJ7IrMfZH4cPaUmxKhEgmF\r
-    I2+gY5xSZ4RByhEdyoLAGbVKGlDX8QEzkDF16hKtrf2B1vj6xYfLUtIG\r
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgKiOxUuyB/twcoZ07\r
+    WNJas//YgqfmuvkQ2TpKg53pUO+hRANCAATbYP2kgLKqVfAU21KiPvUm3LpSHjfd\r
+    XOIWAcOcKIVJ9xHrbKr0D/VEEWj8+dRsN+gXl4m0QHb8+1cOjLRqPMIv\r
     -----END PRIVATE KEY-----\r
     """
-    protocol = 'quic'
-    validator_address = '/mnt/validator_address'
+    protocol = "quic"
+    validator_address = "/mnt/validator_address"
 
     [[network_zenoh.modules]]
-    hostname = '127.0.0.1'
-    module_name = 'consensus'
+    hostname = "127.0.0.1"
+    module_name = "consensus"
     port = 50001
 
     [[network_zenoh.modules]]
-    hostname = '127.0.0.1'
-    module_name = 'controller'
+    hostname = "127.0.0.1"
+    module_name = "controller"
     port = 50004
 
     [[network_zenoh.peers]]
-    domain = 'test-chain-zenoh-raft-node0'
+    domain = "test-chain-zenoh-raft-node0"
     port = 40000
-    protocol = 'quic'
+    protocol = "quic"
 
     [[network_zenoh.peers]]
-    domain = 'test-chain-zenoh-raft-node1'
+    domain = "test-chain-zenoh-raft-node1"
     port = 40000
-    protocol = 'quic'
+    protocol = "quic"
 
     [[network_zenoh.peers]]
-    domain = 'test-chain-zenoh-raft-node3'
+    domain = "test-chain-zenoh-raft-node3"
     port = 40000
-    protocol = 'quic'
+    protocol = "quic"
 
     [[network_zenoh.peers]]
-    domain = 'test-chain-zenoh-raft-node4'
+    domain = "test-chain-zenoh-raft-node4"
     port = 40000
-    protocol = 'quic'
+    protocol = "quic"
 
     [consensus_raft]
     controller_port = 50004
@@ -80,7 +80,7 @@ data:
     grpc_listen_port = 50001
     metrics_port = 60001
     network_port = 50000
-    node_addr = '/mnt/node_address'
+    node_addr = "/mnt/node_address"
 
     [executor_evm]
     enable_metrics = true
@@ -94,20 +94,20 @@ data:
     storage_port = 50003
 
     [genesis_block]
-    prevhash = '0x0000000000000000000000000000000000000000000000000000000000000000'
-    timestamp = 1675218326041
+    prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
+    timestamp = 1675759264115
 
     [system_config]
-    admin = '9bab5858df4a9e84ff3958884a01a4fce5e07edb'
+    admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
     block_interval = 3
     block_limit = 100
-    chain_id = 'eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e'
+    chain_id = "eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e"
     quota_limit = 1073741824
     validators = [
-        '72836cb6ef3317002c5b2a495e04c504ed88ae17',
-        '0de4b2a8f4f527ab3646842f38d516a760c893f7',
-        'adf84b9edc14d242ba77fa2e354456df6b857031',
-        'e09a04ced71f64b1d20aa51de1416502ab5ef604',
+        "1ed2e493f8d6e1717df502d077ac82198272edba",
+        "32904fc85b9a30a9f4fb2e785526a22aacf4808e",
+        "c980517f79f8de877942153bf9ed0640faec0231",
+        "8ff488ad42e365c19a548411b20d4d9213408706",
     ]
     version = 0
 
@@ -119,9 +119,9 @@ data:
     executor_port = 50002
     metrics_port = 60004
     network_port = 50000
-    node_address = '/mnt/node_address'
+    node_address = "/mnt/node_address"
     storage_port = 50003
-    validator_address = '/mnt/validator_address'
+    validator_address = "/mnt/validator_address"
 
     [crypto_sm]
     crypto_port = 50005

@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import sys
+
 sys.path.append("test/utils")
 import util
 
@@ -28,14 +29,15 @@ contract_code = "0x608060405234801561001057600080fd5b5060f58061001f6000396000f30
 if __name__ == "__main__":
     create_result = util.exec_retry('cldi -c default rpc estimate-quota {}'.format(contract_code))
     create_quota = int(create_result)
-    if create_quota > 0 :
+    if create_quota > 0:
         print("create contract estimate quota: {}".format(create_quota))
     else:
         exit(1)
 
-    send_result = util.exec_retry('cldi -c default rpc estimate-quota -t 0xa4582f4966bdef3a2839e2f256a714426508ddb7 0x4f2be91f')
+    send_result = util.exec_retry(
+        'cldi -c default rpc estimate-quota -t 0xa4582f4966bdef3a2839e2f256a714426508ddb7 0x4f2be91f')
     send_quota = int(send_result)
-    if send_quota > 0 :
+    if send_quota > 0:
         print("send transaction estimate quota: {}".format(send_quota))
     else:
         exit(1)
