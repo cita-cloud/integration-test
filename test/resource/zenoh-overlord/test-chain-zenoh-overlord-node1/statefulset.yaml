@@ -36,8 +36,6 @@ spec:
         - run
         - -c
         - /etc/cita-cloud/config/config.toml
-        - -l
-        - /etc/cita-cloud/log/network-log4rs.yaml
         image: registry.devops.rivtower.com/cita-cloud/network_zenoh:latest
         imagePullPolicy: Always
         name: network
@@ -70,8 +68,6 @@ spec:
         - run
         - -c
         - /etc/cita-cloud/config/config.toml
-        - -l
-        - /etc/cita-cloud/log/consensus-log4rs.yaml
         - -p
         - /mnt/private_key
         image: registry.devops.rivtower.com/cita-cloud/consensus_overlord:latest
@@ -103,8 +99,6 @@ spec:
         - run
         - -c
         - /etc/cita-cloud/config/config.toml
-        - -l
-        - /etc/cita-cloud/log/executor-log4rs.yaml
         image: registry.devops.rivtower.com/cita-cloud/executor_evm:latest
         imagePullPolicy: Always
         name: executor
@@ -132,8 +126,6 @@ spec:
         - run
         - -c
         - /etc/cita-cloud/config/config.toml
-        - -l
-        - /etc/cita-cloud/log/storage-log4rs.yaml
         image: registry.devops.rivtower.com/cita-cloud/storage_rocksdb:latest
         imagePullPolicy: Always
         name: storage
@@ -161,8 +153,6 @@ spec:
         - run
         - -c
         - /etc/cita-cloud/config/config.toml
-        - -l
-        - /etc/cita-cloud/log/controller-log4rs.yaml
         image: registry.devops.rivtower.com/cita-cloud/controller:latest
         imagePullPolicy: Always
         name: controller
@@ -192,8 +182,6 @@ spec:
         - run
         - -c
         - /etc/cita-cloud/config/config.toml
-        - -l
-        - /etc/cita-cloud/log/crypto-log4rs.yaml
         - -p
         - /mnt/private_key
         image: registry.devops.rivtower.com/cita-cloud/crypto_sm:latest

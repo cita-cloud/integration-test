@@ -5,26 +5,26 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBaTCCAQ+gAwIBAgIJAJyScufgR4s2MAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
-    B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
-    MDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQDEwJDQTBZMBMGByqG\r
-    SM49AgEGCCqGSM49AwEHA0IABMXKFIUN+c28fpD4G3p/eSbCEPWSOpPhFqb8CZIa\r
-    OT249g1UbuA3njISOJlFO6o5OfTGn7mxSgoP8hTWeqIdLgSjMjAwMB0GA1UdDgQW\r
-    BBQ2i0fg53KSnBKpttmmOm3saEdzWjAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49\r
-    BAMCA0gAMEUCIQC3bHDkPvavoS0Z6AIzUrRRkWOmv3U0mCpHyuq0xoLULwIgDu2S\r
-    /CnFZXNPbJLygq4cquNRd8UB9TvxczAgIqW2z58=\r
+    MIIBaTCCAQ6gAwIBAgIIKwOl0dDvLFIwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
+    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
+    MDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMFkwEwYHKoZI\r
+    zj0CAQYIKoZIzj0DAQcDQgAEsfMAoiLzlyGJa0P8VsE5aitK5rl5VTTxZcM294XR\r
+    t7o2jTusoeGqs8DEnjZ9TxUSFNbs7FiED2/474q/EtxwqqMyMDAwHQYDVR0OBBYE\r
+    FFIs79DRpQMrwthwbMPcAWufte0qMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
+    AwIDSQAwRgIhAIEBSjmtW2McQX8utceia+BsX3bTwK9fbOKTGhN1f5NLAiEArCoX\r
+    Wg/cNfRBixedY0JojMWm1qK7+B6KUEnaCNr+3kc=\r
     -----END CERTIFICATE-----\r
     """
     cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBezCCASCgAwIBAgIJAKzVw7inimeBMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
+    MIIBeTCCASCgAwIBAgIJAJJwmozc89IDMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
     B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
     MDAwMDAwWjA4MRAwDgYDVQQKDAdDSVRBSHViMSQwIgYDVQQDExt0ZXN0LWNoYWlu\r
-    LXplbm9oLXJhZnQtbm9kZTQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATSKhAh\r
-    0qUISUxuPK4V3OSNra2YGUPGTnPYDOur6BmfjDPFBl4AaMcXEsJJ7u5fOR5n5W9U\r
-    lMwpr/3R4t1eU+MqoyowKDAmBgNVHREEHzAdght0ZXN0LWNoYWluLXplbm9oLXJh\r
-    ZnQtbm9kZTQwCgYIKoZIzj0EAwIDSQAwRgIhAKnSN6rMo0MPPhc0cZR8pZkcTPYD\r
-    ueL4ckKp6pzzZmt6AiEAsLADo7kPReIJWZHeUnuMNU9XyfyhuviH9teFJpKeRug=\r
+    LXplbm9oLXJhZnQtbm9kZTQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAT0pf4q\r
+    4w/DlKSf81z2t+KTHdGQ22aj3bqqYHqVFQ1cRAWMCk5HY9ON797scA/Du0ybfAwg\r
+    mtW2MfuNpUXrSWhBoyowKDAmBgNVHREEHzAdght0ZXN0LWNoYWluLXplbm9oLXJh\r
+    ZnQtbm9kZTQwCgYIKoZIzj0EAwIDRwAwRAIgKmGe5M4Zwml1BCyQOEnsLKzWkQhL\r
+    8ZcLyp/2/tlK4uICICE6cqRxG4e5QCPG5t7RyyYalJIr14GdElQbJP8ApRzW\r
     -----END CERTIFICATE-----\r
     """
     chain_id = "eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e"
@@ -36,9 +36,9 @@ data:
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----\r
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg6ao7oJzcmtwraMlp\r
-    /F0fr/8mh9/1iD3ZF2Ml0LaxkM6hRANCAATSKhAh0qUISUxuPK4V3OSNra2YGUPG\r
-    TnPYDOur6BmfjDPFBl4AaMcXEsJJ7u5fOR5n5W9UlMwpr/3R4t1eU+Mq\r
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgoke52sOx/QAkfSdO\r
+    KF+cojj/6h6XWaePmQ1pTqQ85OehRANCAAT0pf4q4w/DlKSf81z2t+KTHdGQ22aj\r
+    3bqqYHqVFQ1cRAWMCk5HY9ON797scA/Du0ybfAwgmtW2MfuNpUXrSWhB\r
     -----END PRIVATE KEY-----\r
     """
     protocol = "quic"
@@ -74,6 +74,11 @@ data:
     port = 40000
     protocol = "quic"
 
+    [network_zenoh.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "network"
+
     [consensus_raft]
     controller_port = 50004
     enable_metrics = true
@@ -83,19 +88,31 @@ data:
     node_addr = "/mnt/node_address"
 
     [executor_evm]
+    domain = "test-chain-zenoh-raft-node4"
     enable_metrics = true
     executor_port = 50002
     metrics_port = 60002
 
+    [executor_evm.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "executor"
+
     [storage_rocksdb]
     crypto_port = 50005
+    domain = "test-chain-zenoh-raft-node4"
     enable_metrics = true
     metrics_port = 60003
     storage_port = 50003
 
+    [storage_rocksdb.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "storage"
+
     [genesis_block]
     prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
-    timestamp = 1675759264115
+    timestamp = 1675927468366
 
     [system_config]
     admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
@@ -104,10 +121,10 @@ data:
     chain_id = "eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e"
     quota_limit = 1073741824
     validators = [
-        "1ed2e493f8d6e1717df502d077ac82198272edba",
-        "32904fc85b9a30a9f4fb2e785526a22aacf4808e",
-        "c980517f79f8de877942153bf9ed0640faec0231",
-        "8ff488ad42e365c19a548411b20d4d9213408706",
+        "e1aa096f6abe9c1baa898253103b20debcfc6f9e",
+        "fe6f2aaea5e1f36cd6040e4ae292e1954543b323",
+        "8ce1da04959ff6c5628fb2d1d261ada19028bcb0",
+        "8e6d60ccc50b633c3d09c43fe86a4c209688826c",
     ]
     version = 0
 
@@ -115,6 +132,7 @@ data:
     consensus_port = 50001
     controller_port = 50004
     crypto_port = 50005
+    domain = "test-chain-zenoh-raft-node4"
     enable_metrics = true
     executor_port = 50002
     metrics_port = 60004
@@ -123,10 +141,21 @@ data:
     storage_port = 50003
     validator_address = "/mnt/validator_address"
 
+    [controller.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "controller"
+
     [crypto_sm]
     crypto_port = 50005
+    domain = "test-chain-zenoh-raft-node4"
     enable_metrics = true
     metrics_port = 60005
+
+    [crypto_sm.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "crypto"
 
 metadata:
   labels:
