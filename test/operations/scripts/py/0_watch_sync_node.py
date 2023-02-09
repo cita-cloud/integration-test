@@ -17,8 +17,10 @@ import pprint
 import threading
 import time
 import sys
+
 sys.path.append("test/utils")
 import util
+
 
 def watch_bn():
     bn = util.get_node_block_number("default")
@@ -28,6 +30,7 @@ def watch_bn():
         result = util.get_node_block_number("node4")
     pprint.pprint("sync node block-number: {result} > {bn}".format(result=result, bn=bn), indent=4)
     exit(0)
+
 
 if __name__ == '__main__':
     t = threading.Thread(target=watch_bn)

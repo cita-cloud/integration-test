@@ -18,6 +18,7 @@
 import json
 import pprint
 import sys
+
 sys.path.append("test/utils")
 import util
 
@@ -69,7 +70,7 @@ if __name__ == "__main__":
 
     if util.exec(get_abi_fmt.format(bad_contract_addr)) != '':
         exit(34)
-    
+
     store_abi_result = util.exec_retry(store_abi_fmt.format(contract_addr, abi))
     pprint.pprint("store_abi_result: {store_abi_result}".format(store_abi_result=store_abi_result))
     if not store_abi_result.startswith(hex_prefix):
@@ -77,9 +78,9 @@ if __name__ == "__main__":
 
     util.get_receipt(store_abi_result)
 
-    result = util.get_abi(contract_addr)    
-    if  result!= abi:
+    result = util.get_abi(contract_addr)
+    if result != abi:
         pprint.pprint("abi not correct!: {result}".format(result=result))
         exit(35)
-    
+
     exit(0)
