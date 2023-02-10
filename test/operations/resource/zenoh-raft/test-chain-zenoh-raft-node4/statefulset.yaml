@@ -58,8 +58,6 @@ spec:
           name: datadir
         - mountPath: /etc/cita-cloud/config
           name: node-config
-        - mountPath: /etc/cita-cloud/log
-          name: node-log
         - mountPath: /mnt
           name: node-account
         workingDir: /data
@@ -88,8 +86,6 @@ spec:
           name: datadir
         - mountPath: /etc/cita-cloud/config
           name: node-config
-        - mountPath: /etc/cita-cloud/log
-          name: node-log
         - mountPath: /mnt
           name: node-account
         workingDir: /data
@@ -117,8 +113,6 @@ spec:
           name: datadir
         - mountPath: /etc/cita-cloud/config
           name: node-config
-        - mountPath: /etc/cita-cloud/log
-          name: node-log
         workingDir: /data
       - command:
         - storage
@@ -144,8 +138,6 @@ spec:
           name: datadir
         - mountPath: /etc/cita-cloud/config
           name: node-config
-        - mountPath: /etc/cita-cloud/log
-          name: node-log
         workingDir: /data
       - command:
         - controller
@@ -171,8 +163,6 @@ spec:
           name: datadir
         - mountPath: /etc/cita-cloud/config
           name: node-config
-        - mountPath: /etc/cita-cloud/log
-          name: node-log
         - mountPath: /mnt
           name: node-account
         workingDir: /data
@@ -202,8 +192,6 @@ spec:
           name: datadir
         - mountPath: /etc/cita-cloud/config
           name: node-config
-        - mountPath: /etc/cita-cloud/log
-          name: node-log
         - mountPath: /mnt
           name: node-account
         workingDir: /data
@@ -222,9 +210,6 @@ spec:
       - configMap:
           name: test-chain-zenoh-raft-node4-config
         name: node-config
-      - configMap:
-          name: test-chain-zenoh-raft-node4-log
-        name: node-log
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim

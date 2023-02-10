@@ -5,26 +5,26 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBaTCCAQ6gAwIBAgIIKwOl0dDvLFIwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
+    MIIBaDCCAQ6gAwIBAgIIXeKhJwSyUC4wCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
     Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
     MDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMFkwEwYHKoZI\r
-    zj0CAQYIKoZIzj0DAQcDQgAEsfMAoiLzlyGJa0P8VsE5aitK5rl5VTTxZcM294XR\r
-    t7o2jTusoeGqs8DEnjZ9TxUSFNbs7FiED2/474q/EtxwqqMyMDAwHQYDVR0OBBYE\r
-    FFIs79DRpQMrwthwbMPcAWufte0qMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
-    AwIDSQAwRgIhAIEBSjmtW2McQX8utceia+BsX3bTwK9fbOKTGhN1f5NLAiEArCoX\r
-    Wg/cNfRBixedY0JojMWm1qK7+B6KUEnaCNr+3kc=\r
+    zj0CAQYIKoZIzj0DAQcDQgAE3FP41fKvT0+4wmOgKwSURelAOzzf7BYz2IoLlp0W\r
+    slga0MIf7pz7n9dDstz+JDZ62puLHecXUnZQlooFLBy5qqMyMDAwHQYDVR0OBBYE\r
+    FC5QsgQnoeJdaqgeXScl7LD9+OeOMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
+    AwIDSAAwRQIhAJfCKWsd78KgQ3ux8qmxmRssDlNCTafwnI0uL8stfCK5AiASbXbS\r
+    HzH3DLzqKaEzZiBT1XioLvhCh3c9hFp8LL7xhQ==\r
     -----END CERTIFICATE-----\r
     """
     cert = """
     -----BEGIN CERTIFICATE-----\r
-    MIIBeTCCASCgAwIBAgIJAJJwmozc89IDMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
-    B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
-    MDAwMDAwWjA4MRAwDgYDVQQKDAdDSVRBSHViMSQwIgYDVQQDExt0ZXN0LWNoYWlu\r
-    LXplbm9oLXJhZnQtbm9kZTQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAT0pf4q\r
-    4w/DlKSf81z2t+KTHdGQ22aj3bqqYHqVFQ1cRAWMCk5HY9ON797scA/Du0ybfAwg\r
-    mtW2MfuNpUXrSWhBoyowKDAmBgNVHREEHzAdght0ZXN0LWNoYWluLXplbm9oLXJh\r
-    ZnQtbm9kZTQwCgYIKoZIzj0EAwIDRwAwRAIgKmGe5M4Zwml1BCyQOEnsLKzWkQhL\r
-    8ZcLyp/2/tlK4uICICE6cqRxG4e5QCPG5t7RyyYalJIr14GdElQbJP8ApRzW\r
+    MIIBeTCCAR+gAwIBAgIINhnOpZXzjtQwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
+    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
+    MDAwMDBaMDgxEDAOBgNVBAoMB0NJVEFIdWIxJDAiBgNVBAMTG3Rlc3QtY2hhaW4t\r
+    emVub2gtcmFmdC1ub2RlNDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABAJFzYUn\r
+    FF3BDKL0tbl+AH+u5qA3UBJwFkgnbHLyKjwzBycGAYlVE94XjrLt9iNCGq6x+2Wu\r
+    QycYItFkQjZnpLmjKjAoMCYGA1UdEQQfMB2CG3Rlc3QtY2hhaW4temVub2gtcmFm\r
+    dC1ub2RlNDAKBggqhkjOPQQDAgNIADBFAiEAxJfoOKA0i4URuo6G/MtqyC421Vpw\r
+    JXwJUqLbcNZTL5sCIEbB6lCft+XU5zq7clblxjgZO7lLuM3QQ8vSrrlHmi6Q\r
     -----END CERTIFICATE-----\r
     """
     chain_id = "eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e"
@@ -36,9 +36,9 @@ data:
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----\r
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgoke52sOx/QAkfSdO\r
-    KF+cojj/6h6XWaePmQ1pTqQ85OehRANCAAT0pf4q4w/DlKSf81z2t+KTHdGQ22aj\r
-    3bqqYHqVFQ1cRAWMCk5HY9ON797scA/Du0ybfAwgmtW2MfuNpUXrSWhB\r
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgDtvFbObnXsLOpAZp\r
+    bBvKBzkMqr0iRFb6gLoMNsSqQFChRANCAAQCRc2FJxRdwQyi9LW5fgB/ruagN1AS\r
+    cBZIJ2xy8io8MwcnBgGJVRPeF46y7fYjQhqusftlrkMnGCLRZEI2Z6S5\r
     -----END PRIVATE KEY-----\r
     """
     protocol = "quic"
@@ -112,7 +112,7 @@ data:
 
     [genesis_block]
     prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
-    timestamp = 1675927468366
+    timestamp = 1675997741451
 
     [system_config]
     admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
@@ -121,10 +121,10 @@ data:
     chain_id = "eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e"
     quota_limit = 1073741824
     validators = [
-        "e1aa096f6abe9c1baa898253103b20debcfc6f9e",
-        "fe6f2aaea5e1f36cd6040e4ae292e1954543b323",
-        "8ce1da04959ff6c5628fb2d1d261ada19028bcb0",
-        "8e6d60ccc50b633c3d09c43fe86a4c209688826c",
+        "2e1575315ade5cf1b9d51d1d7190a39b6838a25c",
+        "2482452cdff4d2146b120a0870d41c593deb5b6d",
+        "09a395c5f79ec190f53dcb49c104398b9077d2ea",
+        "16bc82913cd9252d67d243892de1737c71047ca3",
     ]
     version = 0
 
@@ -135,6 +135,7 @@ data:
     domain = "test-chain-zenoh-raft-node4"
     enable_metrics = true
     executor_port = 50002
+    is_danger = false
     metrics_port = 60004
     network_port = 50000
     node_address = "/mnt/node_address"
