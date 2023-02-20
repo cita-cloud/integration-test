@@ -22,12 +22,13 @@ spec:
       templateType: Schedule
       deadline: 100s
       schedule:
-        schedule: "@every 60s"
+        schedule: "@every 50s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
           action: pod-kill
-          mode: one
+          mode: fixed
+          value: "2"
           selector:
             namespaces:
             - cita
@@ -37,12 +38,13 @@ spec:
       templateType: Schedule
       deadline: 100s
       schedule:
-        schedule: "@every 60s"
+        schedule: "@every 50s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
           action: pod-failure
-          mode: one
+          mode: fixed
+          value: "2"
           duration: "30s"
           selector:
             namespaces:
@@ -58,7 +60,8 @@ spec:
         type: PodChaos
         podChaos:
           action: container-kill
-          mode: one
+          mode: fixed
+          value: "2"
           selector:
             namespaces:
             - cita
@@ -70,12 +73,13 @@ spec:
       templateType: Schedule
       deadline: 100s
       schedule:
-        schedule: "@every 40s"
+        schedule: "@every 50s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
           action: container-kill
-          mode: one
+          mode: fixed
+          value: "2"
           selector:
             namespaces:
             - cita
@@ -92,7 +96,8 @@ spec:
         type: PodChaos
         podChaos:
           action: container-kill
-          mode: one
+          mode: fixed
+          value: "2"
           selector:
             namespaces:
             - cita
@@ -104,12 +109,13 @@ spec:
       templateType: Schedule
       deadline: 100s
       schedule:
-        schedule: "@every 40s"
+        schedule: "@every 50s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
           action: container-kill
-          mode: one
+          mode: fixed
+          value: "2"
           selector:
             namespaces:
             - cita
@@ -143,7 +149,8 @@ spec:
         type: PodChaos
         podChaos:
           action: container-kill
-          mode: one
+          mode: fixed
+          value: "2"
           selector:
             namespaces:
             - cita
@@ -155,7 +162,8 @@ spec:
       templateType: StressChaos
       deadline: 100s
       stressChaos:
-        mode: one
+        mode: fixed
+        value: "2"
         selector:
           namespaces:
           - cita
@@ -164,5 +172,5 @@ spec:
         stressors:
           cpu:
             workers: 1
-            load: 20
+            load: 50
             options: ["--cpu 1", "--timeout 600"]

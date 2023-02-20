@@ -17,7 +17,8 @@ spec:
       deadline: 80s
       networkChaos:
         action: partition
-        mode: one
+        mode: fixed
+        value: "2"
         selector:
           namespaces:
           - cita
@@ -25,7 +26,8 @@ spec:
             app.kubernetes.io/chain-name: XXXXXX
         direction: to
         target:
-          mode: one
+          mode: fixed
+          value: "2"
           selector:
             namespaces:
             - cita
@@ -36,7 +38,8 @@ spec:
       deadline: 80s
       networkChaos:
         action: bandwidth
-        mode: all
+        mode: fixed
+        value: "2"
         selector:
           namespaces:
           - cita
@@ -51,22 +54,23 @@ spec:
       deadline: 80s
       networkChaos:
         action: netem
-        mode: all
+        mode: fixed
+        value: "2"
         selector:
           namespaces:
           - cita
           labelSelectors:
             app.kubernetes.io/chain-name: XXXXXX
         delay:
-          latency: "90ms"
+          latency: "500ms"
           correlation: "25"
-          jitter: "90ms"
+          jitter: "100ms"
         loss:
-          loss: "25"
+          loss: "75"
           correlation: "25"
         duplicate:
-          duplicate: "25"
+          duplicate: "75"
           correlation: "25"
         corrupt:
-          corrupt: "25"
+          corrupt: "75"
           correlation: "25"

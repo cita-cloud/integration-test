@@ -16,9 +16,8 @@
 #
 #
 
-bash test/basic/startup.sh
-bash test/governance/startup.sh
-bash test/performance/startup.sh
-bash test/reliability/startup.sh
-bash test/operations/startup.sh
-bash test/operator/startup.sh
+while :  
+do  
+kubectl port-forward -n cita pod/$CHAIN_NAME-node0-0 50004 50002
+done
+
