@@ -16,12 +16,13 @@ spec:
       templateType: Schedule
       deadline: 100s
       schedule:
-        schedule: "@every 20s"
+        schedule: "@every 10s"
         concurrencyPolicy: Allow
         type: IOChaos
         ioChaos:
           action: latency
-          mode: one
+          mode: fixed
+          value: "2"
           selector:
             namespaces:
             - cita
@@ -29,19 +30,20 @@ spec:
               app.kubernetes.io/chain-name: XXXXXX
           volumePath: /data
           path: '/data/**/*'
-          delay: '100ms'
-          percent: 50
-          duration: '10s'
+          delay: '500ms'
+          percent: 75
+          duration: '5s'
     - name: workflow-io-fault
       templateType: Schedule
       deadline: 100s
       schedule:
-        schedule: "@every 20s"
+        schedule: "@every 10s"
         concurrencyPolicy: Allow
         type: IOChaos
         ioChaos:
           action: fault
-          mode: one
+          mode: fixed
+          value: "2"
           selector:
             namespaces:
             - cita
@@ -50,18 +52,19 @@ spec:
           volumePath: /data
           path: '/data/**/*'
           errno: 5
-          percent: 50
-          duration: '10s'
+          percent: 75
+          duration: '5s'
     - name: workflow-io-mistake
       templateType: Schedule
       deadline: 100s
       schedule:
-        schedule: "@every 20s"
+        schedule: "@every 10s"
         concurrencyPolicy: Allow
         type: IOChaos
         ioChaos:
           action: fault
-          mode: one
+          mode: fixed
+          value: "2"
           selector:
             namespaces:
             - cita
@@ -70,11 +73,11 @@ spec:
           volumePath: /data
           path: '/data/**/*'
           mistake:
-            filling: zero
+            filling: random
             maxOccurrences: 1
-            maxLength: 10
+            maxLength: 100
           methods:
             - READ
             - WRITE
-          percent: 10
-          duration: '10s'
+          percent: 50
+          duration: '5s'
