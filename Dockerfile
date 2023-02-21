@@ -21,4 +21,5 @@ RUN ./get_helm.sh
 RUN pip install tenacity
 RUN pip install PyYaml
 RUN pip install kubernetes
+RUN pip install minio
 
