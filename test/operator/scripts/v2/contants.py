@@ -18,6 +18,7 @@ FULL_BACKUP = "full-backup"
 STATE_BACKUP = "state-backup"
 
 LOCAL = "local"
+LOCAL_WITH_EXIST_PVC = "local-with-pvc"
 S3 = "s3"
 
 BACKUP_REPO_SECRET = "backup-repo"

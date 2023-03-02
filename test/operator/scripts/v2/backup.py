@@ -23,9 +23,11 @@ import kubernetes.client.exceptions
 from kubernetes import client, config
 
 from bucket import Bucket, BucketConfig
-from contants import FULL_BACKUP, STATE_BACKUP, LOCAL, S3, BACKUP_REPO_SECRET, BACKUP_REPO_SECRET_KEY, \
+from contants import FULL_BACKUP, STATE_BACKUP, LOCAL, LOCAL_WITH_EXIST_PVC, S3, BACKUP_REPO_SECRET, \
+    BACKUP_REPO_SECRET_KEY, \
     MINIO_CREDENTIALS_SECRET, \
     MINIO_CREDENTIALS_SECRET_ACCESS_KEY, MINIO_CREDENTIALS_SECRET_SECRET_KEY
+from pvc import prepare_pvc
 from restore import Restore, RestoreConfig
 
 sys.path.append("test/utils")
@@ -34,11 +36,19 @@ from logger import logger
 
 
 class BackupConfig(object):
-    def __init__(self, backup_type, backend_type, block_height=10, storage_class="nas-client-provisioner"):
+    def __init__(self,
+                 backup_type,
+                 backend_type,
+                 block_height=10,
+                 storage_class="nas-client-provisioner",
+                 pvc="integration-test-pvc",
+                 mount_path="/bk/node_backup"):
         self.backup_type = backup_type
         self.backend_type = backend_type
         self.block_height = block_height
         self.storage_class = storage_class
+        self.pvc = pvc
+        self.mount_path = mount_path
 
 
 class Backup(object):
@@ -126,7 +136,15 @@ class Backup(object):
                                deploy_method=deploy_method,
                                storage_class=backup_cfg.storage_class,
                                block_height=backup_cfg.block_height)
-        if backup_cfg.backend_type == S3:
+        elif backup_cfg.backend_type == LOCAL_WITH_EXIST_PVC:
+            self._local_backup_with_exist_pvc(chain,
+                                              node,
+                                              backup_type=backup_cfg.backup_type,
+                                              deploy_method=deploy_method,
+                                              pvc=backup_cfg.pvc,
+                                              mount_path=backup_cfg.mount_path,
+                                              block_height=backup_cfg.block_height)
+        elif backup_cfg.backend_type == S3:
             minio_obj = Bucket(service=bucket_cfg.endpoint,
                                access_key=bucket_cfg.access_key,
                                secret_key=bucket_cfg.secret_key)
@@ -141,6 +159,8 @@ class Backup(object):
                             endpoint=bucket_cfg.endpoint,
                             bucket=bucket_cfg.name,
                             block_height=backup_cfg.block_height)
+        else:
+            raise Exception("mismatched backend type")
 
     def _local_backup(self,
                       chain,
@@ -212,6 +232,93 @@ class Backup(object):
                         "local": {
                             "mountPath": "/hello",
                             "storageClass": storage_class,
+                        }
+                    }
+                },
+            }
+        else:
+            raise Exception("mismatched backup type")
+        # create a cluster scoped resource
+        self.custom_api.create_namespaced_custom_object(
+            group="rivtower.com",
+            version="v1cita",
+            namespace=self.namespace,
+            plural="backups",
+            body=resource_body,
+        )
+        self.created = True
+
+    def _local_backup_with_exist_pvc(self,
+                                     chain,
+                                     node,
+                                     backup_type=FULL_BACKUP,
+                                     deploy_method="cloud-config",
+                                     pvc="nas-client-provisioner",
+                                     mount_path="/bk/node-backup",
+                                     block_height=10):
+        """
+        创建本地备份(用户提供pvc)
+        :param chain:
+        :param node:
+        :param backup_type:
+        :param deploy_method:
+        :param pvc: pvc name
+        :param mount_path: 挂载点
+        :param block_height: 块高,状态备份时使用
+        :return:
+        """
+        if backup_type == FULL_BACKUP:
+            resource_body = {
+                "apiVersion": "rivtower.com/v1cita",
+                "kind": "Backup",
+                "metadata": {"name": self.name},
+                "spec": {
+                    "chain": chain,
+                    "node": node,
+                    "deployMethod": deploy_method,
+                    "dataType": {
+                        "full": {
+                            "includePaths": ["data", "chain_data"]
+                        }
+                    },
+                    "failedJobsHistoryLimit": 2,
+                    "successfulJobsHistoryLimit": 2,
+                    "backend": {
+                        "repoPasswordSecretRef": {
+                            "name": BACKUP_REPO_SECRET,
+                            "key": BACKUP_REPO_SECRET_KEY,
+                        },
+                        "local": {
+                            "mountPath": mount_path,
+                            "pvc": pvc,
+                        }
+                    }
+                },
+            }
+        elif backup_type == STATE_BACKUP:
+            resource_body = {
+                "apiVersion": "rivtower.com/v1cita",
+                "kind": "Backup",
+                "metadata": {"name": self.name},
+                "spec": {
+                    "chain": chain,
+                    "node": node,
+                    "deployMethod": deploy_method,
+                    "dataType": {
+                        "state": {
+                            "blockHeight": block_height
+                        }
+                    },
+                    "failedJobsHistoryLimit": 2,
+                    "successfulJobsHistoryLimit": 2,
+                    "backend": {
+                        "repoPasswordSecretRef": {
+                            "name": BACKUP_REPO_SECRET,
+                            "key": BACKUP_REPO_SECRET_KEY,
+                        },
+                        "local": {
+                            "mountPath": mount_path,
+                            "pvc": pvc,
                         }
                     }
                 },
@@ -426,14 +533,18 @@ def execute_job(backup_type: str = FULL_BACKUP, backend_type: str = LOCAL):
                               backend_type=backend_type,
                               # 快照至5#
                               block_height=5,
-                              storage_class="nas-client-provisioner")
+                              storage_class="nas-client-provisioner",
+                              pvc="integration-test-pvc",
+                              mount_path="/bk/node_backup")
     bucket_cfg = BucketConfig(name="integration-bucket",
                               endpoint="minio.zhujq:9000",
                               access_key="minio",
                               secret_key="minio123")
     restore_cfg = RestoreConfig(backup=backup_name,
                                 storage_class="nas-client-provisioner",
-                                backend_type=backend_type)
+                                backend_type=backend_type,
+                                pvc="integration-test-pvc",
+                                mount_path="/bk/node_backup")
     create_backup_and_restore(namespace="cita",
                               backup_name=backup_name,
                               restore_name="restore-for-backup-{}".format(os.getenv("CHAIN_TYPE")),
@@ -444,9 +555,10 @@ def execute_job(backup_type: str = FULL_BACKUP, backend_type: str = LOCAL):
 
 
 if __name__ == '__main__':
+    prepare_pvc()
     execute_job(backup_type=FULL_BACKUP, backend_type=LOCAL)
+    execute_job(backup_type=FULL_BACKUP, backend_type=LOCAL_WITH_EXIST_PVC)
     execute_job(backup_type=FULL_BACKUP, backend_type=S3)
     execute_job(backup_type=STATE_BACKUP, backend_type=LOCAL)
+    execute_job(backup_type=STATE_BACKUP, backend_type=LOCAL_WITH_EXIST_PVC)
     execute_job(backup_type=STATE_BACKUP, backend_type=S3)
-
-

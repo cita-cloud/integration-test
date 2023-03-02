@@ -93,4 +93,5 @@ def create_block_height_fallback():
 
 
 if __name__ == '__main__':
-    create_block_height_fallback()
+    # create_block_height_fallback()
+    pass
