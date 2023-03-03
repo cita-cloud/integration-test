@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env python
 #
 # Copyright Rivtower Technologies LLC.
 #
@@ -13,33 +13,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-#
 
-pwd=`pwd`
-dir=`dirname $0`
-path=$pwd/$dir/scripts
+FULL_BACKUP = "full-backup"
+STATE_BACKUP = "state-backup"
 
-for file in `ls "$path/v1"`; do
-  echo `date`
-  python "$path/v1/$file"
-  ret=$?
-  if [ "$ret" = "0" ]; then
-    echo "exec $file successful"
-  else
-    echo "exec $file failed, ret = $ret"
-    exit 1
-  fi
-done
+LOCAL = "local"
+LOCAL_WITH_EXIST_PVC = "local-with-pvc"
+S3 = "s3"
 
-for file in `ls "$path/v2"`; do
-  echo `date`
-  python "$path/v2/$file"
-  ret=$?
-  if [ "$ret" = "0" ]; then
-    echo "exec $file successful"
-  else
-    echo "exec $file failed, ret = $ret"
-    exit 1
-  fi
-done
+BACKUP_REPO_SECRET = "backup-repo"
+BACKUP_REPO_SECRET_KEY = "password"
+
+MINIO_CREDENTIALS_SECRET = "minio-credentials"
+MINIO_CREDENTIALS_SECRET_ACCESS_KEY = "username"
+MINIO_CREDENTIALS_SECRET_SECRET_KEY = "password"
+
+BUCKET_ENDPOINT = "http://192.168.10.122:30289"
+BUCKET_FOR_RAFT = "raft-bucket"
+BUCKET_FOR_OVERLORD = "overlord-bucket"
