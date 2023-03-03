@@ -40,7 +40,7 @@ def exec_chaos():
         clean()
         exit(10)
 
-    time.sleep(300)
+    time.sleep(360)
 
     # delete network chaos test
     ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/network-chaos.yaml"))
@@ -60,7 +60,7 @@ def exec_chaos():
         clean()
         exit(40)
 
-    time.sleep(1000)
+    time.sleep(1410)
 
     # delete pod chaos test
     ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/pod-chaos.yaml"))
@@ -80,7 +80,7 @@ def exec_chaos():
         clean()
         exit(70)
 
-    time.sleep(400)
+    time.sleep(420)
 
     # delete io chaos test
     ret = subprocess.getoutput(delete_cmd.format("test/reliability/chaos/io-chaos.yaml"))

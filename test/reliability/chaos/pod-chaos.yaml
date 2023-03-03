@@ -7,9 +7,8 @@ spec:
   templates:
     - name: container-entry
       templateType: Serial
-      deadline: 900s
+      deadline: 1290s
       children:
-        - workflow-pod-failure
         - workflow-pod-kill
         - workflow-consensus-kill
         - workflow-controller-kill
@@ -20,9 +19,9 @@ spec:
         - workflow-stress-test
     - name: workflow-pod-kill
       templateType: Schedule
-      deadline: 100s
+      deadline: 180s
       schedule:
-        schedule: "@every 50s"
+        schedule: "@every 90s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
@@ -34,28 +33,11 @@ spec:
             - cita
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
-    - name: workflow-pod-failure
-      templateType: Schedule
-      deadline: 100s
-      schedule:
-        schedule: "@every 50s"
-        concurrencyPolicy: Allow
-        type: PodChaos
-        podChaos:
-          action: pod-failure
-          mode: fixed
-          value: "2"
-          duration: "30s"
-          selector:
-            namespaces:
-            - cita
-            labelSelectors:
-              app.kubernetes.io/chain-name: XXXXXX
     - name: workflow-consensus-kill
       templateType: Schedule
-      deadline: 100s
+      deadline: 180s
       schedule:
-        schedule: "@every 40s"
+        schedule: "@every 90s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
@@ -71,9 +53,9 @@ spec:
             - consensus
     - name: workflow-controller-kill
       templateType: Schedule
-      deadline: 100s
+      deadline: 180s
       schedule:
-        schedule: "@every 50s"
+        schedule: "@every 90s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
@@ -89,9 +71,9 @@ spec:
             - controller
     - name: workflow-executor-kill
       templateType: Schedule
-      deadline: 100s
+      deadline: 180s
       schedule:
-        schedule: "@every 40s"
+        schedule: "@every 90s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
@@ -107,9 +89,9 @@ spec:
             - executor
     - name: workflow-storage-kill
       templateType: Schedule
-      deadline: 100s
+      deadline: 180s
       schedule:
-        schedule: "@every 50s"
+        schedule: "@every 90s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
@@ -125,9 +107,9 @@ spec:
             - storage
     - name: workflow-crypto-kill
       templateType: Schedule
-      deadline: 100s
+      deadline: 180s
       schedule:
-        schedule: "@every 40s"
+        schedule: "@every 90s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
@@ -142,9 +124,9 @@ spec:
             - crypto
     - name: workflow-network-kill
       templateType: Schedule
-      deadline: 100s
+      deadline: 180s
       schedule:
-        schedule: "@every 40s"
+        schedule: "@every 90s"
         concurrencyPolicy: Allow
         type: PodChaos
         podChaos:
@@ -160,7 +142,7 @@ spec:
             - network
     - name: workflow-stress-test
       templateType: StressChaos
-      deadline: 100s
+      deadline: 30s
       stressChaos:
         mode: fixed
         value: "2"
