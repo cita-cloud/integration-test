@@ -232,6 +232,7 @@ class Backup(object):
                         "local": {
                             "mountPath": "/hello",
                             "storageClass": storage_class,
+                            "size": "10Gi"
                         }
                     }
                 },
