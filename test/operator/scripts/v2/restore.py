@@ -16,6 +16,7 @@
 
 import sys
 
+import kubernetes.client.exceptions
 from kubernetes import client, config
 
 from bucket import BucketConfig
@@ -25,6 +26,7 @@ from contants import BACKUP_REPO_SECRET, BACKUP_REPO_SECRET_KEY, MINIO_CREDENTIA
 
 sys.path.append("test/utils")
 import util
+from logger import logger
 
 
 class RestoreConfig(object):
@@ -220,5 +222,30 @@ class Restore(object):
             body=client.V1DeleteOptions(),
         )
 
-    def status(self):
-        pass
+    def clear(self):
+        try:
+            _ = self.api.get_namespaced_custom_object(
+                group="rivtower.com",
+                version="v1cita",
+                name=self.name,
+                namespace=self.namespace,
+                plural="restores",
+            )
+            self.delete()
+            logger.debug("delete old resource {}/{} successful".format(self.namespace, self.name))
+        except kubernetes.client.exceptions.ApiException:
+            logger.debug("the resource {}/{} have been deleted, pass...".format(self.namespace, self.name))
+
+    def status(self) -> str:
+        resource = self.api.get_namespaced_custom_object(
+            group="rivtower.com",
+            version="v1cita",
+            name=self.name,
+            namespace=self.namespace,
+            plural="restores",
+        )
+        if not resource.get('status'):
+            return "No Status"
+        for condition in resource.get('status').get('conditions'):
+            if condition.get('type') == 'Completed':
+                return condition.get('reason')

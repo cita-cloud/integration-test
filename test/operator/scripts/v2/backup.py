@@ -442,6 +442,34 @@ class Backup(object):
             body=client.V1DeleteOptions(),
         )
 
+    def clear(self):
+        try:
+            _ = self.custom_api.get_namespaced_custom_object(
+                group="rivtower.com",
+                version="v1cita",
+                name=self.name,
+                namespace=self.namespace,
+                plural="backups",
+            )
+            self.delete()
+            logger.debug("delete old resource {}/{} successful".format(self.namespace, self.name))
+        except kubernetes.client.exceptions.ApiException:
+            logger.debug("the resource {}/{} have been deleted, pass...".format(self.namespace, self.name))
+
+    def status(self) -> str:
+        resource = self.custom_api.get_namespaced_custom_object(
+            group="rivtower.com",
+            version="v1cita",
+            name=self.name,
+            namespace=self.namespace,
+            plural="backups",
+        )
+        if not resource.get('status'):
+            return "No Status"
+        for condition in resource.get('status').get('conditions'):
+            if condition.get('type') == 'Completed':
+                return condition.get('reason')
+
 
 def create_backup_and_restore(namespace,
                               backup_name,
@@ -450,7 +478,9 @@ def create_backup_and_restore(namespace,
                               bucket_cfg: BucketConfig = None,
                               restore_cfg: RestoreConfig = None):
     backup = Backup(namespace=namespace, name=backup_name)
+    backup.clear()
     restore = Restore(namespace=namespace, name=restore_name)
+    restore.clear()
     try:
         logger.debug("========================>")
         logger.debug("exec backup and restore, backup type: {}, backend type: {}".format(backup_cfg.backup_type,
@@ -522,9 +552,9 @@ def create_backup_and_restore(namespace,
         logger.debug("exec backup and restore, backup type: {}, backend type: {}".format(backup_cfg.backup_type,
                      backup_cfg.backend_type))
         logger.debug("<========================")
-        if restore.created:
+        if restore.created and restore.status() == "Succeeded":
             restore.delete()
-        if backup.created:
+        if backup.created and backup.status() == "Succeeded":
             backup.delete()
 
 

@@ -2,6 +2,7 @@ import os
 import sys
 import time
 
+import kubernetes.client.exceptions
 from kubernetes import client, config
 
 from restore import Restore
@@ -65,10 +66,38 @@ class Snapshot(object):
             body=client.V1DeleteOptions(),
         )
 
+    def clear(self):
+        try:
+            _ = self.api.get_namespaced_custom_object(
+                group="citacloud.rivtower.com",
+                version="v1",
+                name=self.name,
+                namespace=self.namespace,
+                plural="snapshots",
+            )
+            self.delete()
+            logger.debug("delete old resource {}/{} successful".format(self.namespace, self.name))
+        except kubernetes.client.exceptions.ApiException:
+            logger.debug("the resource {}/{} have been deleted, pass...".format(self.namespace, self.name))
+
+    def status(self) -> str:
+        resource = self.api.get_namespaced_custom_object(
+            group="citacloud.rivtower.com",
+            version="v1",
+            name=self.name,
+            namespace=self.namespace,
+            plural="snapshots",
+        )
+        if not resource.get('status'):
+            return "No Status"
+        return resource.get('status').get('status')
+
 
 if __name__ == "__main__":
     snapshot = Snapshot(name="snapshot-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    snapshot.clear()
     restore = Restore(name="restore-for-snapshot-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    restore.clear()
     try:
         # create snapshot job
         logger.info("create snapshot job...")
@@ -128,7 +157,7 @@ if __name__ == "__main__":
         logger.exception(e)
         exit(30)
     finally:
-        if restore.created:
+        if restore.created and restore.status() == "Complete":
             restore.delete()
-        if snapshot.created:
+        if snapshot.created and snapshot.status() == "Complete":
             snapshot.delete()

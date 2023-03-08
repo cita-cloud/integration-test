@@ -2,6 +2,7 @@ import os
 import sys
 import time
 
+import kubernetes.client.exceptions
 from kubernetes import client, config
 
 from restore import Restore
@@ -66,10 +67,38 @@ class Backup(object):
             body=client.V1DeleteOptions(),
         )
 
+    def clear(self):
+        try:
+            _ = self.api.get_namespaced_custom_object(
+                group="citacloud.rivtower.com",
+                version="v1",
+                name=self.name,
+                namespace=self.namespace,
+                plural="backups",
+            )
+            self.delete()
+            logger.debug("delete old resource {}/{} successful".format(self.namespace, self.name))
+        except kubernetes.client.exceptions.ApiException:
+            logger.debug("the resource {}/{} have been deleted, pass...".format(self.namespace, self.name))
+
+    def status(self) -> str:
+        resource = self.api.get_namespaced_custom_object(
+            group="citacloud.rivtower.com",
+            version="v1",
+            name=self.name,
+            namespace=self.namespace,
+            plural="backups",
+        )
+        if not resource.get('status'):
+            return "No Status"
+        return resource.get('status').get('status')
+
 
 if __name__ == "__main__":
     backup = Backup(name="backup-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    backup.clear()
     restore = Restore(name="restore-for-backup-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    restore.clear()
     try:
         # get block number when backup
         bn_with_backup = util.get_block_number()
@@ -129,7 +158,7 @@ if __name__ == "__main__":
         logger.exception(e)
         exit(10)
     finally:
-        if restore.created:
+        if restore.created and restore.status() == "Complete":
             restore.delete()
-        if backup.created:
+        if backup.created and backup.status() == "Complete":
             backup.delete()
