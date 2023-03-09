@@ -543,7 +543,7 @@ def create_backup_and_restore(namespace,
             "create restore for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
 
         # wait for the consensus block to determine whether the node is ok
-        util.wait_block_number_exceed_specified_height(specified_height=bn_with_latest, retry_times=100, retry_wait=2)
+        util.wait_block_number_exceed_specified_height(specified_height=bn_with_latest, retry_times=200, retry_wait=3)
     except Exception as s:
         logger.exception(s)
         exit(10)
