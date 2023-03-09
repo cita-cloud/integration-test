@@ -1,6 +1,7 @@
 import os
 import sys
 
+import kubernetes.client.exceptions
 from kubernetes import client, config
 
 sys.path.append("test/utils")
@@ -57,6 +58,32 @@ class Switchover(object):
     def wait_job_complete(self):
         return util.wait_job_complete("switchovers", self.name, self.namespace)
 
+    def clear(self):
+        try:
+            _ = self.api.get_namespaced_custom_object(
+                group="citacloud.rivtower.com",
+                version="v1",
+                name=self.name,
+                namespace=self.namespace,
+                plural="switchovers",
+            )
+            self.delete()
+            logger.debug("delete old resource {}/{} successful".format(self.namespace, self.name))
+        except kubernetes.client.exceptions.ApiException:
+            logger.debug("the resource {}/{} have been deleted, pass...".format(self.namespace, self.name))
+
+    def status(self) -> str:
+        resource = self.api.get_namespaced_custom_object(
+            group="citacloud.rivtower.com",
+            version="v1",
+            name=self.name,
+            namespace=self.namespace,
+            plural="switchovers",
+        )
+        if not resource.get('status'):
+            return "No Status"
+        return resource.get('status').get('status')
+
 
 def check_node_account_switched(namespace, name, wanted_account_name):
     config.load_kube_config()
@@ -76,7 +103,9 @@ if __name__ == "__main__":
         exit(0)
 
     sw0 = Switchover(name="switchover-{}-0".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    sw0.clear()
     sw1 = Switchover(name="switchover-{}-1".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    sw1.clear()
     try:
         logger.info("create switchover job, [node0 update to node1-account, node1 update to node0-account]...")
         sw0.create(chain=os.getenv("CHAIN_NAME"),
@@ -125,7 +154,7 @@ if __name__ == "__main__":
         logger.exception(e)
         exit(40)
     finally:
-        if sw0.created:
+        if sw0.created and sw0.status() == "Complete":
             sw0.delete()
-        if sw1.created:
+        if sw1.created and sw1.status() == "Complete":
             sw1.delete()

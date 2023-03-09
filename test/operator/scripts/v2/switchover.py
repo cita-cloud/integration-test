@@ -1,6 +1,7 @@
 import os
 import sys
 
+import kubernetes.client.exceptions
 from kubernetes import client, config
 
 sys.path.append("test/utils")
@@ -51,8 +52,36 @@ class Switchover(object):
             body=client.V1DeleteOptions(),
         )
 
+    def clear(self):
+        try:
+            _ = self.api.get_namespaced_custom_object(
+                group="rivtower.com",
+                version="v1cita",
+                name=self.name,
+                namespace=self.namespace,
+                plural="switchovers",
+            )
+            self.delete()
+            logger.debug("delete old resource {}/{} successful".format(self.namespace, self.name))
+        except kubernetes.client.exceptions.ApiException:
+            logger.debug("the resource {}/{} have been deleted, pass...".format(self.namespace, self.name))
+
     def wait_job_complete(self):
         return util.wait_new_job_complete("switchovers", self.name, self.namespace)
+
+    def status(self) -> str:
+        resource = self.api.get_namespaced_custom_object(
+            group="rivtower.com",
+            version="v1cita",
+            name=self.name,
+            namespace=self.namespace,
+            plural="switchovers",
+        )
+        if not resource.get('status'):
+            return "No Status"
+        for condition in resource.get('status').get('conditions'):
+            if condition.get('type') == 'Completed':
+                return condition.get('reason')
 
 
 def check_node_account_switched(namespace, name, wanted_account_name):
@@ -73,7 +102,9 @@ if __name__ == "__main__":
         exit(0)
 
     sw0 = Switchover(name="switchover-{}-0".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    sw0.clear()
     sw1 = Switchover(name="switchover-{}-1".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    sw1.clear()
     try:
         logger.info("create switchover job, [node0 update to node1-account, node1 update to node0-account]...")
         sw0.create(chain=os.getenv("CHAIN_NAME"),
@@ -122,7 +153,7 @@ if __name__ == "__main__":
         logger.exception(e)
         exit(40)
     finally:
-        if sw0.created:
+        if sw0.created and sw0.status() == "Succeeded":
             sw0.delete()
-        if sw1.created:
+        if sw1.created and sw1.status() == "Succeeded":
             sw1.delete()

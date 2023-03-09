@@ -1,9 +1,11 @@
 import sys
 
+import kubernetes.client.exceptions
 from kubernetes import client, config
 
 sys.path.append("test/utils")
 import util
+from logger import logger
 
 
 class Restore(object):
@@ -95,5 +97,28 @@ class Restore(object):
             body=client.V1DeleteOptions(),
         )
 
-    def status(self):
-        pass
+    def clear(self):
+        try:
+            _ = self.api.get_namespaced_custom_object(
+                group="citacloud.rivtower.com",
+                version="v1",
+                name=self.name,
+                namespace=self.namespace,
+                plural="restores",
+            )
+            self.delete()
+            logger.debug("delete old resource {}/{} successful".format(self.namespace, self.name))
+        except kubernetes.client.exceptions.ApiException:
+            logger.debug("the resource {}/{} have been deleted, pass...".format(self.namespace, self.name))
+
+    def status(self) -> str:
+        resource = self.api.get_namespaced_custom_object(
+            group="citacloud.rivtower.com",
+            version="v1",
+            name=self.name,
+            namespace=self.namespace,
+            plural="restores",
+        )
+        if not resource.get('status'):
+            return "No Status"
+        return resource.get('status').get('status')

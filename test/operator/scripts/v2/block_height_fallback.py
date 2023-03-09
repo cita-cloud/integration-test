@@ -1,6 +1,7 @@
 import os
 import sys
 
+import kubernetes.client.exceptions
 from kubernetes import client, config
 
 sys.path.append("test/utils")
@@ -55,11 +56,40 @@ class BlockHeightFallback(object):
             body=client.V1DeleteOptions(),
         )
 
+    def clear(self):
+        try:
+            _ = self.custom_api.get_namespaced_custom_object(
+                group="rivtower.com",
+                version="v1cita",
+                name=self.name,
+                namespace=self.namespace,
+                plural="blockheightfallbacks",
+            )
+            self.delete()
+            logger.debug("delete old resource {}/{} successful".format(self.namespace, self.name))
+        except kubernetes.client.exceptions.ApiException:
+            logger.debug("the resource {}/{} have been deleted, pass...".format(self.namespace, self.name))
+
+    def status(self) -> str:
+        resource = self.custom_api.get_namespaced_custom_object(
+            group="rivtower.com",
+            version="v1cita",
+            name=self.name,
+            namespace=self.namespace,
+            plural="blockheightfallbacks",
+        )
+        if not resource.get('status'):
+            return "No Status"
+        for condition in resource.get('status').get('conditions'):
+            if condition.get('type') == 'Completed':
+                return condition.get('reason')
+
 
 def create_block_height_fallback():
     old_bn = util.get_block_number()
     logger.info("the block number before fallback is: {}".format(old_bn))
     bhf = BlockHeightFallback(name="bhf-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    bhf.clear()
     try:
         logger.info("create fallback job...")
         bhf.create(chain=os.getenv("CHAIN_NAME"),
@@ -88,7 +118,7 @@ def create_block_height_fallback():
         logger.exception(e)
         exit(20)
     finally:
-        if bhf.created:
+        if bhf.created and bhf.status() == "Succeeded":
             bhf.delete()
 
 
