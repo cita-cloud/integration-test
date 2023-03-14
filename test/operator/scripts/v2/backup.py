@@ -531,7 +531,7 @@ def create_backup_and_restore(namespace,
 
         util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
-        node_syncing_status = util.get_node_syncing_status(retry_times=30, retry_wait=3)
+        node_syncing_status = util.get_node_syncing_status(retry_times=90, retry_wait=1)
         logger.debug("node status after backup restore is: {}".format(node_syncing_status))
 
         bn_with_recover = node_syncing_status["self_status"]["height"]
@@ -543,7 +543,14 @@ def create_backup_and_restore(namespace,
             "create restore for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
 
         # wait for the consensus block to determine whether the node is ok
-        util.wait_block_number_exceed_specified_height(specified_height=bn_with_latest, retry_times=200, retry_wait=3)
+        result = util.wait_block_number_exceed_specified_height(specified_height=bn_with_latest,
+                                                                retry_times=600,
+                                                                retry_wait=1)
+
+        # statistics sync speed
+        # estimated value = ( bn_with_latest - bn_with_recover ) / time_spent
+        estimated_value = (bn_with_latest - bn_with_recover) / result.time_spent
+        logger.info("the sync speed is {:.2f} blocks/sec".format(estimated_value))
     except Exception as s:
         logger.exception(s)
         exit(10)

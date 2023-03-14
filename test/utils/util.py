@@ -20,7 +20,7 @@ import subprocess
 import time
 
 from kubernetes import client, config
-from tenacity import retry, stop_after_attempt, wait_fixed, after_log
+from tenacity import retry, stop_after_attempt, wait_fixed, after_log, Retrying
 
 from logger import logger
 
@@ -67,6 +67,7 @@ def get_node_syncing_status(retry_times=DEFAULT_RETRY_TIMES, retry_wait=DEFAULT_
         if not node_status["is_sync"]:
             raise Exception("the node status is not sync")
         return node_status
+
     return inner_func()
 
 
@@ -206,12 +207,33 @@ def check_node_running(name, namespace):
         raise Exception("chain node is not ready")
 
 
-# wait for the block height to exceed the specified height
-def wait_block_number_exceed_specified_height(specified_height, retry_times=DEFAULT_RETRY_TIMES, retry_wait=DEFAULT_RETRY_WAIT):
-    @retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
-    def inner_func():
-        current_bn = get_block_number(retry_times=retry_times, retry_wait=retry_wait)
-        if current_bn < specified_height:
-            raise Exception("not exceed specified height")
+class RetryResult(object):
+    def __int__(self, attempt_times, retry_wait):
+        self.attempt_times = attempt_times
+        self.retry_wait = retry_wait
 
-    return inner_func()
+    @property
+    def time_spent(self):
+        return (self.attempt_times - 1) * self.retry_wait
+
+
+# wait for the block height to exceed the specified height
+def wait_block_number_exceed_specified_height(specified_height,
+                                              retry_times=DEFAULT_RETRY_TIMES,
+                                              retry_wait=DEFAULT_RETRY_WAIT) -> RetryResult:
+    attempt_times = 0
+    for attempt in Retrying(stop=stop_after_attempt(retry_times),
+                            wait=wait_fixed(retry_wait),
+                            after=after_log(logger, logging.DEBUG)):
+        with attempt:
+            # add times
+            attempt_times += attempt.retry_state.attempt_number
+            current_bn = get_block_number(retry_times=retry_times, retry_wait=retry_wait)
+            if current_bn < specified_height:
+                raise Exception("not exceed specified height")
+
+    retry_result = RetryResult()
+    retry_result.attempt_times = attempt_times
+    retry_result.retry_wait = retry_wait
+
+    return retry_result
