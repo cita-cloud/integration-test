@@ -101,4 +101,8 @@ if __name__ == "__main__":
     subprocess.getoutput("sed -i 's/XXXXXX/{}/g' test/reliability/chaos/network-chaos.yaml".format(os.getenv("CHAIN_NAME")))
     subprocess.getoutput("sed -i 's/XXXXXX/{}/g' test/reliability/chaos/pod-chaos.yaml".format(os.getenv("CHAIN_NAME")))
     subprocess.getoutput("sed -i 's/XXXXXX/{}/g' test/reliability/chaos/io-chaos.yaml".format(os.getenv("CHAIN_NAME")))
+
+    subprocess.getoutput("sed -i 's/NNNNNN/{}/g' test/reliability/chaos/network-chaos.yaml".format(os.getenv("NAMESPACE")))
+    subprocess.getoutput("sed -i 's/NNNNNN/{}/g' test/reliability/chaos/pod-chaos.yaml".format(os.getenv("NAMESPACE")))
+    subprocess.getoutput("sed -i 's/NNNNNN/{}/g' test/reliability/chaos/io-chaos.yaml".format(os.getenv("NAMESPACE")))
     exec_chaos()

@@ -30,7 +30,7 @@ spec:
           value: "2"
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
     - name: workflow-consensus-kill
@@ -46,7 +46,7 @@ spec:
           value: "2"
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
           containerNames:
@@ -64,7 +64,7 @@ spec:
           value: "2"
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
           containerNames:
@@ -82,7 +82,7 @@ spec:
           value: "2"
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
           containerNames:
@@ -100,7 +100,7 @@ spec:
           value: "2"
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
           containerNames:
@@ -117,7 +117,7 @@ spec:
           mode: one
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
           containerNames:
@@ -135,7 +135,7 @@ spec:
           value: "2"
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
           containerNames:
@@ -148,7 +148,7 @@ spec:
         value: "2"
         selector:
           namespaces:
-          - cita
+          - NNNNNN
           labelSelectors:
             app.kubernetes.io/chain-name: XXXXXX
         stressors:

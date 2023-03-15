@@ -21,7 +21,7 @@ spec:
         value: "2"
         selector:
           namespaces:
-          - cita
+          - NNNNNN
           labelSelectors:
             app.kubernetes.io/chain-name: XXXXXX
         direction: to
@@ -30,7 +30,7 @@ spec:
           value: "2"
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
     - name: workflow-network-bandwidth
@@ -42,7 +42,7 @@ spec:
         value: "2"
         selector:
           namespaces:
-          - cita
+          - NNNNNN
           labelSelectors:
             app.kubernetes.io/chain-name: XXXXXX
         bandwidth:
@@ -58,7 +58,7 @@ spec:
         value: "2"
         selector:
           namespaces:
-          - cita
+          - NNNNNN
           labelSelectors:
             app.kubernetes.io/chain-name: XXXXXX
         delay:

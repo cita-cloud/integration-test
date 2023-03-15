@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import logging
+import os
 import sys
 
 from kubernetes import client, config
@@ -76,7 +77,7 @@ class Pvc(object):
 
 
 def prepare_pvc():
-    pvc = Pvc(namespace="cita", name="integration-test-pvc")
+    pvc = Pvc(namespace=os.getenv("NAMESPACE"), name="integration-test-pvc")
     if pvc.exist():
         pvc.delete()
         pvc.check_pvc_deleted()

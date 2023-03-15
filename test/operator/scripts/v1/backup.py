@@ -95,9 +95,9 @@ class Backup(object):
 
 
 if __name__ == "__main__":
-    backup = Backup(name="backup-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    backup = Backup(name="backup-{}".format(os.getenv("CHAIN_TYPE")), namespace=os.getenv("NAMESPACE"))
     backup.clear()
-    restore = Restore(name="restore-for-backup-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    restore = Restore(name="restore-for-backup-{}".format(os.getenv("CHAIN_TYPE")), namespace=os.getenv("NAMESPACE"))
     restore.clear()
     try:
         # get block number when backup
@@ -139,7 +139,7 @@ if __name__ == "__main__":
             raise Exception("restore for backup exec failed")
         logger.info("the restore job for backup has been completed")
 
-        util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace="cita")
+        util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
         node_syncing_status = util.get_node_syncing_status(retry_times=30, retry_wait=3)
         logger.debug("node status after backup restore is: {}".format(node_syncing_status))
