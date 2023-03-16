@@ -94,9 +94,9 @@ class Snapshot(object):
 
 
 if __name__ == "__main__":
-    snapshot = Snapshot(name="snapshot-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    snapshot = Snapshot(name="snapshot-{}".format(os.getenv("CHAIN_TYPE")), namespace=os.getenv("NAMESPACE"))
     snapshot.clear()
-    restore = Restore(name="restore-for-snapshot-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    restore = Restore(name="restore-for-snapshot-{}".format(os.getenv("CHAIN_TYPE")), namespace=os.getenv("NAMESPACE"))
     restore.clear()
     try:
         # create snapshot job
@@ -136,7 +136,7 @@ if __name__ == "__main__":
             raise Exception("restore for snapshot exec failed")
         logger.info("the restore job for snapshot has been completed")
 
-        util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace="cita")
+        util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
         node_syncing_status = util.get_node_syncing_status(retry_times=30, retry_wait=3)
         logger.debug("node status after snapshot restore is: {}".format(node_syncing_status))

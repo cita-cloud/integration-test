@@ -25,7 +25,7 @@ spec:
           value: "2"
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
           volumePath: /data
@@ -46,7 +46,7 @@ spec:
           value: "2"
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
           volumePath: /data
@@ -67,7 +67,7 @@ spec:
           value: "2"
           selector:
             namespaces:
-            - cita
+            - NNNNNN
             labelSelectors:
               app.kubernetes.io/chain-name: XXXXXX
           volumePath: /data

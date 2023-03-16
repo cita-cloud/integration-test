@@ -529,7 +529,7 @@ def create_backup_and_restore(namespace,
             raise Exception("restore for backup exec failed")
         logger.info("the restore job for backup has been completed")
 
-        util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace="cita")
+        util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
         node_syncing_status = util.get_node_syncing_status(retry_times=30, retry_wait=3)
         logger.debug("node status after backup restore is: {}".format(node_syncing_status))
@@ -576,7 +576,7 @@ def execute_job(backup_type: str = FULL_BACKUP, backend_type: str = LOCAL):
                                 backend_type=backend_type,
                                 pvc="integration-test-pvc",
                                 mount_path="/bk/node_backup")
-    create_backup_and_restore(namespace="cita",
+    create_backup_and_restore(namespace=os.getenv("NAMESPACE"),
                               backup_name=backup_name,
                               restore_name="restore-for-backup-{}".format(os.getenv("CHAIN_TYPE")),
                               backup_cfg=backup_cfg,

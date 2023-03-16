@@ -88,7 +88,7 @@ class BlockHeightFallback(object):
 def create_block_height_fallback():
     old_bn = util.get_block_number()
     logger.info("the block number before fallback is: {}".format(old_bn))
-    bhf = BlockHeightFallback(name="bhf-{}".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    bhf = BlockHeightFallback(name="bhf-{}".format(os.getenv("CHAIN_TYPE")), namespace=os.getenv("NAMESPACE"))
     bhf.clear()
     try:
         logger.info("create fallback job...")
@@ -101,7 +101,7 @@ def create_block_height_fallback():
         logger.info("the fallback job has been completed")
 
         # check work well
-        util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace="cita")
+        util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
         node_syncing_status = util.get_node_syncing_status(retry_times=30, retry_wait=3)
         logger.debug("node status after fallback is: {}".format(node_syncing_status))

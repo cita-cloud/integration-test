@@ -101,9 +101,9 @@ if __name__ == "__main__":
         print("raft chain skip switchover")
         exit(0)
 
-    sw0 = Switchover(name="switchover-{}-0".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    sw0 = Switchover(name="switchover-{}-0".format(os.getenv("CHAIN_TYPE")), namespace=os.getenv("NAMESPACE"))
     sw0.clear()
-    sw1 = Switchover(name="switchover-{}-1".format(os.getenv("CHAIN_TYPE")), namespace="cita")
+    sw1 = Switchover(name="switchover-{}-1".format(os.getenv("CHAIN_TYPE")), namespace=os.getenv("NAMESPACE"))
     sw1.clear()
     try:
         logger.info("create switchover job, [node0 update to node1-account, node1 update to node0-account]...")
@@ -114,11 +114,11 @@ if __name__ == "__main__":
         if status == "Failed":
             raise Exception("switchover exec failed")
         logger.info("the switchover job has been completed")
-        if not check_node_account_switched(namespace="cita",
+        if not check_node_account_switched(namespace=os.getenv("NAMESPACE"),
                                            name="{}-node0".format(os.getenv("CHAIN_NAME")),
                                            wanted_account_name="{}-node1-account".format(
                                                os.getenv("CHAIN_NAME"))) or not \
-                check_node_account_switched(namespace="cita",
+                check_node_account_switched(namespace=os.getenv("NAMESPACE"),
                                             name="{}-node1".format(os.getenv("CHAIN_NAME")),
                                             wanted_account_name="{}-node0-account".format(os.getenv("CHAIN_NAME"))):
             raise Exception("account configmap haven't switched")
@@ -136,11 +136,11 @@ if __name__ == "__main__":
         if status == "Failed":
             raise Exception("switchover exec failed")
         logger.info("the switchover job has been completed")
-        if not check_node_account_switched(namespace="cita",
+        if not check_node_account_switched(namespace=os.getenv("NAMESPACE"),
                                            name="{}-node0".format(os.getenv("CHAIN_NAME")),
                                            wanted_account_name="{}-node0-account".format(
                                                os.getenv("CHAIN_NAME"))) or not \
-                check_node_account_switched(namespace="cita",
+                check_node_account_switched(namespace=os.getenv("NAMESPACE"),
                                             name="{}-node1".format(os.getenv("CHAIN_NAME")),
                                             wanted_account_name="{}-node1-account".format(os.getenv("CHAIN_NAME"))):
             raise Exception("account configmap haven't switched")

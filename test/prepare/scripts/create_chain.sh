@@ -20,13 +20,13 @@
 echo 'import admin account'
 cldi account import 0xb2371a70c297106449f89445f20289e6d16942f08f861b5e95cbcf0462e384c1 --name admin --crypto SM
 
-kubectl create namespace cita
+kubectl create namespace $NAMESPACE
 
 # check pod
 times=60
 while [ $times -ge 0 ]
 do
-  res=`kubectl get pod --no-headers=true -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s`
+  res=`kubectl get pod --no-headers=true -n $NAMESPACE -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s`
   if [ $? -ne 0 ]; then
     let times--
     continue
@@ -36,8 +36,8 @@ do
   else
     echo "old chain resource still exists, delete it..."
     # delete command maybe return errors, ignore
-    kubectl delete -f test/resource/$CHAIN_TYPE -n cita --request-timeout=10s --recursive 2>/dev/null
-    kubectl delete -f test/operations/resource/$CHAIN_TYPE -n cita --request-timeout=10s --recursive 2>/dev/null
+    kubectl delete -f test/resource/$CHAIN_TYPE -n $NAMESPACE --request-timeout=10s --recursive 2>/dev/null
+    kubectl delete -f test/operations/resource/$CHAIN_TYPE -n $NAMESPACE --request-timeout=10s --recursive 2>/dev/null
     let times--
     sleep 5
   fi
@@ -46,7 +46,7 @@ done
 times=60
 while [ $times -ge 0 ]
 do
-  res=`kubectl get pvc --no-headers=true -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s`
+  res=`kubectl get pvc --no-headers=true -n $NAMESPACE -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s`
   if [ $? -ne 0 ]; then
     let times--
     continue
@@ -55,7 +55,7 @@ do
     break
   else
     echo "old chain pvc still exists, delete it..."
-    kubectl delete pvc -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s 2>/dev/null
+    kubectl delete pvc -n $NAMESPACE -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s 2>/dev/null
     let times--
     sleep 5
   fi
@@ -63,7 +63,7 @@ done
 
 # create chain
 echo "create $CHAIN_TYPE chain"
-kubectl apply -f test/resource/$CHAIN_TYPE -n cita --recursive --request-timeout=30s
+kubectl apply -f test/resource/$CHAIN_TYPE -n $NAMESPACE --recursive --request-timeout=30s
 if [ $? -ne 0 ]; then
   echo "create $CHAIN_TYPE chain failed"
   exit 1
@@ -73,7 +73,7 @@ fi
 times=300
 while [ $times -ge 0 ]
 do
-  res=`kubectl get pod --no-headers=true -ncita -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s`
+  res=`kubectl get pod --no-headers=true -n $NAMESPACE -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s`
   if [ $? -ne 0 ]; then
     let times--
     continue
@@ -92,5 +92,5 @@ done
 echo `date`
 sleep 30
 
-service_name=`kubectl get svc -ncita --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s | head -n 1 | awk '{print $1}'`
-cldi -r $service_name.cita:50004 -e $service_name.cita:50002 -u default context save default
+service_name=`kubectl get svc -n $NAMESPACE --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s | head -n 1 | awk '{print $1}'`
+cldi -r $service_name.$NAMESPACE:50004 -e $service_name.$NAMESPACE:50002 -u default context save default
