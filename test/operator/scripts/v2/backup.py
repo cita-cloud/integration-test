@@ -531,19 +531,35 @@ def create_backup_and_restore(namespace,
 
         util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
-        node_syncing_status = util.get_node_syncing_status(retry_times=30, retry_wait=3)
-        logger.debug("node status after backup restore is: {}".format(node_syncing_status))
+        init_time = int(time.time() * 1000)
 
-        bn_with_recover = node_syncing_status["self_status"]["height"]
-        logger.info("the block number after backup restore is: {}".format(bn_with_recover))
-        if bn_with_recover > bn_with_latest:
-            raise Exception("restore not excepted block number: bn_with_recover is {}, bn_with_latest is {}".
-                            format(bn_with_recover, bn_with_latest))
+        node_status = util.get_node_status(retry_times=30, retry_wait=2)
+        logger.debug("node status after backup restore is: {}".format(node_status))
+
+        bn_with_recover = node_status["self_status"]["height"]
+        bn_init_height = node_status["init_block_number"]
+        logger.info("the block number after backup restore is: {} init height is: {}".format(bn_with_recover, bn_init_height))
+        
+        if backup_cfg.backup_type == FULL_BACKUP:
+            if bn_init_height < bn_with_backup or bn_init_height > bn_with_recover:
+                raise Exception("restore full backup not excepted block number: bn_with_recover is {}, bn_init_height is: {}, bn_with_backup is {}".
+                                format(bn_with_recover, bn_init_height, bn_with_backup))
+        
+        if backup_cfg.backup_type == STATE_BACKUP:
+            if bn_init_height != 9:
+                raise Exception("restore state backup not excepted block number: bn_with_recover is {}, bn_init_height is: {}, bn_with_backup is {}".
+                                format(bn_with_recover, bn_init_height, bn_with_backup))
+
+        while True:
+            current_height = util.get_block_number()
+            if current_height >= bn_with_latest:
+                now_time = int(time.time() * 1000)
+                logger.info("the sync speed is {:.2f} blocks/sec".format((current_height - bn_init_height) * 1000.0 / (now_time - init_time)))
+                break
+            time.sleep(1)
+
         logger.info(
             "create restore for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
-
-        # wait for the consensus block to determine whether the node is ok
-        util.wait_block_number_exceed_specified_height(specified_height=bn_with_latest, retry_times=200, retry_wait=3)
     except Exception as s:
         logger.exception(s)
         exit(10)
@@ -562,8 +578,8 @@ def execute_job(backup_type: str = FULL_BACKUP, backend_type: str = LOCAL):
     backup_name = "backup-{}".format(os.getenv("CHAIN_TYPE"))
     backup_cfg = BackupConfig(backup_type=backup_type,
                               backend_type=backend_type,
-                              # 快照至5#
-                              block_height=5,
+                              # 快照至9#
+                              block_height=9,
                               storage_class="nas-client-provisioner",
                               pvc="integration-test-pvc",
                               mount_path="/bk/node_backup")

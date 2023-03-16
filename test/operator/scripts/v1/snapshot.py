@@ -99,11 +99,14 @@ if __name__ == "__main__":
     restore = Restore(name="restore-for-snapshot-{}".format(os.getenv("CHAIN_TYPE")), namespace=os.getenv("NAMESPACE"))
     restore.clear()
     try:
+        # get block number when snapshot
+        bn_with_snapshot = util.get_block_number()
+        logger.info("the block number before snapshot is: {}".format(bn_with_snapshot))
         # create snapshot job
         logger.info("create snapshot job...")
         snapshot.create(chain=os.getenv("CHAIN_NAME"),
                         node="{}-node0".format(os.getenv("CHAIN_NAME")),
-                        block_height=5,
+                        block_height=7,
                         ttl=120)
         status = snapshot.wait_job_complete()
         if status == "Failed":
@@ -138,20 +141,28 @@ if __name__ == "__main__":
 
         util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
-        node_syncing_status = util.get_node_syncing_status(retry_times=30, retry_wait=3)
-        logger.debug("node status after snapshot restore is: {}".format(node_syncing_status))
+        init_time = int(time.time() * 1000)
 
-        bn_with_recover = node_syncing_status["self_status"]["height"]
-        logger.info("the block number after snapshot restore is: {}".format(bn_with_recover))
-        if bn_with_recover > bn_with_latest:
-            raise Exception("snapshot not excepted block number: bn_with_recover is {}, bn_with_latest is {}".format(
-                bn_with_recover, bn_with_latest))
+        node_status = util.get_node_status(retry_times=30, retry_wait=2)
+        logger.debug("node status after snapshot restore is: {}".format(node_status))
+
+        bn_with_recover = node_status["self_status"]["height"]
+        bn_init_height = node_status["init_block_number"]
+        logger.info("the block number after snapshot restore is: {} init height is: {}".format(bn_with_recover, bn_init_height))
+        if bn_init_height != 7:
+            raise Exception("snapshot not excepted block number: bn_with_recover is {}, bn_init_height is {}, bn_with_snapshot is {}".format(
+                bn_with_recover, bn_init_height, bn_with_snapshot))
 
         logger.info(
             "create restore for node {}-node0 and check block increase successful".format(os.getenv("CHAIN_NAME")))
 
-        # wait for the consensus block to determine whether the node is ok
-        util.wait_block_number_exceed_specified_height(specified_height=bn_with_latest, retry_times=100, retry_wait=2)
+        while True:
+            current_height = util.get_block_number()
+            if current_height >= bn_with_snapshot:
+                now_time = int(time.time() * 1000)
+                logger.info("the sync speed is {:.2f} blocks/sec".format((current_height - bn_init_height) * 1000.0 / (now_time - init_time)))
+                break
+            time.sleep(1)
 
     except Exception as e:
         logger.exception(e)
