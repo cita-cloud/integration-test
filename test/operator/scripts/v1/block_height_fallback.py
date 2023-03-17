@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 
 import kubernetes.client.exceptions
 from kubernetes import client, config
@@ -106,15 +107,26 @@ if __name__ == "__main__":
         # check work well
         util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
-        node_syncing_status = util.get_node_syncing_status(retry_times=30, retry_wait=3)
-        logger.debug("node status after fallback is: {}".format(node_syncing_status))
+        init_time = int(time.time() * 1000)
 
-        bn_with_bhf = node_syncing_status["self_status"]["height"]
-        logger.info("the block number after fallback is: {}".format(bn_with_bhf))
-        if bn_with_bhf >= old_bn:
+        node_status = util.get_node_status(retry_times=30, retry_wait=2)
+        logger.debug("node status after fallback is: {}".format(node_status))
+
+        bn_with_bhf = node_status["self_status"]["height"]
+        bn_init_height = node_status["init_block_number"]
+        logger.info("the block number after fallback is: {} init height is: {}".format(bn_with_bhf, bn_init_height))
+        if bn_init_height != 5:
             raise Exception(
-                "block height fallback not excepted block number: bn_with_bhf is {}, old_bn is {}".format(bn_with_bhf,
-                                                                                                          old_bn))
+                "block height fallback not excepted block number: bn_with_bhf is {}, bn_init_height is:{} old_bn is {}".format(bn_with_bhf, bn_init_height, old_bn))
+
+        while True:
+            current_height = util.get_block_number()
+            if current_height >= old_bn:
+                now_time = int(time.time() * 1000)
+                logger.info("the sync speed is {:.2f} blocks/sec".format((current_height - bn_init_height) * 1000.0 / (now_time - init_time)))
+                break
+            time.sleep(1)
+
         logger.info("create block height fallback for node {}-node0 and check block increase successful".format(
             os.getenv("CHAIN_NAME")))
     except Exception as e:

@@ -26,7 +26,7 @@ kubectl create namespace $NAMESPACE
 times=60
 while [ $times -ge 0 ]
 do
-  res=`kubectl get pod --no-headers=true -n $NAMESPACE -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s`
+  res=`kubectl get sts --no-headers=true -n $NAMESPACE -l app.kubernetes.io/chain-name=$CHAIN_NAME --request-timeout=10s`
   if [ $? -ne 0 ]; then
     let times--
     continue

@@ -29,7 +29,7 @@ if __name__ == "__main__":
         exit(0)
 
     # now we have 4 node
-    cmd = "kubectl get pod -n$NAMESPACE --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME | wc -l"
+    cmd = "kubectl get sts -n$NAMESPACE --no-headers=true -l app.kubernetes.io/chain-name=$CHAIN_NAME | wc -l"
     node_count = int(util.exec_retry(cmd))
     if node_count != 4:
         print("There are no 4 node, can't fault tolerance!", node_count)
