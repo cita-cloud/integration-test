@@ -168,7 +168,8 @@ class Backup(object):
                       backup_type=FULL_BACKUP,
                       deploy_method="cloud-config",
                       storage_class="nas-client-provisioner",
-                      block_height=10):
+                      block_height=10,
+                      action="StopAndStart"):
         """
         创建本地备份
         :param chain:
@@ -177,6 +178,7 @@ class Backup(object):
         :param deploy_method:
         :param storage_class:
         :param block_height: 块高，当backup_type为状态备份时，需要指定该值
+        :param action:
         :return:
         """
         # resource_body = None
@@ -189,6 +191,7 @@ class Backup(object):
                     "chain": chain,
                     "node": node,
                     "deployMethod": deploy_method,
+                    "action": action,
                     "dataType": {
                         "full": {
                             "includePaths": ["data", "chain_data"]
@@ -217,6 +220,7 @@ class Backup(object):
                     "chain": chain,
                     "node": node,
                     "deployMethod": deploy_method,
+                    "action": action,
                     "dataType": {
                         "state": {
                             "blockHeight": block_height
@@ -256,7 +260,8 @@ class Backup(object):
                                      deploy_method="cloud-config",
                                      pvc="nas-client-provisioner",
                                      mount_path="/bk/node-backup",
-                                     block_height=10):
+                                     block_height=10,
+                                     action="StopAndStart"):
         """
         创建本地备份(用户提供pvc)
         :param chain:
@@ -266,6 +271,7 @@ class Backup(object):
         :param pvc: pvc name
         :param mount_path: 挂载点
         :param block_height: 块高,状态备份时使用
+        :param action:
         :return:
         """
         if backup_type == FULL_BACKUP:
@@ -277,6 +283,7 @@ class Backup(object):
                     "chain": chain,
                     "node": node,
                     "deployMethod": deploy_method,
+                    "action": action,
                     "dataType": {
                         "full": {
                             "includePaths": ["data", "chain_data"]
@@ -305,6 +312,7 @@ class Backup(object):
                     "chain": chain,
                     "node": node,
                     "deployMethod": deploy_method,
+                    "action": action,
                     "dataType": {
                         "state": {
                             "blockHeight": block_height
@@ -343,7 +351,8 @@ class Backup(object):
                    deploy_method="cloud-config",
                    endpoint="minio.zhujq:9000",
                    bucket="k8up-full",
-                   block_height=10):
+                   block_height=10,
+                   action="StopAndStart"):
         if backup_type == FULL_BACKUP:
             resource_body = {
                 "apiVersion": "rivtower.com/v1cita",
@@ -353,6 +362,7 @@ class Backup(object):
                     "chain": chain,
                     "node": node,
                     "deployMethod": deploy_method,
+                    "action": action,
                     "dataType": {
                         "full": {
                             "includePaths": ["data", "chain_data"]
@@ -389,6 +399,7 @@ class Backup(object):
                     "chain": chain,
                     "node": node,
                     "deployMethod": deploy_method,
+                    "action": action,
                     "dataType": {
                         "state": {
                             "blockHeight": block_height

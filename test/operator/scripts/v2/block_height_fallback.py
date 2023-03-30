@@ -22,7 +22,8 @@ class BlockHeightFallback(object):
                chain,
                node,
                block_height,
-               deploy_method="cloud-config"):
+               deploy_method="cloud-config",
+               action="StopAndStart"):
         resource_body = {
             "apiVersion": "rivtower.com/v1cita",
             "kind": "BlockHeightFallback",
@@ -31,6 +32,7 @@ class BlockHeightFallback(object):
                 "chain": chain,
                 "node": node,
                 "deployMethod": deploy_method,
+                "action": action,
                 "blockHeight": block_height
             },
         }

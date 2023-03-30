@@ -78,7 +78,8 @@ class Restore(object):
                           node,
                           backup,
                           deploy_method="cloud-config",
-                          storage_class="nas-client-provisioner"):
+                          storage_class="nas-client-provisioner",
+                          action="StopAndStart"):
         resource_body = {
             "apiVersion": "rivtower.com/v1cita",
             "kind": "Restore",
@@ -87,6 +88,7 @@ class Restore(object):
                 "chain": chain,
                 "node": node,
                 "deployMethod": deploy_method,
+                "action": action,
                 "backup": backup,
                 "restoreMethod": {
                     "folder": {
@@ -121,7 +123,8 @@ class Restore(object):
                                          backup,
                                          deploy_method="cloud-config",
                                          pvc="nas-client-provisioner",
-                                         mount_path="/bk/node-backup",):
+                                         mount_path="/bk/node-backup",
+                                         action="StopAndStart"):
         resource_body = {
             "apiVersion": "rivtower.com/v1cita",
             "kind": "Restore",
@@ -130,6 +133,7 @@ class Restore(object):
                 "chain": chain,
                 "node": node,
                 "deployMethod": deploy_method,
+                "action": action,
                 "backup": backup,
                 "restoreMethod": {
                     "folder": {
@@ -164,7 +168,8 @@ class Restore(object):
                        backup,
                        deploy_method="cloud-config",
                        endpoint="minio.zhujq:9000",
-                       bucket="k8up-full"):
+                       bucket="k8up-full",
+                       action="StopAndStart"):
         resource_body = {
             "apiVersion": "rivtower.com/v1cita",
             "kind": "Restore",
@@ -173,6 +178,7 @@ class Restore(object):
                 "chain": chain,
                 "node": node,
                 "deployMethod": deploy_method,
+                "action": action,
                 "backup": backup,
                 "restoreMethod": {
                     "folder": {
