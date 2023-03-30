@@ -16,16 +16,28 @@
 #
 #
 
-# add repo
-helm repo add cita-node-operator https://cita-cloud.github.io/cita-node-operator
-
-res=`helm list -ncita`
-if [ $? -ne 0 ]; then
-  exit 1
-fi
-if [ 1 == `echo "${res}" | grep cita-node-operator | wc -l` ]; then
-  echo "cita-node-operator has installed"
+# check cita-node-operator
+res=`kubectl get deployments.apps cita-node-operator -n $NAMESPACE  -o jsonpath='{.spec.replicas}'`
+if [ $? -eq 0 ]; then
+  if [ ${res} -eq 0 ]; then
+    echo "scale up cita-node-operator replica to 1..."
+    kubectl scale deployments.apps cita-node-operator --replicas=1 -n $NAMESPACE
+  else
+    echo "cita-node-operator's replica is already 1"
+  fi
 else
-  echo "please install cita-node-operator first"
-  exit 2
+  echo "get operator deployment happens error, please check it!"
+fi
+
+# check k8up-operator
+res=`kubectl get deployments.apps k8up -n $NAMESPACE  -o jsonpath='{.spec.replicas}'`
+if [ $? -eq 0 ]; then
+  if [ ${res} -eq 0 ]; then
+    echo "scale up k8up-operator replica to 1..."
+    kubectl scale deployments.apps k8up --replicas=1 -n $NAMESPACE
+  else
+    echo "k8up-operator's replica is already 1"
+  fi
+else
+  echo "get operator deployment happens error, please check it!"
 fi
