@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
         init_time = int(time.time() * 1000)
 
-        node_status = util.get_node_status(retry_times=30, retry_wait=2)
+        node_status = util.get_node_status(retry_times=60, retry_wait=2)
         logger.debug("node status after snapshot restore is: {}".format(node_status))
 
         bn_with_recover = node_status["self_status"]["height"]
