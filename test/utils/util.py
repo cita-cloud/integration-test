@@ -167,7 +167,7 @@ def wait_job_complete(crd, cr_name, namespace):
     return resource.get('status').get('status')
 
 
-@retry(stop=stop_after_attempt(150), wait=wait_fixed(2), after=after_log(logger, logging.DEBUG))
+@retry(stop=stop_after_attempt(300), wait=wait_fixed(2), after=after_log(logger, logging.DEBUG))
 def wait_new_job_complete(crd, cr_name, namespace):
     """
     for k8-up operator status
