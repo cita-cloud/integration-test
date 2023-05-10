@@ -60,6 +60,8 @@ spec:
           name: node-config
         - mountPath: /mnt
           name: node-account
+        - mountPath: /etc/localtime
+          name: node-localtime
         workingDir: /data
       - command:
         - consensus
@@ -89,6 +91,8 @@ spec:
           name: node-config
         - mountPath: /mnt
           name: node-account
+        - mountPath: /etc/localtime
+          name: node-localtime
         workingDir: /data
       - command:
         - executor
@@ -114,6 +118,8 @@ spec:
           name: datadir
         - mountPath: /etc/cita-cloud/config
           name: node-config
+        - mountPath: /etc/localtime
+          name: node-localtime
         workingDir: /data
       - command:
         - storage
@@ -139,12 +145,16 @@ spec:
           name: datadir
         - mountPath: /etc/cita-cloud/config
           name: node-config
+        - mountPath: /etc/localtime
+          name: node-localtime
         workingDir: /data
       - command:
         - controller
         - run
         - -c
         - /etc/cita-cloud/config/config.toml
+        - -p
+        - /mnt/private_key
         image: registry.devops.rivtower.com/cita-cloud/controller:latest
         imagePullPolicy: Always
         name: controller
@@ -166,6 +176,8 @@ spec:
           name: node-config
         - mountPath: /mnt
           name: node-account
+        - mountPath: /etc/localtime
+          name: node-localtime
         workingDir: /data
       - command:
         - crypto
@@ -195,6 +207,8 @@ spec:
           name: node-config
         - mountPath: /mnt
           name: node-account
+        - mountPath: /etc/localtime
+          name: node-localtime
         workingDir: /data
       hostAliases:
       - hostnames:
@@ -211,6 +225,9 @@ spec:
       - configMap:
           name: test-chain-zenoh-overlord-node3-config
         name: node-config
+      - hostPath:
+          path: /etc/localtime
+        name: node-localtime
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
