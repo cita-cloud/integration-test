@@ -90,6 +90,8 @@ def check_node_account_switched(namespace, name, wanted_account_name):
     exist = False
     node_sts = apps_v1.read_namespaced_stateful_set(name=name, namespace=namespace)
     for volume in node_sts.spec.template.spec.volumes:
+        if volume.config_map is None:
+            continue
         if volume.config_map.name == wanted_account_name:
             exist = True
     return exist
