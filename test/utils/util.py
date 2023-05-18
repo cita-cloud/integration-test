@@ -33,8 +33,11 @@ DEFAULT_INTERVAL = 30
 get_receipt_fmt = 'cldi -c default get receipt {}'
 get_abi_fmt = 'cldi -c default get abi {}'
 get_tx_fmt = 'cldi -c default get tx {}'
-get_block_fmt = "cldi -c default get block {}"
-
+get_block_fmt = 'cldi -c default get block {}'
+get_cross_chain_proof_fmt = 'cldi -c default get cross-chain-proof {} --output .'
+verify_cross_chain_proof_fmt = 'cldi -c default verify cross-chain-proof --file {}'
+get_receipt_proof_fmt = 'cldi -c default get receipt-proof {}'
+get_roots_info_fmt = 'cldi -c default get roots-info {}'
 
 def get_block_number(retry_times=DEFAULT_RETRY_TIMES, retry_wait=DEFAULT_RETRY_WAIT):
     @retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
@@ -213,3 +216,31 @@ def wait_block_number_exceed_specified_height(specified_height, retry_times=DEFA
             raise Exception("not exceed specified height")
 
     return inner_func()
+
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
+def get_cross_chain_proof(tx_hash):
+    result = subprocess.getoutput(get_cross_chain_proof_fmt.format(tx_hash))
+    if result.__contains__("Error"):
+        raise Exception("get cross-chain-proof failed!")
+    return result
+
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
+def verify_cross_chain_proof(tx_hash):
+    result = subprocess.getoutput(verify_cross_chain_proof_fmt.format(tx_hash))
+    if result.__contains__("Error"):
+        raise Exception("get cross-chain-proof failed!")
+    return result
+
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
+def get_receipt_proof(tx_hash):
+    result = subprocess.getoutput(get_receipt_proof_fmt.format(tx_hash))
+    if result.__contains__("Error"):
+        raise Exception("get receipt_proof failed!")
+    return result
+
+@retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
+def get_roots_info(height):
+    result = subprocess.getoutput(get_roots_info_fmt.format(height))
+    if result.__contains__("Error"):
+        raise Exception("get roots_info failed!")
+    return result
