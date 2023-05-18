@@ -26,7 +26,7 @@ if __name__ == "__main__":
         print("raft proof is empty, skip parse-proof test")
         exit(0)
 
-    result = util.exec_retry("cldi -c default get block")
+    result = util.exec_retry("cldi -c default get block 1")
     try:
         json_obj = json.loads(result)
         proof = json_obj['proof']
