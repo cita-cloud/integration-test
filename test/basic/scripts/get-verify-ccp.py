@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
     roots_info = util.get_roots_info(height)
     json_roots_info = json.loads(roots_info)
-    if not json_roots_info['height'] != height:
+    if json_roots_info['height'] != height:
         exit(30)
 
     exit(0)
