@@ -34,6 +34,11 @@ contract_code = "0x608060405234801561001057600080fd5b5060f58061001f6000396000f30
 create_fmt = 'cldi -c default create {}'
 
 if __name__ == "__main__":
+    # raft chain don't need to execute this test
+    if os.getenv("CHAIN_TYPE") == "zenoh-raft":
+        print("raft proof is empty, skip ccp test")
+        exit(0)
+
     # send tx
     util.check_block_increase()
 
