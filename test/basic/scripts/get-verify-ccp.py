@@ -34,11 +34,6 @@ contract_code = "0x608060405234801561001057600080fd5b5060f58061001f6000396000f30
 create_fmt = 'cldi -c default create {}'
 
 if __name__ == "__main__":
-    # raft chain don't need to execute this test
-    if os.getenv("CHAIN_TYPE") == "zenoh-raft":
-        print("raft proof is empty, skip ccp test")
-        exit(0)
-
     # send tx
     util.check_block_increase()
 
@@ -59,14 +54,19 @@ if __name__ == "__main__":
     pprint.pprint("verify_cross_chain_proof: {verify_result}".format(verify_result=verify_result))
     json_result = json.loads(verify_result)
 
-    if not json_result['code'] == 0:
-        exit(20)
+    if os.getenv("CHAIN_TYPE") == "zenoh-raft":
+        if not json_result['code'] == 4:
+            exit(40)
+    else:
+        if not json_result['code'] == 0:
+            exit(20)
 
     if os.path.exists(ccp_file):
         os.remove(ccp_file)
 
     # do nothing
     receipt_proof = util.get_receipt_proof(create_result)
+    pprint.pprint("get_receipt_proof: {receipt_proof}".format(receipt_proof=receipt_proof))
 
     roots_info = util.get_roots_info(height)
     json_roots_info = json.loads(roots_info)
