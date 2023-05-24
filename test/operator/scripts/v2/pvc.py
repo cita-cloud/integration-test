@@ -33,7 +33,7 @@ class Pvc(object):
         self.name = name
         self.core_api = client.CoreV1Api()
 
-    def create(self, storage_class="nas-client-provisioner", size="10Gi"):
+    def create(self, storage_class="nfs-client", size="10Gi"):
         pvc = {
             "apiVersion": "v1",
             "kind": "PersistentVolumeClaim",

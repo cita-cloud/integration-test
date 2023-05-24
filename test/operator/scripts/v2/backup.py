@@ -40,7 +40,7 @@ class BackupConfig(object):
                  backup_type,
                  backend_type,
                  block_height=10,
-                 storage_class="nas-client-provisioner",
+                 storage_class="nfs-client",
                  pvc="integration-test-pvc",
                  mount_path="/bk/node_backup"):
         self.backup_type = backup_type
@@ -167,7 +167,7 @@ class Backup(object):
                       node,
                       backup_type=FULL_BACKUP,
                       deploy_method="cloud-config",
-                      storage_class="nas-client-provisioner",
+                      storage_class="nfs-client",
                       block_height=10,
                       action="StopAndStart"):
         """
@@ -258,7 +258,7 @@ class Backup(object):
                                      node,
                                      backup_type=FULL_BACKUP,
                                      deploy_method="cloud-config",
-                                     pvc="nas-client-provisioner",
+                                     pvc="nfs-client",
                                      mount_path="/bk/node-backup",
                                      block_height=10,
                                      action="StopAndStart"):
@@ -591,7 +591,7 @@ def execute_job(backup_type: str = FULL_BACKUP, backend_type: str = LOCAL):
                               backend_type=backend_type,
                               # 快照至9#
                               block_height=9,
-                              storage_class="nas-client-provisioner",
+                              storage_class="nfs-client",
                               pvc="integration-test-pvc",
                               mount_path="/bk/node_backup")
     bucket_cfg = BucketConfig(name="integration-bucket",
@@ -599,7 +599,7 @@ def execute_job(backup_type: str = FULL_BACKUP, backend_type: str = LOCAL):
                               access_key="minio",
                               secret_key="minio123")
     restore_cfg = RestoreConfig(backup=backup_name,
-                                storage_class="nas-client-provisioner",
+                                storage_class="nfs-client",
                                 backend_type=backend_type,
                                 pvc="integration-test-pvc",
                                 mount_path="/bk/node_backup")
