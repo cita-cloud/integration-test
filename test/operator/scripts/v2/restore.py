@@ -78,7 +78,7 @@ class Restore(object):
                           node,
                           backup,
                           deploy_method="cloud-config",
-                          storage_class="nas-client-provisioner",
+                          storage_class="nfs-client",
                           action="StopAndStart"):
         resource_body = {
             "apiVersion": "rivtower.com/v1cita",
@@ -122,7 +122,7 @@ class Restore(object):
                                          node,
                                          backup,
                                          deploy_method="cloud-config",
-                                         pvc="nas-client-provisioner",
+                                         pvc="nfs-client",
                                          mount_path="/bk/node-backup",
                                          action="StopAndStart"):
         resource_body = {

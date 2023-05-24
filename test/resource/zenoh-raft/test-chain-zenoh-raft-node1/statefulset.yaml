@@ -207,4 +207,4 @@ spec:
       resources:
         requests:
           storage: 10Gi
-      storageClassName: nas-client-provisioner
+      storageClassName: nfs-client

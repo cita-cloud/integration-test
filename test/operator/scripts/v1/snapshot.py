@@ -22,7 +22,7 @@ class Snapshot(object):
 
     def create(self, chain, node, block_height,
                deploy_method="cloud-config",
-               storage_class="nas-client-provisioner",
+               storage_class="nfs-client",
                image="registry.devops.rivtower.com/cita-cloud/cita-node-job:latest",
                pull_policy="Always",
                ttl=30,
