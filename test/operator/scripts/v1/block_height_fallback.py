@@ -37,7 +37,6 @@ class BlockHeightFallback(object):
                 "image": image,
                 "ttlSecondsAfterFinished": ttl,
                 "podAffinityFlag": pod_affinity_flag,
-                "deleteConsensusData": True
             },
         }
         # create a cluster scoped resource
