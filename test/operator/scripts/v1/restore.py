@@ -23,7 +23,8 @@ class Restore(object):
                           image="registry.devops.rivtower.com/cita-cloud/cita-node-job:latest",
                           pull_policy="Always",
                           ttl=30,
-                          pod_affinity_flag=True):
+                          pod_affinity_flag=True,
+                          delete_consensus_data=False):
         resource_body = {
             "apiVersion": "citacloud.rivtower.com/v1",
             "kind": "Restore",
@@ -38,6 +39,7 @@ class Restore(object):
                 "image": image,
                 "ttlSecondsAfterFinished": ttl,
                 "podAffinityFlag": pod_affinity_flag,
+                "deleteConsensusData": delete_consensus_data,
             },
         }
         # create a cluster scoped resource

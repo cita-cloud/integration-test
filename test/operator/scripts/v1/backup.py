@@ -170,5 +170,6 @@ if __name__ == "__main__":
     finally:
         if restore.created and restore.status() == "Complete":
             restore.delete()
-        if backup.created and backup.status() == "Complete":
-            backup.delete()
+        # 由于后面还需要用到该备份(多节点恢复)，这里先不删
+        # if backup.created and backup.status() == "Complete":
+        #     backup.delete()

@@ -217,12 +217,14 @@ def wait_block_number_exceed_specified_height(specified_height, retry_times=DEFA
 
     return inner_func()
 
+
 @retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_cross_chain_proof(tx_hash):
     result = subprocess.getoutput(get_cross_chain_proof_fmt.format(tx_hash))
     if result.__contains__("Error"):
         raise Exception("get cross-chain-proof failed!")
     return result
+
 
 @retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def verify_cross_chain_proof(tx_hash):
@@ -231,12 +233,14 @@ def verify_cross_chain_proof(tx_hash):
         raise Exception("get cross-chain-proof failed!")
     return result
 
+
 @retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_receipt_proof(tx_hash):
     result = subprocess.getoutput(get_receipt_proof_fmt.format(tx_hash))
     if result.__contains__("Error"):
         raise Exception("get receipt_proof failed!")
     return result
+
 
 @retry(stop=stop_after_attempt(retry_times), wait=wait_fixed(retry_wait), after=after_log(logger, logging.DEBUG))
 def get_roots_info(height):
