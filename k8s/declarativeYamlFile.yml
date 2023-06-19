@@ -13,6 +13,8 @@ spec:
       volumeMounts:
         - name: kube-config
           mountPath: /root/.kube
+    - name: jnlp
+      image: registry.devops.rivtower.com/cita-cloud/inbound-agent:4.11-1-jdk11
   volumes:
     - name: kube-config
       configMap:
