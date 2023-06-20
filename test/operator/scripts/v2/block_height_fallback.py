@@ -5,6 +5,8 @@ import time
 import kubernetes.client.exceptions
 from kubernetes import client, config
 
+from contants import BLOCK_HEIGHT_FOR_FALLBACK
+
 sys.path.append("test/utils")
 import util
 from logger import logger
@@ -97,7 +99,7 @@ def create_block_height_fallback():
         logger.info("create fallback job...")
         bhf.create(chain=os.getenv("CHAIN_NAME"),
                    node="{}-node0".format(os.getenv("CHAIN_NAME")),
-                   block_height=5)
+                   block_height=BLOCK_HEIGHT_FOR_FALLBACK)
         status = bhf.wait_job_complete()
         if status == "Failed":
             raise Exception("block height fallback exec failed")
@@ -116,13 +118,15 @@ def create_block_height_fallback():
         logger.info("the block number after fallback is: {} init height is: {}".format(bn_with_bhf, bn_init_height))
         if bn_init_height != 5:
             raise Exception(
-                "block height fallback not excepted block number: bn_with_bhf is {}, bn_init_height is:{} old_bn is {}".format(bn_with_bhf, bn_init_height, old_bn))
+                "block height fallback not excepted block number: bn_with_bhf is {}, bn_init_height is:{} old_bn is {}".format(
+                    bn_with_bhf, bn_init_height, old_bn))
 
         while True:
             current_height = util.get_block_number()
             if current_height >= old_bn:
                 now_time = int(time.time() * 1000)
-                logger.info("the sync speed is {:.2f} blocks/sec".format((current_height - bn_init_height) * 1000.0 / (now_time - init_time)))
+                logger.info("the sync speed is {:.2f} blocks/sec".format(
+                    (current_height - bn_init_height) * 1000.0 / (now_time - init_time)))
                 break
             time.sleep(1)
 

@@ -22,7 +22,8 @@ from kubernetes import client, config
 from bucket import BucketConfig
 from contants import BACKUP_REPO_SECRET, BACKUP_REPO_SECRET_KEY, MINIO_CREDENTIALS_SECRET, \
     MINIO_CREDENTIALS_SECRET_ACCESS_KEY, MINIO_CREDENTIALS_SECRET_SECRET_KEY, \
-    LOCAL, S3, LOCAL_WITH_EXIST_PVC
+    LOCAL, S3, LOCAL_WITH_EXIST_PVC, PVC_NAME, MOUNT_PATH, STORAGE_CLASS, DEPLOY_METHOD_FOR_CLOUD_CONFIG, \
+    ACTION_STOP_AND_START, BUCKET_NAME, BUCKET_ENDPOINT
 
 sys.path.append("test/utils")
 import util
@@ -34,8 +35,8 @@ class RestoreConfig(object):
                  backup,
                  storage_class,
                  backend_type,
-                 pvc="integration-test-pvc",
-                 mount_path="/bk/node_backup"):
+                 pvc=PVC_NAME,
+                 mount_path=MOUNT_PATH):
         self.backup = backup
         self.storage_class = storage_class
         self.backend_type = backend_type
@@ -54,7 +55,7 @@ class Restore(object):
     def create(self,
                chain,
                node,
-               deploy_method="cloud-config",
+               deploy_method=DEPLOY_METHOD_FOR_CLOUD_CONFIG,
                restore_config: RestoreConfig = None,
                bucket_config: BucketConfig = None):
         if restore_config.backend_type == LOCAL:
@@ -77,9 +78,9 @@ class Restore(object):
                           chain,
                           node,
                           backup,
-                          deploy_method="cloud-config",
-                          storage_class="nfs-client",
-                          action="StopAndStart"):
+                          deploy_method=DEPLOY_METHOD_FOR_CLOUD_CONFIG,
+                          storage_class=STORAGE_CLASS,
+                          action=ACTION_STOP_AND_START):
         resource_body = {
             "apiVersion": "rivtower.com/v1cita",
             "kind": "Restore",
@@ -121,10 +122,10 @@ class Restore(object):
                                          chain,
                                          node,
                                          backup,
-                                         deploy_method="cloud-config",
-                                         pvc="nfs-client",
-                                         mount_path="/bk/node-backup",
-                                         action="StopAndStart"):
+                                         deploy_method=DEPLOY_METHOD_FOR_CLOUD_CONFIG,
+                                         pvc=PVC_NAME,
+                                         mount_path=MOUNT_PATH,
+                                         action=ACTION_STOP_AND_START):
         resource_body = {
             "apiVersion": "rivtower.com/v1cita",
             "kind": "Restore",
@@ -166,10 +167,10 @@ class Restore(object):
                        chain,
                        node,
                        backup,
-                       deploy_method="cloud-config",
-                       endpoint="minio.zhujq:9000",
-                       bucket="k8up-full",
-                       action="StopAndStart"):
+                       deploy_method=DEPLOY_METHOD_FOR_CLOUD_CONFIG,
+                       endpoint=BUCKET_ENDPOINT,
+                       bucket=BUCKET_NAME,
+                       action=ACTION_STOP_AND_START):
         resource_body = {
             "apiVersion": "rivtower.com/v1cita",
             "kind": "Restore",

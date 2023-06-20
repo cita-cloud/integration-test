@@ -17,17 +17,32 @@
 FULL_BACKUP = "full-backup"
 STATE_BACKUP = "state-backup"
 
+# backend_type
 LOCAL = "local"
 LOCAL_WITH_EXIST_PVC = "local-with-pvc"
 S3 = "s3"
+
+PVC_NAME = "integration-test-pvc"
+MOUNT_PATH = "/bk/node_backup"
+
+STORAGE_CLASS = "nfs-client"
 
 BACKUP_REPO_SECRET = "backup-repo"
 BACKUP_REPO_SECRET_KEY = "password"
 
 MINIO_CREDENTIALS_SECRET = "minio-credentials"
 MINIO_CREDENTIALS_SECRET_ACCESS_KEY = "username"
+MINIO_CREDENTIALS_SECRET_ACCESS_VALUE = "minio"
 MINIO_CREDENTIALS_SECRET_SECRET_KEY = "password"
+MINIO_CREDENTIALS_SECRET_SECRET_VALUE = "minio123"
 
-BUCKET_ENDPOINT = "http://192.168.10.122:30289"
-BUCKET_FOR_RAFT = "raft-bucket"
-BUCKET_FOR_OVERLORD = "overlord-bucket"
+BUCKET_ENDPOINT = "minio.zhujq:9000"
+BUCKET_NAME = "integration-bucket"
+
+BLOCK_HEIGHT_FOR_FALLBACK = 5
+BLOCK_HEIGHT_FOR_SNAPSHOT = 5
+
+DEPLOY_METHOD_FOR_CLOUD_CONFIG = "cloud-config"
+
+ACTION_STOP_AND_START = "StopAndStart"
+ACTION_DIRECT = "Direct"

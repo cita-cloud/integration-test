@@ -26,7 +26,9 @@ from bucket import Bucket, BucketConfig
 from contants import FULL_BACKUP, STATE_BACKUP, LOCAL, LOCAL_WITH_EXIST_PVC, S3, BACKUP_REPO_SECRET, \
     BACKUP_REPO_SECRET_KEY, \
     MINIO_CREDENTIALS_SECRET, \
-    MINIO_CREDENTIALS_SECRET_ACCESS_KEY, MINIO_CREDENTIALS_SECRET_SECRET_KEY
+    MINIO_CREDENTIALS_SECRET_ACCESS_KEY, MINIO_CREDENTIALS_SECRET_SECRET_KEY, BLOCK_HEIGHT_FOR_SNAPSHOT, PVC_NAME, \
+    MOUNT_PATH, STORAGE_CLASS, BUCKET_NAME, BUCKET_ENDPOINT, MINIO_CREDENTIALS_SECRET_ACCESS_VALUE, \
+    MINIO_CREDENTIALS_SECRET_SECRET_VALUE, DEPLOY_METHOD_FOR_CLOUD_CONFIG, ACTION_STOP_AND_START
 from pvc import prepare_pvc
 from restore import Restore, RestoreConfig
 
@@ -40,9 +42,9 @@ class BackupConfig(object):
                  backup_type,
                  backend_type,
                  block_height=10,
-                 storage_class="nfs-client",
-                 pvc="integration-test-pvc",
-                 mount_path="/bk/node_backup"):
+                 storage_class=STORAGE_CLASS,
+                 pvc=PVC_NAME,
+                 mount_path=MOUNT_PATH):
         self.backup_type = backup_type
         self.backend_type = backend_type
         self.block_height = block_height
@@ -86,8 +88,8 @@ class Backup(object):
 
     def _prepare_minio_credentials(self, namespace,
                                    name=MINIO_CREDENTIALS_SECRET,
-                                   username="minio",
-                                   password="minio123"):
+                                   username=MINIO_CREDENTIALS_SECRET_ACCESS_VALUE,
+                                   password=MINIO_CREDENTIALS_SECRET_SECRET_VALUE):
         """
         prepare minio credentials secret
         :param namespace:
@@ -123,7 +125,7 @@ class Backup(object):
     def create(self,
                chain,
                node,
-               deploy_method="cloud-config",
+               deploy_method=DEPLOY_METHOD_FOR_CLOUD_CONFIG,
                backup_cfg: BackupConfig = None,
                bucket_cfg: BucketConfig = None):
         # check secret
@@ -166,10 +168,10 @@ class Backup(object):
                       chain,
                       node,
                       backup_type=FULL_BACKUP,
-                      deploy_method="cloud-config",
-                      storage_class="nfs-client",
-                      block_height=10,
-                      action="StopAndStart"):
+                      deploy_method=DEPLOY_METHOD_FOR_CLOUD_CONFIG,
+                      storage_class=STORAGE_CLASS,
+                      block_height=BLOCK_HEIGHT_FOR_SNAPSHOT,
+                      action=ACTION_STOP_AND_START):
         """
         创建本地备份
         :param chain:
@@ -257,11 +259,11 @@ class Backup(object):
                                      chain,
                                      node,
                                      backup_type=FULL_BACKUP,
-                                     deploy_method="cloud-config",
-                                     pvc="nfs-client",
-                                     mount_path="/bk/node-backup",
-                                     block_height=10,
-                                     action="StopAndStart"):
+                                     deploy_method=DEPLOY_METHOD_FOR_CLOUD_CONFIG,
+                                     pvc=PVC_NAME,
+                                     mount_path=MOUNT_PATH,
+                                     block_height=BLOCK_HEIGHT_FOR_SNAPSHOT,
+                                     action=ACTION_STOP_AND_START):
         """
         创建本地备份(用户提供pvc)
         :param chain:
@@ -348,11 +350,11 @@ class Backup(object):
                    chain,
                    node,
                    backup_type=FULL_BACKUP,
-                   deploy_method="cloud-config",
-                   endpoint="minio.zhujq:9000",
-                   bucket="k8up-full",
-                   block_height=10,
-                   action="StopAndStart"):
+                   deploy_method=DEPLOY_METHOD_FOR_CLOUD_CONFIG,
+                   endpoint=BUCKET_ENDPOINT,
+                   bucket=BUCKET_NAME,
+                   block_height=BLOCK_HEIGHT_FOR_SNAPSHOT,
+                   action=ACTION_STOP_AND_START):
         if backup_type == FULL_BACKUP:
             resource_body = {
                 "apiVersion": "rivtower.com/v1cita",
@@ -495,7 +497,7 @@ def create_backup_and_restore(namespace,
     try:
         logger.debug("========================>")
         logger.debug("exec backup and restore, backup type: {}, backend type: {}".format(backup_cfg.backup_type,
-                     backup_cfg.backend_type))
+                                                                                         backup_cfg.backend_type))
         logger.debug("========================>")
 
         # get block number when backup
@@ -549,23 +551,27 @@ def create_backup_and_restore(namespace,
 
         bn_with_recover = node_status["self_status"]["height"]
         bn_init_height = node_status["init_block_number"]
-        logger.info("the block number after backup restore is: {} init height is: {}".format(bn_with_recover, bn_init_height))
-        
+        logger.info(
+            "the block number after backup restore is: {} init height is: {}".format(bn_with_recover, bn_init_height))
+
         if backup_cfg.backup_type == FULL_BACKUP:
             if bn_init_height < bn_with_backup or bn_init_height > bn_with_recover:
-                raise Exception("restore full backup not excepted block number: bn_with_recover is {}, bn_init_height is: {}, bn_with_backup is {}".
-                                format(bn_with_recover, bn_init_height, bn_with_backup))
-        
+                raise Exception(
+                    "restore full backup not excepted block number: bn_with_recover is {}, bn_init_height is: {}, bn_with_backup is {}".
+                    format(bn_with_recover, bn_init_height, bn_with_backup))
+
         if backup_cfg.backup_type == STATE_BACKUP:
             if bn_init_height != 9:
-                raise Exception("restore state backup not excepted block number: bn_with_recover is {}, bn_init_height is: {}, bn_with_backup is {}".
-                                format(bn_with_recover, bn_init_height, bn_with_backup))
+                raise Exception(
+                    "restore state backup not excepted block number: bn_with_recover is {}, bn_init_height is: {}, bn_with_backup is {}".
+                    format(bn_with_recover, bn_init_height, bn_with_backup))
 
         while True:
             current_height = util.get_block_number()
             if current_height >= bn_with_latest:
                 now_time = int(time.time() * 1000)
-                logger.info("the sync speed is {:.2f} blocks/sec".format((current_height - bn_init_height) * 1000.0 / (now_time - init_time)))
+                logger.info("the sync speed is {:.2f} blocks/sec".format(
+                    (current_height - bn_init_height) * 1000.0 / (now_time - init_time)))
                 break
             time.sleep(1)
 
@@ -577,7 +583,7 @@ def create_backup_and_restore(namespace,
     finally:
         logger.debug("<========================")
         logger.debug("exec backup and restore, backup type: {}, backend type: {}".format(backup_cfg.backup_type,
-                     backup_cfg.backend_type))
+                                                                                         backup_cfg.backend_type))
         logger.debug("<========================")
         if restore.created and restore.status() == "Succeeded":
             restore.delete()
@@ -589,20 +595,20 @@ def execute_job(backup_type: str = FULL_BACKUP, backend_type: str = LOCAL):
     backup_name = "backup-{}".format(os.getenv("CHAIN_TYPE"))
     backup_cfg = BackupConfig(backup_type=backup_type,
                               backend_type=backend_type,
-                              # 快照至9#
-                              block_height=9,
-                              storage_class="nfs-client",
-                              pvc="integration-test-pvc",
-                              mount_path="/bk/node_backup")
-    bucket_cfg = BucketConfig(name="integration-bucket",
-                              endpoint="minio.zhujq:9000",
-                              access_key="minio",
-                              secret_key="minio123")
+                              # 快照至5#
+                              block_height=BLOCK_HEIGHT_FOR_SNAPSHOT,
+                              storage_class=STORAGE_CLASS,
+                              pvc=PVC_NAME,
+                              mount_path=MOUNT_PATH)
+    bucket_cfg = BucketConfig(name=BUCKET_NAME,
+                              endpoint=BUCKET_ENDPOINT,
+                              access_key=MINIO_CREDENTIALS_SECRET_ACCESS_VALUE,
+                              secret_key=MINIO_CREDENTIALS_SECRET_SECRET_VALUE)
     restore_cfg = RestoreConfig(backup=backup_name,
-                                storage_class="nfs-client",
+                                storage_class=STORAGE_CLASS,
                                 backend_type=backend_type,
-                                pvc="integration-test-pvc",
-                                mount_path="/bk/node_backup")
+                                pvc=PVC_NAME,
+                                mount_path=MOUNT_PATH)
     create_backup_and_restore(namespace=os.getenv("NAMESPACE"),
                               backup_name=backup_name,
                               restore_name="restore-for-backup-{}".format(os.getenv("CHAIN_TYPE")),
