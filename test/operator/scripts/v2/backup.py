@@ -561,7 +561,7 @@ def create_backup_and_restore(namespace,
                     format(bn_with_recover, bn_init_height, bn_with_backup))
 
         if backup_cfg.backup_type == STATE_BACKUP:
-            if bn_init_height != 9:
+            if bn_init_height != BLOCK_HEIGHT_FOR_SNAPSHOT:
                 raise Exception(
                     "restore state backup not excepted block number: bn_with_recover is {}, bn_init_height is: {}, bn_with_backup is {}".
                     format(bn_with_recover, bn_init_height, bn_with_backup))

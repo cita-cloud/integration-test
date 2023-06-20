@@ -116,7 +116,7 @@ def create_block_height_fallback():
         bn_with_bhf = node_status["self_status"]["height"]
         bn_init_height = node_status["init_block_number"]
         logger.info("the block number after fallback is: {} init height is: {}".format(bn_with_bhf, bn_init_height))
-        if bn_init_height != 5:
+        if bn_init_height != BLOCK_HEIGHT_FOR_FALLBACK:
             raise Exception(
                 "block height fallback not excepted block number: bn_with_bhf is {}, bn_init_height is:{} old_bn is {}".format(
                     bn_with_bhf, bn_init_height, old_bn))
