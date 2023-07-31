@@ -54,7 +54,7 @@ if __name__ == "__main__":
     pprint.pprint("verify_cross_chain_proof: {verify_result}".format(verify_result=verify_result))
     json_result = json.loads(verify_result)
 
-    if os.getenv("CHAIN_TYPE") == "zenoh-raft":
+    if os.getenv("CHAIN_TYPE") == "raft":
         if not json_result['code'] == 4:
             exit(40)
     else:

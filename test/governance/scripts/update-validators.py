@@ -90,7 +90,7 @@ if __name__ == "__main__":
         exit(80)
 
     # raft chain need to execute next test, Others don't need
-    if os.getenv("CHAIN_TYPE") != "zenoh-raft":
+    if os.getenv("CHAIN_TYPE") != "raft":
         exit(0)
 
     # Only keep one validator

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+binaryData:
+  private_key: NDY2ZWJhMmU5MmQ4ZDE3MDAxNjAyOGFlNDc2ZmQ5NDFiZGJiNzAwMDVkMzRmYjJjZDExOTBlZjBmM2I0ZDFlZg==
+data:
+  node_address: 44db5579eb95126cb046aeabae25161302affe24
+  validator_address: 44db5579eb95126cb046aeabae25161302affe24
+metadata:
+  labels:
+    app.kubernetes.io/chain-name: test-chain-raft
+    app.kubernetes.io/chain-node: test-chain-raft-node2
+  name: test-chain-raft-node2-account

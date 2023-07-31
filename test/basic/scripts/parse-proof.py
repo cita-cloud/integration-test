@@ -22,7 +22,7 @@ import util
 
 if __name__ == "__main__":
     # raft chain don't need to execute this test
-    if os.getenv("CHAIN_TYPE") == "zenoh-raft":
+    if os.getenv("CHAIN_TYPE") == "raft":
         print("raft proof is empty, skip parse-proof test")
         exit(0)
 
