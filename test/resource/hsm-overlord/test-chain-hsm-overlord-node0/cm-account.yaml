@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+binaryData:
+  private_key: MzdjODFjM2UzZTM5NjMyMjAwOTliNWRlZmIxMDM5NTBiYjQ0MjBmZWFkZGM3OWRkMThhMzk1MmQ0MGUxY2Y5MQ==
+data:
+  node_address: a3933d5a2014459d5d9d09d82d4842037d826140
+  validator_address: ad11329d59fdad40f867aea63fc9c6f3e2ad697818a2547bc5f2f8359b240558d9d2efa1baa8d9be99191d56217cfb21
+metadata:
+  labels:
+    app.kubernetes.io/chain-name: test-chain-hsm-overlord
+    app.kubernetes.io/chain-node: test-chain-hsm-overlord-node0
+  name: test-chain-hsm-overlord-node0-account
