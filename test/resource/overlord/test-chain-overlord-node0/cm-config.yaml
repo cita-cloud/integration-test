@@ -1,0 +1,166 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  config.toml: |+
+    [network_zenoh]
+    ca_cert = """
+    -----BEGIN CERTIFICATE-----
+    MIIBdTCCARugAwIBAgIVAJ4uq/a0exRdXAuzibfp0vsRxweKMAoGCCqGSM49BAMC
+    MB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAw
+    MFoYDzQwOTYwMTAxMDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQD
+    EwJDQTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJd9ZSOgx+gO+VYFS34hm8ZT
+    26e7JUG/xj76vlSnA8UAEBoqPIQsovZeWK+BKslk/qBJ7EndhA3M83EqewmbUkaj
+    MjAwMB0GA1UdDgQWBBSeLqv2tHsUXVwLs4m36dL7EccHijAPBgNVHRMBAf8EBTAD
+    AQH/MAoGCCqGSM49BAMCA0gAMEUCIQD8OQPeymY+yYYOkRYc/6yCJobA2UiN0GLf
+    aoEQlIp3dAIgPBAspxk9UoCe3ORP+gpFq/oAfG7Ki7W4/xQr5xJQNmA=
+    -----END CERTIFICATE-----
+    """
+    cert = """
+    -----BEGIN CERTIFICATE-----
+    MIIBgTCCASegAwIBAgIUX3zk36Bto5getGd5MoYKe3zz1tMwCgYIKoZIzj0EAwIw
+    HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
+    WhgPNDA5NjAxMDEwMDAwMDBaMDYxEDAOBgNVBAoMB0NJVEFIdWIxIjAgBgNVBAMT
+    GXRlc3QtY2hhaW4tb3ZlcmxvcmQtbm9kZTAwWTATBgcqhkjOPQIBBggqhkjOPQMB
+    BwNCAAQ3/nnfQtmQ9zPc+VDJ4jQNimubd1ZWSCpqSmvpwp1MJbVY8LINFu0Nml0U
+    Y7TC3Hd4cHlinFFBxVes6mPoasLmoygwJjAkBgNVHREEHTAbghl0ZXN0LWNoYWlu
+    LW92ZXJsb3JkLW5vZGUwMAoGCCqGSM49BAMCA0gAMEUCIA5SrFmamfSMYKZKN3xz
+    7O7VcESRfFdUX4TXKhdd1fYwAiEA/d8BKuI+OFi2jid70uPnemST9a4tvRZeI0Sh
+    RdIH7BM=
+    -----END CERTIFICATE-----
+    """
+    chain_id = "f43b00f1e0d0b3b5a7c5692f622aa550f80612c3a8b73eec436cb02c1e616abe"
+    domain = "test-chain-overlord-node0"
+    enable_metrics = true
+    grpc_port = 50000
+    metrics_port = 60000
+    node_address = "/mnt/node_address"
+    port = 40000
+    priv_key = """
+    -----BEGIN PRIVATE KEY-----
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgab2/bfAhLwnt3Wmg
+    GSIvD+8qP8rLhsxNKMTeiZ9/F/qhRANCAAQ3/nnfQtmQ9zPc+VDJ4jQNimubd1ZW
+    SCpqSmvpwp1MJbVY8LINFu0Nml0UY7TC3Hd4cHlinFFBxVes6mPoasLm
+    -----END PRIVATE KEY-----
+    """
+    protocol = "quic"
+    validator_address = "/mnt/validator_address"
+
+    [[network_zenoh.modules]]
+    hostname = "127.0.0.1"
+    module_name = "consensus"
+    port = 50001
+
+    [[network_zenoh.modules]]
+    hostname = "127.0.0.1"
+    module_name = "controller"
+    port = 50004
+
+    [[network_zenoh.peers]]
+    domain = "test-chain-overlord-node1"
+    port = 40000
+    protocol = "quic"
+
+    [[network_zenoh.peers]]
+    domain = "test-chain-overlord-node2"
+    port = 40000
+    protocol = "quic"
+
+    [[network_zenoh.peers]]
+    domain = "test-chain-overlord-node3"
+    port = 40000
+    protocol = "quic"
+
+    [[network_zenoh.peers]]
+    domain = "test-chain-overlord-node4"
+    port = 40000
+    protocol = "quic"
+
+    [network_zenoh.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "network"
+
+    [consensus_overlord]
+    consensus_port = 50001
+    controller_port = 50004
+    domain = "test-chain-overlord-node0"
+    enable_metrics = true
+    metrics_port = 60001
+    network_port = 50000
+
+    [consensus_overlord.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "consensus"
+
+    [executor_evm]
+    domain = "test-chain-overlord-node0"
+    enable_metrics = true
+    executor_port = 50002
+    metrics_port = 60002
+
+    [executor_evm.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "executor"
+
+    [storage_opendal]
+    domain = "test-chain-overlord-node0"
+    enable_metrics = true
+    metrics_port = 60003
+    storage_port = 50003
+
+    [storage_opendal.cloud_storage]
+    access_key_id = ""
+    bucket = ""
+    endpoint = ""
+    root = ""
+    secret_access_key = ""
+    service_type = ""
+
+    [storage_opendal.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "storage"
+
+    [genesis_block]
+    prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
+    timestamp = 1690775337964
+
+    [system_config]
+    admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
+    block_interval = 3
+    block_limit = 100
+    chain_id = "f43b00f1e0d0b3b5a7c5692f622aa550f80612c3a8b73eec436cb02c1e616abe"
+    quota_limit = 1073741824
+    validators = [
+        "b73685cc5df9c767db9f08555b3e11adf9c782fcc7223f8eb46d625b27a2e9989c945ab10ed0696516fab8c8e72cc286",
+        "81679c8cb513dea4c93303d89cbf465ab35a7cef326313922377c97f3e4e59c439d03dfd42fe7fd9733b87f7c550c71a",
+        "887fd475b093c8cea492f02f3a265e054854c9be13ae70c85215d8ea738e2cdfc2a5f61b316c3a14a62e410d1f4d6b2a",
+        "83c11758d52ff585da6418eb9ecce1ea4d96c0544724eb7c496f1fdcc9694d53ef0e514b6bdf478efd88237ffa697b02",
+    ]
+    version = 0
+
+    [controller]
+    consensus_port = 50001
+    controller_port = 50004
+    domain = "test-chain-overlord-node0"
+    enable_metrics = true
+    executor_port = 50002
+    is_danger = false
+    metrics_port = 60004
+    network_port = 50000
+    node_address = "/mnt/node_address"
+    storage_port = 50003
+    validator_address = "/mnt/validator_address"
+
+    [controller.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "controller"
+
+metadata:
+  labels:
+    app.kubernetes.io/chain-name: test-chain-overlord
+    app.kubernetes.io/chain-node: test-chain-overlord-node0
+  name: test-chain-overlord-node0-config

@@ -1,0 +1,160 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  config.toml: |+
+    [network_zenoh]
+    ca_cert = """
+    -----BEGIN CERTIFICATE-----
+    MIIBdjCCARugAwIBAgIVAP5FNxPgwPc6hlcRFfXG4aqsSC9QMAoGCCqGSM49BAMC
+    MB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAw
+    MFoYDzQwOTYwMTAxMDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQD
+    EwJDQTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABIlIyGYjX6PGaCzfxGPPhbWc
+    BLtIzf7YG+PBLoxWxxUFI8c5Z/ajgTYwUa6Ls8wbVy7Gx/c/bbEp+aUk2F5jM7Oj
+    MjAwMB0GA1UdDgQWBBT+RTcT4MD3OoZXERX1xuGqrEgvUDAPBgNVHRMBAf8EBTAD
+    AQH/MAoGCCqGSM49BAMCA0kAMEYCIQDNOPuPNEuEW0/y7aa6yIW69+VDsBrUmCTF
+    PnOoSyi6CQIhAMFcu4Ib8eAQDbsDAORM09H/9SALShCBJjOMe2Awv+hl
+    -----END CERTIFICATE-----
+    """
+    cert = """
+    -----BEGIN CERTIFICATE-----
+    MIIBeTCCAR+gAwIBAgIUTnjEXx7NF8pzU/iWduz8ng2nTtcwCgYIKoZIzj0EAwIw
+    HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
+    WhgPNDA5NjAxMDEwMDAwMDBaMDIxEDAOBgNVBAoMB0NJVEFIdWIxHjAcBgNVBAMT
+    FXRlc3QtY2hhaW4tcmFmdC1ub2RlMjBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IA
+    BLrgfxRcTZ45X9ehhgLryCQjTN5Wr9q0aBtdIyNqI9YwgkBzkGbXAa7eQxuI2xtv
+    ro/z1uhAVsba8axduWh8eS+jJDAiMCAGA1UdEQQZMBeCFXRlc3QtY2hhaW4tcmFm
+    dC1ub2RlMjAKBggqhkjOPQQDAgNIADBFAiAmxAJLSeGebbzVP4PAhJoJjGl6zvcb
+    jfQde+VOeGum0QIhAK/dK/Kceu0fgHSe3Wyam7EaRtj65Bas0BvLDMPz4BMK
+    -----END CERTIFICATE-----
+    """
+    chain_id = "dc4257d3bdc69554939072abac52e72b6c4a0b8d00c6fda5bc1bacbc5a4cb00f"
+    domain = "test-chain-raft-node2"
+    enable_metrics = true
+    grpc_port = 50000
+    metrics_port = 60000
+    node_address = "/mnt/node_address"
+    port = 40000
+    priv_key = """
+    -----BEGIN PRIVATE KEY-----
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgzonnCZKHP0XtbigY
+    Dxdz/PXYU3Jf25JWw/PWkr3yalihRANCAAS64H8UXE2eOV/XoYYC68gkI0zeVq/a
+    tGgbXSMjaiPWMIJAc5Bm1wGu3kMbiNsbb66P89boQFbG2vGsXblofHkv
+    -----END PRIVATE KEY-----
+    """
+    protocol = "quic"
+    validator_address = "/mnt/validator_address"
+
+    [[network_zenoh.modules]]
+    hostname = "127.0.0.1"
+    module_name = "consensus"
+    port = 50001
+
+    [[network_zenoh.modules]]
+    hostname = "127.0.0.1"
+    module_name = "controller"
+    port = 50004
+
+    [[network_zenoh.peers]]
+    domain = "test-chain-raft-node0"
+    port = 40000
+    protocol = "quic"
+
+    [[network_zenoh.peers]]
+    domain = "test-chain-raft-node1"
+    port = 40000
+    protocol = "quic"
+
+    [[network_zenoh.peers]]
+    domain = "test-chain-raft-node3"
+    port = 40000
+    protocol = "quic"
+
+    [[network_zenoh.peers]]
+    domain = "test-chain-raft-node4"
+    port = 40000
+    protocol = "quic"
+
+    [network_zenoh.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "network"
+
+    [consensus_raft]
+    controller_port = 50004
+    enable_metrics = true
+    grpc_listen_port = 50001
+    metrics_port = 60001
+    network_port = 50000
+    node_addr = "/mnt/node_address"
+
+    [executor_evm]
+    domain = "test-chain-raft-node2"
+    enable_metrics = true
+    executor_port = 50002
+    metrics_port = 60002
+
+    [executor_evm.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "executor"
+
+    [storage_opendal]
+    domain = "test-chain-raft-node2"
+    enable_metrics = true
+    metrics_port = 60003
+    storage_port = 50003
+
+    [storage_opendal.cloud_storage]
+    access_key_id = ""
+    bucket = ""
+    endpoint = ""
+    root = ""
+    secret_access_key = ""
+    service_type = ""
+
+    [storage_opendal.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "storage"
+
+    [genesis_block]
+    prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
+    timestamp = 1690775338138
+
+    [system_config]
+    admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
+    block_interval = 3
+    block_limit = 100
+    chain_id = "dc4257d3bdc69554939072abac52e72b6c4a0b8d00c6fda5bc1bacbc5a4cb00f"
+    quota_limit = 1073741824
+    validators = [
+        "697f3c77bb253fb9cb69d7b2f3cbf9112a4b1fed",
+        "1cb42fd43a5c8894986058d80e26ac80c4796e6d",
+        "44db5579eb95126cb046aeabae25161302affe24",
+        "c9b3497e42bf542f3a551cd63c908021d739d14b",
+    ]
+    version = 0
+
+    [controller]
+    consensus_port = 50001
+    controller_port = 50004
+    domain = "test-chain-raft-node2"
+    enable_metrics = true
+    executor_port = 50002
+    is_danger = false
+    metrics_port = 60004
+    network_port = 50000
+    node_address = "/mnt/node_address"
+    storage_port = 50003
+    validator_address = "/mnt/validator_address"
+
+    [controller.log_config]
+    filter = "info"
+    max_level = "info"
+    service_name = "controller"
+
+metadata:
+  labels:
+    app.kubernetes.io/chain-name: test-chain-raft
+    app.kubernetes.io/chain-node: test-chain-raft-node2
+  name: test-chain-raft-node2-config
