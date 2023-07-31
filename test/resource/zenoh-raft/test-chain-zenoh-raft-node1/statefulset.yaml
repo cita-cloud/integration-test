@@ -178,10 +178,6 @@ spec:
         - mountPath: /etc/localtime
           name: node-localtime
         workingDir: /data
-      hostAliases:
-      - hostnames:
-        - test-chain-zenoh-raft-node1
-        ip: 0.0.0.0
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000

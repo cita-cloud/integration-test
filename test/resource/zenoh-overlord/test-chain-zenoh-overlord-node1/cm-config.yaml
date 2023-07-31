@@ -4,29 +4,29 @@ data:
   config.toml: |+
     [network_zenoh]
     ca_cert = """
-    -----BEGIN CERTIFICATE-----\r
-    MIIBaTCCAQ+gAwIBAgIJAKuK0wgkx2jfMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
-    B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
-    MDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQDEwJDQTBZMBMGByqG\r
-    SM49AgEGCCqGSM49AwEHA0IABEJ4FdrTMJ49uaAO2zY6Mj524oLj4gUCn32kv8tS\r
-    2SySGmEgQ/jjGBlNhB2DYUaSDNq1Glechdzlle2P5mwGGT+jMjAwMB0GA1UdDgQW\r
-    BBTfaMckCNOKqz0c02hOeg1U7JjRszAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49\r
-    BAMCA0gAMEUCIA/AiUJWmBqM/eDV5S66eVtoJ0P71PpLLNMf5bilSOY2AiEAjd96\r
-    DRRZEOAxEYfcjWjwVXz5/8KZqyi4RwqlCds4tA8=\r
-    -----END CERTIFICATE-----\r
+    -----BEGIN CERTIFICATE-----
+    MIIBdTCCARugAwIBAgIVANV97pTYFWC1fWlLCFpqwnAhZoNWMAoGCCqGSM49BAMC
+    MB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAw
+    MFoYDzQwOTYwMTAxMDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQD
+    EwJDQTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABIYd4v40BEds9zc62e0yvDaa
+    RmHtI5fLjDByRqbLQF1USHBjJXwOeD8CbTgMcwYVxQKV5mFxU3FnmSfEXn0dL7yj
+    MjAwMB0GA1UdDgQWBBTVfe6U2BVgtX1pSwhaasJwIWaDVjAPBgNVHRMBAf8EBTAD
+    AQH/MAoGCCqGSM49BAMCA0gAMEUCIE8+q3fWPzgBKm8lFkmg2YQIJlPy4q/ryiH6
+    l1Qo1LlvAiEAzcN9Vqfn1xgHXndYwKvGFlzMF5FSt9hYpgh2elAsiiU=
+    -----END CERTIFICATE-----
     """
     cert = """
-    -----BEGIN CERTIFICATE-----\r
-    MIIBgzCCASigAwIBAgIJAJC57BRHi5GiMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
-    B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
-    MDAwMDAwWjA8MRAwDgYDVQQKDAdDSVRBSHViMSgwJgYDVQQDEx90ZXN0LWNoYWlu\r
-    LXplbm9oLW92ZXJsb3JkLW5vZGUxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE\r
-    pFBD0iLScLJBEf10joMhTLL5cV5ti5qJJ46aa0k/NMCr1l9jariZv6yreW70z7X4\r
-    +IrwyB031PDDtQE4gUONdaMuMCwwKgYDVR0RBCMwIYIfdGVzdC1jaGFpbi16ZW5v\r
-    aC1vdmVybG9yZC1ub2RlMTAKBggqhkjOPQQDAgNJADBGAiEA+vT8ya0Wjxyyrv4J\r
-    +hKlOlw3LV1VfZLzTm1AnWYWakYCIQD9gatx9uLOvE31B3ocJIrhekpbWgKQYimB\r
-    J58DGpuO8g==\r
-    -----END CERTIFICATE-----\r
+    -----BEGIN CERTIFICATE-----
+    MIIBjzCCATSgAwIBAgIVAPNcaM58uQOxPPp+diOfOPgrT4YHMAoGCCqGSM49BAMC
+    MB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAw
+    MFoYDzQwOTYwMTAxMDAwMDAwWjA8MRAwDgYDVQQKDAdDSVRBSHViMSgwJgYDVQQD
+    Ex90ZXN0LWNoYWluLXplbm9oLW92ZXJsb3JkLW5vZGUxMFkwEwYHKoZIzj0CAQYI
+    KoZIzj0DAQcDQgAEGDKdAAOsNNl7piz3ggCBI12K2k3yocULBeRfJjPqCzNKcbT7
+    5NqtUtvuOXrShAWeLxhEC1/rKYQyiecLH7yQ3qMuMCwwKgYDVR0RBCMwIYIfdGVz
+    dC1jaGFpbi16ZW5vaC1vdmVybG9yZC1ub2RlMTAKBggqhkjOPQQDAgNJADBGAiEA
+    mVvQhtKTb4L1++1+HhkcxBEwCgGhJ439arZTFOiXbLkCIQDNf0aSIVyB7FEGdTJq
+    kt3qzj3MIOo5KYokQou3cRb98A==
+    -----END CERTIFICATE-----
     """
     chain_id = "5f267c2f9aa5ff8200452d21c2f5e870046727f66501be4f32e18d1bf8e55111"
     domain = "test-chain-zenoh-overlord-node1"
@@ -36,11 +36,11 @@ data:
     node_address = "/mnt/node_address"
     port = 40000
     priv_key = """
-    -----BEGIN PRIVATE KEY-----\r
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgTubS+flb+9Vk4sD0\r
-    rJogTNGAqa1jJ52kufuzhJ7iDrShRANCAASkUEPSItJwskER/XSOgyFMsvlxXm2L\r
-    moknjpprST80wKvWX2NquJm/rKt5bvTPtfj4ivDIHTfU8MO1ATiBQ411\r
-    -----END PRIVATE KEY-----\r
+    -----BEGIN PRIVATE KEY-----
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgy0O/kiRofUJdpcFw
+    F1HYqG5FcCYm10ye8pDP9Jl5TJyhRANCAAQYMp0AA6w02XumLPeCAIEjXYraTfKh
+    xQsF5F8mM+oLM0pxtPvk2q1S2+45etKEBZ4vGEQLX+sphDKJ5wsfvJDe
+    -----END PRIVATE KEY-----
     """
     protocol = "quic"
     validator_address = "/mnt/validator_address"
@@ -105,14 +105,18 @@ data:
     service_name = "executor"
 
     [storage_opendal]
-    access_key_id = ""
-    bucket = ""
     domain = "test-chain-zenoh-overlord-node1"
     enable_metrics = true
-    endpoint = ""
     metrics_port = 60003
-    secret_access_key = ""
     storage_port = 50003
+
+    [storage_opendal.cloud_storage]
+    access_key_id = ""
+    bucket = ""
+    endpoint = ""
+    root = ""
+    secret_access_key = ""
+    service_type = ""
 
     [storage_opendal.log_config]
     filter = "info"
@@ -121,7 +125,7 @@ data:
 
     [genesis_block]
     prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
-    timestamp = 1683897074108
+    timestamp = 1690772675166
 
     [system_config]
     admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
@@ -130,10 +134,10 @@ data:
     chain_id = "5f267c2f9aa5ff8200452d21c2f5e870046727f66501be4f32e18d1bf8e55111"
     quota_limit = 1073741824
     validators = [
-        "8428536b43c6fecd2fdba17b65196a3bd38004a788fb374fb5e1376eae2da74225ab1abf917b927943363e463d1d88d1",
-        "ad8a44647525e8fd2158ca7f8653f766216aa5bd1457ffa322474b7364550b2e7982ab2ee91a46fa8d51d83d1039079d",
-        "9698f951cd4f2edababb8cbca8c4ac424ba63ad7e5a6eac287d5ed9739c7a9170659ea3c378819817a52eda0cca3652c",
-        "96fcb063a74cd81ef117f2500d47e165061a0918f34510a0f19d568be141fb4ad1b8fe6c59d9bd3bcd526174869e74d9",
+        "aa213c69835058e22a2497c30d4f56953faee07bfc713baa07165c4aee4ef87bd2d8e83554b597944128b8e3124af291",
+        "8e02bbcd404c8c0c1b41cae705fe69b579a4be1a4d0e9d05dca604153ba072fb6cb9bb06c49059856ea0cff0e7611fd7",
+        "869d9d1dd59e425dd15f96e71834f8d3f86b4c3d0b97fd8eeda659eb1f50141e99ad8474365f087372a4cf93b9fa6820",
+        "8fe53bf015e9caa56d95338d8ec4ae4c802c07129a22eb3ff8d180dae0e36e73768022a58c1c92736e93483bcbf37a7d",
     ]
     version = 0
 

@@ -4,28 +4,29 @@ data:
   config.toml: |+
     [network_zenoh]
     ca_cert = """
-    -----BEGIN CERTIFICATE-----\r
-    MIIBaTCCAQ6gAwIBAgIIUfuCbrK7NCkwCgYIKoZIzj0EAwIwHzEQMA4GA1UECgwH\r
-    Q0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAwWhgPNDA5NjAxMDEw\r
-    MDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMFkwEwYHKoZI\r
-    zj0CAQYIKoZIzj0DAQcDQgAETdeZPE+TYiewGHR+/G4B4UvpNwRehB8bdFceldj5\r
-    gryHd8s49bjW5e3/Vk4CIKFIlsbO4hNvxruXeKLB4wX9P6MyMDAwHQYDVR0OBBYE\r
-    FCk0u7JugvtR57HQDkHB1Po/UXKHMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0E\r
-    AwIDSQAwRgIhALwKU1jWXJwlO7RqZm0749bQUveCyB4cITvLfrm2LkCmAiEAyH8I\r
-    i9SX+aaJE0gh0DaOytMfxLAvpy64hb3nAl9a4Yg=\r
-    -----END CERTIFICATE-----\r
+    -----BEGIN CERTIFICATE-----
+    MIIBdTCCARqgAwIBAgIUPo82kSX0TJkZ2Bh+zFYcu2JiL5IwCgYIKoZIzj0EAwIw
+    HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
+    WhgPNDA5NjAxMDEwMDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMT
+    AkNBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE/lvSnImXEt1gBxv8AtXGElTu
+    ibL4eZ9013yDRMavs6sMP4CofCnIEZLtQxNYCOK/alVQi6BFUrpJ7l/EL7lf5aMy
+    MDAwHQYDVR0OBBYEFD6PNpEl9EyZGdgYfsxWHLtiYi+SMA8GA1UdEwEB/wQFMAMB
+    Af8wCgYIKoZIzj0EAwIDSQAwRgIhAOkLqQBkqiCpxPZDDnkfhjdpmXrkEUjbPAWb
+    a6SkESGcAiEAuu4TCa9Y/+KHMzUG+jZ5eopaL3RBiYsRGjlgrXpJ0Ww=
+    -----END CERTIFICATE-----
     """
     cert = """
-    -----BEGIN CERTIFICATE-----\r
-    MIIBejCCASCgAwIBAgIJAJ3Mn6yna61qMAoGCCqGSM49BAMCMB8xEDAOBgNVBAoM\r
-    B0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAwMFoYDzQwOTYwMTAx\r
-    MDAwMDAwWjA4MRAwDgYDVQQKDAdDSVRBSHViMSQwIgYDVQQDExt0ZXN0LWNoYWlu\r
-    LXplbm9oLXJhZnQtbm9kZTMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQ2ld0l\r
-    Xtf3Du3G3ixwKqMhGLKovwxyPH3Yhjx/cWZP97xfErB48eHi9BuswuRJi5IZuiQn\r
-    9EliTB/s97YPCtTzoyowKDAmBgNVHREEHzAdght0ZXN0LWNoYWluLXplbm9oLXJh\r
-    ZnQtbm9kZTMwCgYIKoZIzj0EAwIDSAAwRQIhAOAZD5D8Tfx2XixGSsvDKwJ1TMeo\r
-    iYhUIuPaX3Hhd51RAiBpRHFdFZaukr5fRdrg8IqUZgcFyscv3+GWnxVCrrSlQw==\r
-    -----END CERTIFICATE-----\r
+    -----BEGIN CERTIFICATE-----
+    MIIBhTCCASugAwIBAgIUCbtB7xcxcD4sLRNvL4mkaAFpaTIwCgYIKoZIzj0EAwIw
+    HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
+    WhgPNDA5NjAxMDEwMDAwMDBaMDgxEDAOBgNVBAoMB0NJVEFIdWIxJDAiBgNVBAMT
+    G3Rlc3QtY2hhaW4temVub2gtcmFmdC1ub2RlMzBZMBMGByqGSM49AgEGCCqGSM49
+    AwEHA0IABIPDBqcfjbUyiB/4l/Jb+PUcYQ5+nDZFTPyrsW3U/SVYQhzKR47IiVLC
+    eOJEDlc307Q2Qh9gOS3/Y7VwQZxMyBmjKjAoMCYGA1UdEQQfMB2CG3Rlc3QtY2hh
+    aW4temVub2gtcmFmdC1ub2RlMzAKBggqhkjOPQQDAgNIADBFAiA1G3GZwZA4E0YG
+    RdXoMW3t50LyTEA8kyrFi4r3mSEebwIhAP3JreHrJBbGVWqFzpZ5sBwRckh+MPOh
+    Cpk1ZpfE/fI8
+    -----END CERTIFICATE-----
     """
     chain_id = "eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e"
     domain = "test-chain-zenoh-raft-node3"
@@ -35,11 +36,11 @@ data:
     node_address = "/mnt/node_address"
     port = 40000
     priv_key = """
-    -----BEGIN PRIVATE KEY-----\r
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgv34tH7xSrcYKKfft\r
-    ZagHP6mns2Yuz68IEdNO0j+SktahRANCAAQ2ld0lXtf3Du3G3ixwKqMhGLKovwxy\r
-    PH3Yhjx/cWZP97xfErB48eHi9BuswuRJi5IZuiQn9EliTB/s97YPCtTz\r
-    -----END PRIVATE KEY-----\r
+    -----BEGIN PRIVATE KEY-----
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg0y6VbOmCfU432ch9
+    xIqAo4OB/Xcj5hGv6rGLHtZDCEWhRANCAASDwwanH421Mogf+JfyW/j1HGEOfpw2
+    RUz8q7Ft1P0lWEIcykeOyIlSwnjiRA5XN9O0NkIfYDkt/2O1cEGcTMgZ
+    -----END PRIVATE KEY-----
     """
     protocol = "quic"
     validator_address = "/mnt/validator_address"
@@ -99,14 +100,18 @@ data:
     service_name = "executor"
 
     [storage_opendal]
-    access_key_id = ""
-    bucket = ""
     domain = "test-chain-zenoh-raft-node3"
     enable_metrics = true
-    endpoint = ""
     metrics_port = 60003
-    secret_access_key = ""
     storage_port = 50003
+
+    [storage_opendal.cloud_storage]
+    access_key_id = ""
+    bucket = ""
+    endpoint = ""
+    root = ""
+    secret_access_key = ""
+    service_type = ""
 
     [storage_opendal.log_config]
     filter = "info"
@@ -115,7 +120,7 @@ data:
 
     [genesis_block]
     prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
-    timestamp = 1683897079577
+    timestamp = 1690772675246
 
     [system_config]
     admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
@@ -124,10 +129,10 @@ data:
     chain_id = "eb1b773a2f1a56837fb7b182f91551f13ef721499c4e9bedbcda5366a345ad1e"
     quota_limit = 1073741824
     validators = [
-        "e9ba3244aba70b02e7e59ef1472ed3ba31988e91",
-        "407c965fe827f5595bef64773feea1dfe6dfb3d8",
-        "6609856ab5f49a08d02b24065dec070019f64a5b",
-        "2153c0d48f1daa8345c4f6b148d9c6ac2caa0e09",
+        "5b143ef1c56d2aebe856253b2a8fc4b0bc9fd232",
+        "e6b8a668226b0db92dbdd138a2d6a5674fda3b6b",
+        "d81c623206ae6245fa1e0bb17181e60baee92a9a",
+        "83bbe1813a57e03ad5800a5db668dda33d1f6ab4",
     ]
     version = 0
 
