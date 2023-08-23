@@ -153,6 +153,7 @@ data:
     node_address = "/mnt/node_address"
     storage_port = 50003
     validator_address = "/mnt/validator_address"
+    tx_persistence = true
 
     [controller.log_config]
     filter = "info"

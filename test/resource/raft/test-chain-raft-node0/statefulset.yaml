@@ -154,7 +154,7 @@ spec:
         - /etc/cita-cloud/config/config.toml
         - -p
         - /mnt/private_key
-        image: registry.devops.rivtower.com/cita-cloud/controller:latest
+        image: registry.devops.rivtower.com/cita-cloud/controller_hsm:latest
         imagePullPolicy: Always
         name: controller
         ports:
