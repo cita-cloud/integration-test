@@ -18,5 +18,5 @@ spec:
   volumes:
     - name: kube-config
       configMap:
-        defaultMode: 0600
+        defaultMode: 384
         name: integration-test-kube-config
