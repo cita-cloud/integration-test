@@ -183,6 +183,7 @@ spec:
         fsGroup: 1000
         runAsGroup: 1000
         runAsUser: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
       volumes:
       - configMap:
           name: test-chain-overlord-node0-account
