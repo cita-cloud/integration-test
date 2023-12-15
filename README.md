@@ -11,7 +11,7 @@ or
 ```
 $ git clone https://gitee.com/cita-cloud/integration-test.git
 $ cd integration-test
-$ docker run -it --rm -v $(pwd):/data -v ~/.kube:/root/.kube -w /data -e CHAIN_NAME=`your chain name` -e CHAIN_TYPE=`your chain type` -e NAMESPACE=`chain's namespace` registry.devops.rivtower.com/cita-cloud/test-ci:v0.0.1 bash
+$ docker run -it --rm -v $(pwd):/data -v ~/.kube:/root/.kube -w /data -e CHAIN_NAME=`your chain name` -e CHAIN_TYPE=`your chain type` -e NAMESPACE=`chain's namespace` -e SC=`storageclass` registry.devops.rivtower.com/cita-cloud/test-ci:v0.0.1 bash
 
 # kubectl get nodes
 # bash port_forward.sh &

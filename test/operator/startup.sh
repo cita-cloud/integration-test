@@ -20,30 +20,14 @@ pwd=`pwd`
 dir=`dirname $0`
 path=$pwd/$dir/scripts
 
-for file in `ls "$path/v1"`; do
-  if [ "${file##*.}" = "py" ]; then
-    echo `date`
-    python "$path/v1/$file"
-    ret=$?
-    if [ "$ret" = "0" ]; then
-      echo "exec $file successful"
-    else
-      echo "exec $file failed, ret = $ret"
-      exit 1
-    fi
-  fi
-done
-
-for file in `ls "$path/v2"`; do
-  if [ "${file##*.}" = "py" ]; then
-    echo `date`
-    python "$path/v2/$file"
-    ret=$?
-    if [ "$ret" = "0" ]; then
-      echo "exec $file successful"
-    else
-      echo "exec $file failed, ret = $ret"
-      exit 1
-    fi
+for file in `ls "$path"`; do
+  echo `date`
+  python "$path/$file"
+  ret=$?
+  if [ "$ret" = "0" ]; then
+    echo "exec $file successful"
+  else
+    echo "exec $file failed ret = $ret"
+    exit 1
   fi
 done
