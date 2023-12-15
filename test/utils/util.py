@@ -152,52 +152,6 @@ def exec(cmd):
     return subprocess.getoutput(cmd)
 
 
-@retry(stop=stop_after_attempt(150), wait=wait_fixed(2), after=after_log(logger, logging.DEBUG))
-def wait_job_complete(crd, cr_name, namespace):
-    config.load_kube_config()
-    api = client.CustomObjectsApi()
-    resource = api.get_namespaced_custom_object(
-        group="citacloud.rivtower.com",
-        version="v1",
-        name=cr_name,
-        namespace=namespace,
-        plural=crd,
-    )
-    if not resource.get('status'):
-        raise Exception("no status")
-    if resource.get('status').get('status') == 'Active':
-        raise Exception("the job's status is still Active")
-    return resource.get('status').get('status')
-
-
-@retry(stop=stop_after_attempt(300), wait=wait_fixed(2), after=after_log(logger, logging.DEBUG))
-def wait_new_job_complete(crd, cr_name, namespace):
-    """
-    for k8-up operator status
-    :param crd:
-    :param cr_name:
-    :param namespace:
-    :return:
-    """
-    config.load_kube_config()
-    api = client.CustomObjectsApi()
-    resource = api.get_namespaced_custom_object(
-        group="rivtower.com",
-        version="v1cita",
-        name=cr_name,
-        namespace=namespace,
-        plural=crd,
-    )
-    if not resource.get('status'):
-        raise Exception("no status")
-    complete_flag = False
-    for condition in resource.get('status').get('conditions'):
-        if condition.get('type') == 'Completed':
-            return condition.get('reason')
-    if not complete_flag:
-        raise Exception("the job's status is still Active")
-
-
 @retry(stop=stop_after_attempt(60), wait=wait_fixed(5), after=after_log(logger, logging.DEBUG))
 def check_node_running(name, namespace):
     config.load_kube_config()
