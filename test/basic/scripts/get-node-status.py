@@ -27,8 +27,9 @@ if __name__ == "__main__":
         is_sync = json_obj['is_sync']
         peers_count = json_obj['peers_count']
         peers_status = json_obj['peers_status']
+        waiting_block = json_obj['waiting_block']
         version = json_obj['version']
-        if isinstance(is_sync, bool) and isinstance(peers_status, list) and isinstance(peers_count, int) and isinstance(version, str):
+        if isinstance(is_sync, bool) and isinstance(peers_status, list) and isinstance(peers_count, int) and isinstance(waiting_block, int):
             exit(0)
     except ValueError:
         pass
