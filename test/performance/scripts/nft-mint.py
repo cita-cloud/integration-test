@@ -65,9 +65,9 @@ with arg: "0"
     if not len(contract_addr) == 42 or not contract_addr.__contains__("0x"):
         print("get contract addr failed!")
         exit(40)
+    print("contract_addr: ", contract_addr)
 
-
-    # bench send
+    # bench send mint
     cmd = "cldi -c default bench send -t {} -d 0x6a627842000000000000000000000000ab8483f64d9c6d1ecf9b849ae677dd3315835cb2 -c 20"
     ret = util.exec(cmd.format(contract_addr))
 
@@ -75,6 +75,26 @@ with arg: "0"
     print(ret.split('\n')[-1])
 
     time.sleep(30)
+
+    # burn
+    cmd = "cldi -c default send {} 0x42966c680000000000000000000000000000000000000000000000000000000000000000"
+    ret = util.exec(cmd.format(contract_addr))
+
+    # print
+    print("burn: ", ret)
+
+    cmd = "cldi -c default get receipt {}"
+    receipt_result = util.exec_retry(cmd.format(tx_hash))
+    if receipt_result.__contains__("Error"):
+        print("get burn receipt failed!")
+        exit(50)
+
+    burn_receipt = json.loads(receipt_result)
+    if len(burn_receipt['error_msg']) != 0:
+        print("burn receipt has error!")
+        exit(60)
+
+    time.sleep(1)
 
     # bench call
     cmd = "cldi -c default bench call -t {} -d 0x6352211e0000000000000000000000000000000000000000000000000000000000000000"
