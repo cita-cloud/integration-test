@@ -76,25 +76,18 @@ with arg: "0"
 
     time.sleep(30)
 
-    # burn
-    cmd = "cldi -c default send {} 0x42966c680000000000000000000000000000000000000000000000000000000000000000"
+    # burn call/EstimateQuota
+    cmd = "cldi -c default bench call -t {} -d 0x42966c680000000000000000000000000000000000000000000000000000000000000000 -c 1"
     ret = util.exec(cmd.format(contract_addr))
 
-    # print
-    print("burn: ", ret)
+    # calc tps
+    begin_pos = ret.find('`10000` tasks finished in `') + 27
+    time_len = ret[begin_pos:].find('` ms')
+    t_ms = int(ret[begin_pos:begin_pos + time_len])
+    tps = 10000 * 1000 / t_ms
+    print("call/estimatequota burn single thread tps: ", int(tps))
 
-    cmd = "cldi -c default get receipt {}"
-    receipt_result = util.exec_retry(cmd.format(tx_hash))
-    if receipt_result.__contains__("Error"):
-        print("get burn receipt failed!")
-        exit(50)
-
-    burn_receipt = json.loads(receipt_result)
-    if len(burn_receipt['error_msg']) != 0:
-        print("burn receipt has error!")
-        exit(60)
-
-    time.sleep(1)
+    time.sleep(30)
 
     # bench call
     cmd = "cldi -c default bench call -t {} -d 0x6352211e0000000000000000000000000000000000000000000000000000000000000000"
@@ -106,7 +99,7 @@ with arg: "0"
     t_ms = int(ret[begin_pos:begin_pos + time_len])
 
     tps = 10000 * 1000 / t_ms
-    print("tps: ", int(tps))
+    print("call ownerof tps: ", int(tps))
 
     time.sleep(30)
 
