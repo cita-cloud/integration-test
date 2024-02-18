@@ -12,7 +12,7 @@ from logger import logger
 if __name__ == "__main__":
     old_bn = util.get_block_number()
     logger.info("the block number before backup is: {}".format(old_bn))
-    
+
     # create backpvc
     with open("backup_pvc.yaml", 'w') as pvc_file:
             pvc_file.write(''' 
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     if "created" not in result:
         print("create pvc error: ", result)
         exit(10)
-    
+
     # patch node
     # xxx --- chain type
     patch_op_json_template = '''
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     if "patched" not in result:
         print("patch node error: ", result)
         exit(10)
-    
+
     # wait for node restart
     time.sleep(300)
     util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     if "rolled back" not in result:
         print("undo error: ", result)
         exit(30)
-    
+
     # wait for node restart
     time.sleep(300)
     util.check_block_increase()
@@ -121,7 +121,7 @@ if __name__ == "__main__":
     if "scaled" not in result:
         print("stop node error: ", result)
         exit(40)
-    
+
     # wait for node stop
     time.sleep(300)
 
@@ -171,7 +171,7 @@ if __name__ == "__main__":
     if "created" not in result:
         print("create temp pod error: ", result)
         exit(50)
-    
+
     # wait for restore finish
     time.sleep(300)
 

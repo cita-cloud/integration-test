@@ -115,12 +115,19 @@ def main():
             exit(20)
     logger.info("all nodes rollback")
 
+    # rollback cloud storage
+    result = util.exec("kubectl exec -n {} -it {}-0 -c patch-op -- cloud-op cloud-rollback -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), nodes[0].name, old_bn - 100))
+    if "cloud rollback done" not in result:
+        print("exec rollback error: ", result)
+        exit(30)
+    logger.info("cloud rollback")
+
     # undo all nodes
     for node in nodes:
         result = util.exec("kubectl rollout undo -n {} sts {}".format(os.getenv("NAMESPACE"), node.name))
         if "rolled back" not in result:
             print("undo error: ", result)
-            exit(30)
+            exit(40)
     
     # wait for all nodes restart
     time.sleep(300)

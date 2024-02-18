@@ -5,27 +5,27 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----
-    MIIBdTCCARugAwIBAgIVAJ4uq/a0exRdXAuzibfp0vsRxweKMAoGCCqGSM49BAMC
+    MIIBdTCCARugAwIBAgIVAO7CYwpvU1MjFiJZ/3tW2N98zWZbMAoGCCqGSM49BAMC
     MB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAw
     MFoYDzQwOTYwMTAxMDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQD
-    EwJDQTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJd9ZSOgx+gO+VYFS34hm8ZT
-    26e7JUG/xj76vlSnA8UAEBoqPIQsovZeWK+BKslk/qBJ7EndhA3M83EqewmbUkaj
-    MjAwMB0GA1UdDgQWBBSeLqv2tHsUXVwLs4m36dL7EccHijAPBgNVHRMBAf8EBTAD
-    AQH/MAoGCCqGSM49BAMCA0gAMEUCIQD8OQPeymY+yYYOkRYc/6yCJobA2UiN0GLf
-    aoEQlIp3dAIgPBAspxk9UoCe3ORP+gpFq/oAfG7Ki7W4/xQr5xJQNmA=
+    EwJDQTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABPq6AwMgahyWfPo3aTd3qfn0
+    O0dBqKuuGW3QfajnIhlstTGXyUX9rghEU5ysGuvJO1bV0R8zaGmaPmsfHGW81CKj
+    MjAwMB0GA1UdDgQWBBTuwmMKb1NTIxYiWf97VtjffM1mWzAPBgNVHRMBAf8EBTAD
+    AQH/MAoGCCqGSM49BAMCA0gAMEUCIHs7Zy+Lf61rKu8h6KFLGv56oncIWOzj15B4
+    4FBtAygFAiEA18ertGs9PpWJGg2tfMJpbMMFN982QPhdvT4z6qpNK+0=
     -----END CERTIFICATE-----
     """
     cert = """
     -----BEGIN CERTIFICATE-----
-    MIIBgTCCASegAwIBAgIUMV7Y6D25rjiY4NnBblfHzE0p06AwCgYIKoZIzj0EAwIw
+    MIIBgjCCASegAwIBAgIUdE3H6KavG8+7D57405slf8Kwuq8wCgYIKoZIzj0EAwIw
     HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
     WhgPNDA5NjAxMDEwMDAwMDBaMDYxEDAOBgNVBAoMB0NJVEFIdWIxIjAgBgNVBAMT
     GXRlc3QtY2hhaW4tb3ZlcmxvcmQtbm9kZTEwWTATBgcqhkjOPQIBBggqhkjOPQMB
-    BwNCAATqWNTmS9gP/qLCU1UDzVe0zY3BRne7enDN8yGoP/IeUyWMP/HmmW/VKOE0
-    AXK1Hbu5waQh1SxqnkpdGkgd/HhToygwJjAkBgNVHREEHTAbghl0ZXN0LWNoYWlu
-    LW92ZXJsb3JkLW5vZGUxMAoGCCqGSM49BAMCA0gAMEUCICyEHniPH6pXaQVXYFM7
-    lU1qI3qE7YQiEMnbDPI//O88AiEAzxI1MRVzWKWOCdf86EY+8dB8U/cuSXt5EOZc
-    nDEUQ6I=
+    BwNCAAR9akNDAf6DweBtxmddaLSB4Exiw2FfqIM7hYBpVgJhDcj+ZKhmiaUoDLT0
+    th4/e3ks324SmsTspn8Yrfbsn1ieoygwJjAkBgNVHREEHTAbghl0ZXN0LWNoYWlu
+    LW92ZXJsb3JkLW5vZGUxMAoGCCqGSM49BAMCA0kAMEYCIQDQqlgZvI8+rWcvAvNe
+    KsdX2qypOHNi95XVQCQHPx1t8AIhAOiqjYKYHFluL/IFkEr32kz68NfW7Ph5/MA6
+    pOJ+HUQN
     -----END CERTIFICATE-----
     """
     chain_id = "f43b00f1e0d0b3b5a7c5692f622aa550f80612c3a8b73eec436cb02c1e616abe"
@@ -37,9 +37,9 @@ data:
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgY8fLGudKrPMTIN4w
-    +u6qif1m6wnylUcq7oP9W2Ya8QShRANCAATqWNTmS9gP/qLCU1UDzVe0zY3BRne7
-    enDN8yGoP/IeUyWMP/HmmW/VKOE0AXK1Hbu5waQh1SxqnkpdGkgd/HhT
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg6pmNdCAZXQVZ+CC8
+    GndSmFPHLCKRQteFZg/fWD8/7BKhRANCAAR9akNDAf6DweBtxmddaLSB4Exiw2Ff
+    qIM7hYBpVgJhDcj+ZKhmiaUoDLT0th4/e3ks324SmsTspn8Yrfbsn1ie
     -----END PRIVATE KEY-----
     """
     protocol = "quic"
@@ -111,12 +111,12 @@ data:
     storage_port = 50003
 
     [storage_opendal.cloud_storage]
-    access_key_id = ""
-    bucket = ""
-    endpoint = ""
-    root = ""
-    secret_access_key = ""
-    service_type = ""
+    access_key_id = "admin"
+    bucket = "cita-cloud"
+    endpoint = "http://minio:9000"
+    root = "overlord"
+    secret_access_key = "testtest"
+    service_type = "s3"
 
     [storage_opendal.log_config]
     filter = "info"
@@ -125,7 +125,7 @@ data:
 
     [genesis_block]
     prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
-    timestamp = 1690775337964
+    timestamp = 1708413765033
 
     [system_config]
     admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
@@ -134,10 +134,10 @@ data:
     chain_id = "f43b00f1e0d0b3b5a7c5692f622aa550f80612c3a8b73eec436cb02c1e616abe"
     quota_limit = 1073741824
     validators = [
-        "b73685cc5df9c767db9f08555b3e11adf9c782fcc7223f8eb46d625b27a2e9989c945ab10ed0696516fab8c8e72cc286",
-        "81679c8cb513dea4c93303d89cbf465ab35a7cef326313922377c97f3e4e59c439d03dfd42fe7fd9733b87f7c550c71a",
-        "887fd475b093c8cea492f02f3a265e054854c9be13ae70c85215d8ea738e2cdfc2a5f61b316c3a14a62e410d1f4d6b2a",
-        "83c11758d52ff585da6418eb9ecce1ea4d96c0544724eb7c496f1fdcc9694d53ef0e514b6bdf478efd88237ffa697b02",
+        "a2ed76b8f97fa38dd90bf4ea3c06cca2371bdb3fbe521209af2dbdb4d2ad814992647e397adba4b9a8510f0070acbaf5",
+        "b7d40d0a02779166fd8c8bffdac1148a0ec56db6a8674461ee21437cdce9414aaa8cf278ca39b390e0231932ec3ec602",
+        "893022e67e4dc800d93d6d21630a438ff10d5b42ccc61f1141ba1bfb9245f47da6bbff9867a04bddc492ad555df5e46c",
+        "b7a66b6bf0a0b5efcc37c52774d56301bc30e58078944f8b5ec38380bcf779393d6d981b5c3a036abe013ee43d5c0e37",
     ]
     version = 0
 

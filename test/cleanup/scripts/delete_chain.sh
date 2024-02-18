@@ -19,6 +19,7 @@
 # delete chain resource
 kubectl delete -f test/resource/$CHAIN_TYPE -n $NAMESPACE --recursive
 kubectl delete -f test/operations/resource/$CHAIN_TYPE -n $NAMESPACE --recursive
+kubectl delete -f test/resource/minio.yaml -n $NAMESPACE
 
 
 kubectl delete pvc -n $NAMESPACE -l app.kubernetes.io/chain-name=$CHAIN_NAME
