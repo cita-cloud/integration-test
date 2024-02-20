@@ -52,6 +52,12 @@ if __name__ == "__main__":
                         "infinity"
                     ],
                     "imagePullPolicy": "Always",
+                    "env": [
+                        {
+                            "name": "AWS_REGION",
+                            "value": "local"
+                        }
+                    ],
                     "volumeMounts": [
                         {
                             "mountPath": "/data",

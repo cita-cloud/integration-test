@@ -74,6 +74,12 @@ def main():
                             "infinity"
                         ],
                         "imagePullPolicy": "Always",
+                        env: [
+                            {
+                                "name": "AWS_REGION",
+                                "value": "local"
+                            }
+                        ],
                         "volumeMounts": [
                             {
                                 "mountPath": "/data",
