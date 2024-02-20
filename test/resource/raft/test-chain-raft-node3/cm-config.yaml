@@ -5,26 +5,26 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----
-    MIIBdjCCARugAwIBAgIVAP5FNxPgwPc6hlcRFfXG4aqsSC9QMAoGCCqGSM49BAMC
-    MB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAw
-    MFoYDzQwOTYwMTAxMDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQD
-    EwJDQTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABIlIyGYjX6PGaCzfxGPPhbWc
-    BLtIzf7YG+PBLoxWxxUFI8c5Z/ajgTYwUa6Ls8wbVy7Gx/c/bbEp+aUk2F5jM7Oj
-    MjAwMB0GA1UdDgQWBBT+RTcT4MD3OoZXERX1xuGqrEgvUDAPBgNVHRMBAf8EBTAD
-    AQH/MAoGCCqGSM49BAMCA0kAMEYCIQDNOPuPNEuEW0/y7aa6yIW69+VDsBrUmCTF
-    PnOoSyi6CQIhAMFcu4Ib8eAQDbsDAORM09H/9SALShCBJjOMe2Awv+hl
+    MIIBdDCCARqgAwIBAgIUC4gZT6md4N9WAoaICVIYKiI6TbAwCgYIKoZIzj0EAwIw
+    HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
+    WhgPNDA5NjAxMDEwMDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMT
+    AkNBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAESoGAym1+EuPT0NbtS0Y0w3L2
+    Fj58553L1vqDuYNcfPSPy1cMRWA38P+u70ZDwA2VS/njKSBgnxLmtQIcTM1/2KMy
+    MDAwHQYDVR0OBBYEFAuIGU+pneDfVgKGiAlSGCoiOk2wMA8GA1UdEwEB/wQFMAMB
+    Af8wCgYIKoZIzj0EAwIDSAAwRQIhAMPJC6PGmDPWdwCOITH2sCN5Ibp6fUZsvbRn
+    LO0sFRd1AiBDQ/MHnWyNbtb3BdcbcRYqrMFNOoTefImIAdkyBS4myw==
     -----END CERTIFICATE-----
     """
     cert = """
     -----BEGIN CERTIFICATE-----
-    MIIBejCCASCgAwIBAgIVAPu4JO1g6JnxFx0yTeUCSgL9dTdzMAoGCCqGSM49BAMC
-    MB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAw
-    MFoYDzQwOTYwMTAxMDAwMDAwWjAyMRAwDgYDVQQKDAdDSVRBSHViMR4wHAYDVQQD
-    ExV0ZXN0LWNoYWluLXJhZnQtbm9kZTMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNC
-    AAR+z7z6shu2P9N33+y9dz/I/vnk7jVglYfrCFEP8WVcOHdQu8dP7z1gXHHvZcNY
-    MTWoz8JZ2vej5rAE4ZEMCwmJoyQwIjAgBgNVHREEGTAXghV0ZXN0LWNoYWluLXJh
-    ZnQtbm9kZTMwCgYIKoZIzj0EAwIDSAAwRQIgTuPqiFRl9uXau8uEFfmWPwCkKRBO
-    fXFsN6KKgoZL+0oCIQCKBJ2zwyUxEgYXQGtg5oUxJ1Sbgz2PidbY6g39Uv0nQw==
+    MIIBejCCAR+gAwIBAgIUGrmag3N8fUXRPJ7SDvvprfr1W7owCgYIKoZIzj0EAwIw
+    HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
+    WhgPNDA5NjAxMDEwMDAwMDBaMDIxEDAOBgNVBAoMB0NJVEFIdWIxHjAcBgNVBAMT
+    FXRlc3QtY2hhaW4tcmFmdC1ub2RlMzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IA
+    BL5wOVQ1pTCOvTm4/Li8vYYDwXLiLaBuidyjcqHYvyCkN8A3XJY65UcMUujVVyth
+    jPnRhLTwcN4JNKu43PYmQ2CjJDAiMCAGA1UdEQQZMBeCFXRlc3QtY2hhaW4tcmFm
+    dC1ub2RlMzAKBggqhkjOPQQDAgNJADBGAiEAyC4DVKJg+dEUCAccGWIEfXIqRbvp
+    wKpcS7nmFiiL2JECIQCifr5o10J/y/d6iekY519SGUbStHvmXipKprjFwuNT4A==
     -----END CERTIFICATE-----
     """
     chain_id = "dc4257d3bdc69554939072abac52e72b6c4a0b8d00c6fda5bc1bacbc5a4cb00f"
@@ -36,9 +36,9 @@ data:
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgd6wR3KoTXLxDpU6G
-    Ad4C4YqJbiuNuihW9ZIsAi+4IuWhRANCAAR+z7z6shu2P9N33+y9dz/I/vnk7jVg
-    lYfrCFEP8WVcOHdQu8dP7z1gXHHvZcNYMTWoz8JZ2vej5rAE4ZEMCwmJ
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg9PveGgKFqsNRpbxG
+    9v/9XHwX7aVnvkFUNFpR4hXmXHahRANCAAS+cDlUNaUwjr05uPy4vL2GA8Fy4i2g
+    bonco3Kh2L8gpDfAN1yWOuVHDFLo1VcrYYz50YS08HDeCTSruNz2JkNg
     -----END PRIVATE KEY-----
     """
     protocol = "quic"
@@ -105,12 +105,12 @@ data:
     storage_port = 50003
 
     [storage_opendal.cloud_storage]
-    access_key_id = ""
-    bucket = ""
-    endpoint = ""
-    root = ""
-    secret_access_key = ""
-    service_type = ""
+    access_key_id = "admin"
+    bucket = "cita-cloud"
+    endpoint = "http://minio:9000"
+    root = "raft"
+    secret_access_key = "testtest"
+    service_type = "s3"
 
     [storage_opendal.log_config]
     filter = "info"
@@ -119,7 +119,7 @@ data:
 
     [genesis_block]
     prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
-    timestamp = 1690775338138
+    timestamp = 1708413768362
 
     [system_config]
     admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
@@ -128,10 +128,10 @@ data:
     chain_id = "dc4257d3bdc69554939072abac52e72b6c4a0b8d00c6fda5bc1bacbc5a4cb00f"
     quota_limit = 1073741824
     validators = [
-        "697f3c77bb253fb9cb69d7b2f3cbf9112a4b1fed",
-        "1cb42fd43a5c8894986058d80e26ac80c4796e6d",
-        "44db5579eb95126cb046aeabae25161302affe24",
-        "c9b3497e42bf542f3a551cd63c908021d739d14b",
+        "daeb81134eac4d85fa72cf2202f1cd0584cb3746",
+        "222590cf16960477e0b805e8daab9c92f4f29d71",
+        "1d1a0e8eab5f85b956dcffbe01b870e80aee4f62",
+        "6e550f9cd33195bfc11bd0a6e0d4e46864f0f61a",
     ]
     version = 0
 

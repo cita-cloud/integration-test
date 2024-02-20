@@ -22,6 +22,11 @@ cldi account import 0xb2371a70c297106449f89445f20289e6d16942f08f861b5e95cbcf0462
 
 kubectl create namespace $NAMESPACE
 
+
+# recreate s3:minio
+kubectl delete -f test/resource/minio.yaml -n $NAMESPACE --request-timeout=30s
+kubectl apply -f test/resource/minio.yaml -n $NAMESPACE --request-timeout=30s
+
 # check pod
 times=60
 while [ $times -ge 0 ]
