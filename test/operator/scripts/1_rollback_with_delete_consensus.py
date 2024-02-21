@@ -115,7 +115,7 @@ def main():
 
     # rollback all nodes with delete consensus data
     for node in nodes:
-        result = util.cloud-op("kubectl exec -n {} -it {}-0 -c patch-op -- cloud-op rollback --clean -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), node.name, old_bn - 100))
+        result = util.exec_retry("kubectl exec -n {} -it {}-0 -c patch-op -- cloud-op rollback --clean -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), node.name, old_bn - 100))
         if "executor rollback done" not in result:
             print("exec rollback error: ", result)
             exit(20)
