@@ -106,7 +106,7 @@ if __name__ == "__main__":
     util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
     # exec backup
-    result = util.exec("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op backup -c /etc/cita-cloud/config/config.toml -n /data -b /backup {} --export".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME"), 200))
+    result = util.exec_retry("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op backup -c /etc/cita-cloud/config/config.toml -n /data -b /backup {} --export".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME"), 200))
     if "backup done!" not in result:
         print("exec back error: ", result)
         exit(20)
