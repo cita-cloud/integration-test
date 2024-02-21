@@ -23,7 +23,7 @@ from logger import logger
 
 def watch_bn():
     bn = util.get_node_block_number("default")
-    result = util.get_node_block_number("node4")
+    result = 0
     while result <= bn:
         time.sleep(10)
         logger.debug("syncing node block-number: {result} ... {bn}".format(result=result, bn=bn))
