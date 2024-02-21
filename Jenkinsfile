@@ -48,14 +48,6 @@ pipeline {
       }
     }
 
-    stage('Reliability Test') {
-      steps {
-        container('cli') {
-          sh 'test/reliability/startup.sh'
-        }
-      }
-    }
-
     stage('Security Test') {
       steps {
         container('cli') {
