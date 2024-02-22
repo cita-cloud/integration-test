@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: minio
 spec:
@@ -25,6 +25,27 @@ spec:
         ports:
           - containerPort: 9000
           - containerPort: 9001
+        volumeMounts:
+        - mountPath: /data
+          name: datadir
+        - mountPath: /etc/localtime
+          name: node-localtime
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+        name: node-localtime
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: datadir
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: xxxxxx
 
 
 ---

@@ -127,9 +127,6 @@ spec:
         - -c
         - /etc/cita-cloud/config/config.toml
         image: registry.devops.rivtower.com/cita-cloud/storage_opendal:latest
-        env:
-        - name: AWS_REGION
-          value: "local"
         imagePullPolicy: Always
         name: storage
         ports:
