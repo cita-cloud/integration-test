@@ -25,6 +25,13 @@ spec:
         ports:
           - containerPort: 9000
           - containerPort: 9001
+        resources:
+          limits:
+            cpu: 8000m
+            memory: 16384Mi
+          requests:
+            cpu: 4000m
+            memory: 8192Mi
         volumeMounts:
         - mountPath: /data
           name: datadir
