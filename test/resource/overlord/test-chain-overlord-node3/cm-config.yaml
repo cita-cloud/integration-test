@@ -5,27 +5,27 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----
-    MIIBdTCCARugAwIBAgIVAO7CYwpvU1MjFiJZ/3tW2N98zWZbMAoGCCqGSM49BAMC
-    MB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAw
-    MFoYDzQwOTYwMTAxMDAwMDAwWjAfMRAwDgYDVQQKDAdDSVRBSHViMQswCQYDVQQD
-    EwJDQTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABPq6AwMgahyWfPo3aTd3qfn0
-    O0dBqKuuGW3QfajnIhlstTGXyUX9rghEU5ysGuvJO1bV0R8zaGmaPmsfHGW81CKj
-    MjAwMB0GA1UdDgQWBBTuwmMKb1NTIxYiWf97VtjffM1mWzAPBgNVHRMBAf8EBTAD
-    AQH/MAoGCCqGSM49BAMCA0gAMEUCIHs7Zy+Lf61rKu8h6KFLGv56oncIWOzj15B4
-    4FBtAygFAiEA18ertGs9PpWJGg2tfMJpbMMFN982QPhdvT4z6qpNK+0=
+    MIIBczCCARqgAwIBAgIUdHyK48jErDV5R+BgM8dpcgUrwzMwCgYIKoZIzj0EAwIw
+    HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
+    WhgPNDA5NjAxMDEwMDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMT
+    AkNBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEAIScDwYaLDgbAlQBV3UyhGtt
+    QH9e2itcsFao8rvDp7WtyzaJA3cbDtl1PqEFdDkUuF3AUmAZ1rrvmrCeorRl86My
+    MDAwHQYDVR0OBBYEFHR8iuPIxKw1eUfgYDPHaXIFK8MzMA8GA1UdEwEB/wQFMAMB
+    Af8wCgYIKoZIzj0EAwIDRwAwRAIgAbqKN8y3hFF9wCJUkeernbqlhsyhgBlWmULN
+    x1hDFOICICjUTUGVDifoPBWBS7GD6prZn9thLW1CVo6uYhtnjzEs
     -----END CERTIFICATE-----
     """
     cert = """
     -----BEGIN CERTIFICATE-----
-    MIIBgTCCASigAwIBAgIVANxjpX/v8s2HROpPbGYlgRb0SjpDMAoGCCqGSM49BAMC
+    MIIBgjCCASigAwIBAgIVAIGBMGvHbU5/b72yCU9oGXF8HxeLMAoGCCqGSM49BAMC
     MB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMTAkNBMCAXDTc1MDEwMTAwMDAw
     MFoYDzQwOTYwMTAxMDAwMDAwWjA2MRAwDgYDVQQKDAdDSVRBSHViMSIwIAYDVQQD
     Exl0ZXN0LWNoYWluLW92ZXJsb3JkLW5vZGUzMFkwEwYHKoZIzj0CAQYIKoZIzj0D
-    AQcDQgAEx7h+CpqziU91TIB9iBR+GJi+xfIOrXKiQ/Bg8xBlEHi8AjDGCmIAUMTW
-    R401Gfcer+or2d3QtJxgXdkx+imYpqMoMCYwJAYDVR0RBB0wG4IZdGVzdC1jaGFp
-    bi1vdmVybG9yZC1ub2RlMzAKBggqhkjOPQQDAgNHADBEAiAU5pKu8XzVeNL5WB0L
-    uJDhOM+SqjwBwKCaZMXT99sF3gIgG95EeCeAFYYWYs9QBImLHSUD1LHprhKLLr9W
-    Y3ntnjA=
+    AQcDQgAE/5P9wSIscwsHE2HwTaR1IlitC+mIpNKYJB3bau+wHUA91NUtCgMqyY4M
+    aZiLXugn1nxpV3sZYvClsTZZASVLwKMoMCYwJAYDVR0RBB0wG4IZdGVzdC1jaGFp
+    bi1vdmVybG9yZC1ub2RlMzAKBggqhkjOPQQDAgNIADBFAiB8OYarzaPbtAohvBax
+    twjjvpfmswjMOqJ7nylSTujabAIhAKfe7QWzVZptnUiXviBi8e01yrLnl0QkC0Uo
+    frSjt2Zg
     -----END CERTIFICATE-----
     """
     chain_id = "f43b00f1e0d0b3b5a7c5692f622aa550f80612c3a8b73eec436cb02c1e616abe"
@@ -37,9 +37,9 @@ data:
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg15U2FuxgtpYyR8Q3
-    LykuMg39rNyYRSIyfmgmBqCyU2mhRANCAATHuH4KmrOJT3VMgH2IFH4YmL7F8g6t
-    cqJD8GDzEGUQeLwCMMYKYgBQxNZHjTUZ9x6v6ivZ3dC0nGBd2TH6KZim
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg9sJ3SJRo0kCporjI
+    1ABetIFrWO6ulXrQBdOprEZVf66hRANCAAT/k/3BIixzCwcTYfBNpHUiWK0L6Yik
+    0pgkHdtq77AdQD3U1S0KAyrJjgxpmIte6CfWfGlXexli8KWxNlkBJUvA
     -----END PRIVATE KEY-----
     """
     protocol = "quic"
@@ -114,6 +114,7 @@ data:
     access_key_id = "admin"
     bucket = "cita-cloud"
     endpoint = "http://minio:9000"
+    region = "cn-east-1"
     root = "overlord"
     secret_access_key = "testtest"
     service_type = "s3"
@@ -125,7 +126,7 @@ data:
 
     [genesis_block]
     prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
-    timestamp = 1708413765033
+    timestamp = 1708572837132
 
     [system_config]
     admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
@@ -134,10 +135,10 @@ data:
     chain_id = "f43b00f1e0d0b3b5a7c5692f622aa550f80612c3a8b73eec436cb02c1e616abe"
     quota_limit = 1073741824
     validators = [
-        "a2ed76b8f97fa38dd90bf4ea3c06cca2371bdb3fbe521209af2dbdb4d2ad814992647e397adba4b9a8510f0070acbaf5",
-        "b7d40d0a02779166fd8c8bffdac1148a0ec56db6a8674461ee21437cdce9414aaa8cf278ca39b390e0231932ec3ec602",
-        "893022e67e4dc800d93d6d21630a438ff10d5b42ccc61f1141ba1bfb9245f47da6bbff9867a04bddc492ad555df5e46c",
-        "b7a66b6bf0a0b5efcc37c52774d56301bc30e58078944f8b5ec38380bcf779393d6d981b5c3a036abe013ee43d5c0e37",
+        "a7e827282728b2d61cb19f45fa49a2ebb336a188107556dc338fb0a227153e577c032901c749071096d5f62dbdcc2f21",
+        "b3d02eadf19cb4198439f36fa110664201431bd217ec63525f11189a31dc89a508875667dadb4c1cb496681f75addba3",
+        "8d8ecb18abbecd2be776f46087634db1dffc417c1aa22bc9b84908b00fae53da901d15e11a0b4f4aee05369dd14ee208",
+        "a5ffbcbe586411f07cfebd094744d425b10184871b14ae573922db9168639174361e95686fe9bc3298957d12853ad9e0",
     ]
     version = 0
 
@@ -152,8 +153,8 @@ data:
     network_port = 50000
     node_address = "/mnt/node_address"
     storage_port = 50003
-    validator_address = "/mnt/validator_address"
     tx_persistence = true
+    validator_address = "/mnt/validator_address"
 
     [controller.log_config]
     filter = "info"

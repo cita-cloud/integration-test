@@ -67,7 +67,7 @@ if __name__ == "__main__":
     util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
     # exec rollback
-    result = util.exec("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op rollback -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME"), old_bn - 100))
+    result = util.exec_retry("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op rollback -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME"), old_bn - 100))
     if "executor rollback done" not in result:
         print("exec rollback error: ", result)
         exit(20)

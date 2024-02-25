@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: minio
 spec:
@@ -16,7 +16,7 @@ spec:
       - name: minio
         image: minio/minio:RELEASE.2024-02-17T01-15-57Z-cpuv1
         command: ["/bin/sh", "-c"]
-        args: ["mkdir -p /tmp/cita-cloud && minio server --console-address 0.0.0.0:9001 /tmp"]
+        args: ["mkdir -p /data/cita-cloud && minio server --console-address 0.0.0.0:9001 /data"]
         env:
           - name: "MINIO_ROOT_USER" 
             value: "admin"
@@ -25,6 +25,34 @@ spec:
         ports:
           - containerPort: 9000
           - containerPort: 9001
+        resources:
+          limits:
+            cpu: 8000m
+            memory: 16384Mi
+          requests:
+            cpu: 4000m
+            memory: 8192Mi
+        volumeMounts:
+        - mountPath: /data
+          name: datadir
+        - mountPath: /etc/localtime
+          name: node-localtime
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+        name: node-localtime
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: datadir
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: xxxxxx
 
 
 ---
