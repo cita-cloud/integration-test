@@ -115,14 +115,14 @@ def main():
 
     # rollback all nodes with delete consensus data
     for node in nodes:
-        result = util.exec_retry("kubectl exec -n {} -it {}-0 -c patch-op -- cloud-op rollback --clean -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), node.name, old_bn - 200))
+        result = util.exec_retry("kubectl exec -n {} -it {}-0 -c patch-op -- cloud-op rollback --clean -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), node.name, old_bn - 400))
         if "executor rollback done" not in result:
             print("exec rollback error: ", result)
             exit(20)
     logger.info("all nodes rollback")
 
     # rollback cloud storage
-    result = util.exec_retry("kubectl exec -n {} -it {}-0 -c patch-op -- cloud-op cloud-rollback -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), nodes[0].name, old_bn - 200))
+    result = util.exec_retry("kubectl exec -n {} -it {}-0 -c patch-op -- cloud-op cloud-rollback -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), nodes[0].name, old_bn - 400))
     if "cloud rollback done" not in result:
         print("exec rollback error: ", result)
         exit(30)
@@ -148,8 +148,8 @@ def main():
 
     init_height = node_status["init_block_number"]
 
-    if init_height != old_bn - 200:
-        raise Exception("rollback not excepted block number: init_height is:{} should be {}".format(init_height, old_bn - 200))
+    if init_height != old_bn - 400:
+        raise Exception("rollback not excepted block number: init_height is:{} should be {}".format(init_height, old_bn - 400))
     
     new_bn = util.get_block_number()
     if new_bn  <= init_height:
