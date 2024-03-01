@@ -14,12 +14,12 @@ if __name__ == "__main__":
     logger.info("the block number before backup is: {}".format(old_bn))
 
     # create backpvc
-    with open("backup_pvc.yaml", 'w') as pvc_file:
+    with open("export_pvc.yaml", 'w') as pvc_file:
             pvc_file.write(''' 
     apiVersion: v1
     kind: PersistentVolumeClaim
     metadata:
-      name: {}-export-backup
+      name: {}-export
       labels:
         app.kubernetes.io/chain-name: {}
     spec:
@@ -31,7 +31,7 @@ if __name__ == "__main__":
           storage: 10G
     '''.format(os.getenv("CHAIN_TYPE"), os.getenv("CHAIN_NAME"), os.getenv("SC")))
 
-    result = util.exec("kubectl apply -n {} -f backup_pvc.yaml".format(os.getenv("NAMESPACE")))
+    result = util.exec("kubectl apply -n {} -f export_pvc.yaml".format(os.getenv("NAMESPACE")))
     if "created" not in result:
         print("create pvc error: ", result)
         exit(10)
@@ -76,8 +76,8 @@ if __name__ == "__main__":
                             "name": "node-localtime"
                         },
                         {
-                            "mountPath": "/backup",
-                            "name": "backup"
+                            "mountPath": "/export",
+                            "name": "export"
                         }
                     ],
                     "workingDir": "/data"
@@ -88,9 +88,9 @@ if __name__ == "__main__":
             "op" : "add" ,
             "path" : "/spec/template/spec/volumes/-" ,
             "value" : {
-                "name": "backup",
+                "name": "export",
                 "persistentVolumeClaim": {
-                    "claimName": "xxx-export-backup"
+                    "claimName": "xxx-export"
                 }
             }
         }
@@ -105,10 +105,16 @@ if __name__ == "__main__":
     time.sleep(300)
     util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
-    # exec backup
-    result = util.exec_retry("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op backup -c /etc/cita-cloud/config/config.toml -n /data -b /backup {} --export".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME"), 200))
-    if "backup done!" not in result:
-        print("exec back error: ", result)
+    # exec export
+    result = util.exec_retry("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op export -c /etc/cita-cloud/config/config.toml -n /data -p /export -b 0 -e 200".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME")))
+    if "export done!" not in result:
+        print("exec export error: ", result)
+        exit(20)
+
+    # exec incremental export
+    result = util.exec_retry("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op export -c /etc/cita-cloud/config/config.toml -n /data -p /export -b 201 -e 300".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME")))
+    if "export done!" not in result:
+        print("exec incremental export error: ", result)
         exit(20)
 
     # undo patch
@@ -143,11 +149,11 @@ if __name__ == "__main__":
                 "name": "restore",
                 "image": "busybox",
                 "command": ["/bin/sh"],
-                "args": ["-c", "rm -rf /data/chain_data; rm -rf /data/data; cp -af /backup/nnn/chain_data /data; cp -af /backup/nnn/data /data"],
+                "args": ["-c", "rm -rf /data/chain_data; rm -rf /data/data; cp -af /export/chain_data /data; cp -af /export/data /data"],
                 "volumeMounts": [
                 {
-                    "mountPath": "/backup",
-                    "name": "backup"
+                    "mountPath": "/export",
+                    "name": "export"
                 },
                 {
                     "mountPath": "/data",
@@ -158,9 +164,9 @@ if __name__ == "__main__":
             ],
             "volumes": [
             {
-                "name": "backup",
+                "name": "export",
                 "persistentVolumeClaim": {
-                "claimName": "xxx-export-backup"
+                "claimName": "xxx-export"
                 }
             },
             {
@@ -173,7 +179,7 @@ if __name__ == "__main__":
         }
     }
     '''
-    result = util.exec("kubectl run restore -n {} --overrides='{}' --image=busybox --restart=Never".format(os.getenv("NAMESPACE"), patch_json_template.replace("nnn", str(200)).replace("xxx", os.getenv("CHAIN_TYPE")).replace("zzz", os.getenv("CHAIN_NAME"))))
+    result = util.exec("kubectl run restore -n {} --overrides='{}' --image=busybox --restart=Never".format(os.getenv("NAMESPACE"), patch_json_template.replace("xxx", os.getenv("CHAIN_TYPE")).replace("zzz", os.getenv("CHAIN_NAME"))))
     if "created" not in result:
         print("create temp pod error: ", result)
         exit(50)
@@ -203,5 +209,5 @@ if __name__ == "__main__":
 
     init_height = node_status["init_block_number"]
 
-    if init_height != 200:
-        raise Exception("rollback not excepted block number: init_height is:{} should be {}".format(init_height, 200))
+    if init_height != 300:
+        raise Exception("rollback not excepted block number: init_height is:{} should be 300".format(init_height))
