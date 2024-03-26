@@ -94,8 +94,9 @@ if __name__ == "__main__":
         exit(0)
 
     # Only keep one validator
+    # keep last validator to test leader transfer
     cmd = "cldi -c default -u admin admin update-validators {}"
-    tx_hash = util.exec_retry(cmd.format(validators[0]))
+    tx_hash = util.exec_retry(cmd.format(validators[-1]))
     
     print("update-validators ret:", tx_hash)
 
