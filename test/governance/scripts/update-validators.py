@@ -111,7 +111,7 @@ if __name__ == "__main__":
     cmd_result = util.exec_retry(cmd)
     system_config = json.loads(cmd_result)
 
-    if not system_config['validators'].__contains__(validators[0]):
+    if not system_config['validators'].__contains__(validators[-1]):
         print("validators mismatch!", system_config)
         exit(30)
 
