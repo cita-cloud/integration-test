@@ -18,6 +18,6 @@
 
 while :  
 do  
-kubectl port-forward -n cita pod/$CHAIN_NAME-node0-0 50004 50002
+kubectl port-forward -n $NAMESPACE pod/$CHAIN_NAME-node0-0 50004 50002
 done
 
