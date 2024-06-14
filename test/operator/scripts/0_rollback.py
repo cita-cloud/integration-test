@@ -14,6 +14,7 @@ if __name__ == "__main__":
     logger.info("the block number before rollback is: {}".format(old_bn))
     
     # patch node
+    logger.info("patch node0")
     patch_op_json = '''[
         {
             "op" : "replace" ,
@@ -62,27 +63,27 @@ if __name__ == "__main__":
         print("patch node error: ", result)
         exit(10)
     
-    # wait for node restart
+    logger.info("wait 5min for node0 restart after patch")
     time.sleep(300)
     util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
-    # exec rollback
+    logger.info("exec rollback")
     result = util.exec_retry("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op rollback -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME"), old_bn - 100))
     if "executor rollback done" not in result:
         print("exec rollback error: ", result)
         exit(20)
 
-    # undo patch
+    logger.info("undo patch")
     result = util.exec("kubectl rollout undo -n {} sts {}-node0".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME")))
     if "rolled back" not in result:
         print("undo error: ", result)
         exit(30)
     
-    # wait for node restart
+    logger.info("wait 5min for node0 restart after undo patch")
     time.sleep(300)
     util.check_block_increase()
 
-    # check rollback
+    logger.info("check rollback")
     node_status = util.get_node_status(retry_times=30, retry_wait=2)
     logger.debug("node status after rollback is: {}".format(node_status))
 
