@@ -110,10 +110,10 @@ def main():
             exit(10)
     logger.info("all nodes patched")
 
-    # wait for all nodes restart
+    logger.info("wait 5min for all nodes restart")
     time.sleep(300)
 
-    # rollback all nodes with delete consensus data
+    logger.info("rollback all nodes with delete consensus data")
     for node in nodes:
         result = util.exec_retry("kubectl exec -n {} -it {}-0 -c patch-op -- cloud-op rollback --clean -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), node.name, old_bn - 400))
         if "executor rollback done" not in result:
@@ -121,28 +121,28 @@ def main():
             exit(20)
     logger.info("all nodes rollback")
 
-    # rollback cloud storage
+    logger.info("rollback cloud storage")
     result = util.exec_retry("kubectl exec -n {} -it {}-0 -c patch-op -- cloud-op cloud-rollback -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), nodes[0].name, old_bn - 400))
     if "cloud rollback done" not in result:
         print("exec rollback error: ", result)
         exit(30)
     logger.info("cloud rollback")
 
-    # undo all nodes
+    logger.info("undo all nodes")
     for node in nodes:
         result = util.exec("kubectl rollout undo -n {} sts {}".format(os.getenv("NAMESPACE"), node.name))
         if "rolled back" not in result:
             print("undo error: ", result)
             exit(40)
     
-    # wait for all nodes restart
+    logger.info("wait 5min for all nodes restart")
     time.sleep(300)
 
     for node in nodes:
         util.check_node_running(name=node.name, namespace=node.namespace)
     logger.info("all nodes running")
 
-    # check rollback
+    logger.info("check rollback")
     node_status = util.get_node_status(retry_times=30, retry_wait=2)
     logger.debug("node status after rollback is: {}".format(node_status))
 

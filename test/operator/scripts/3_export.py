@@ -13,7 +13,7 @@ if __name__ == "__main__":
     old_bn = util.get_block_number()
     logger.info("the block number before backup is: {}".format(old_bn))
 
-    # create backpvc
+    logger.info("create export pvc")
     with open("export_pvc.yaml", 'w') as pvc_file:
             pvc_file.write(''' 
     apiVersion: v1
@@ -36,7 +36,7 @@ if __name__ == "__main__":
         print("create pvc error: ", result)
         exit(10)
 
-    # patch node
+    logger.info("patch node0")
     # xxx --- chain type
     patch_op_json_template = '''
     [
@@ -101,43 +101,43 @@ if __name__ == "__main__":
         print("patch node error: ", result)
         exit(10)
 
-    # wait for node restart
+    logger.info("wait 5min for node0 restart after patch")
     time.sleep(300)
     util.check_node_running(name="{}-node0".format(os.getenv("CHAIN_NAME")), namespace=os.getenv("NAMESPACE"))
 
-    # exec export
+    logger.info("exec export")
     result = util.exec_retry("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op export -c /etc/cita-cloud/config/config.toml -n /data -p /export -b 0 -e 200".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME")))
     if "export done!" not in result:
         print("exec export error: ", result)
         exit(20)
 
-    # exec incremental export
+    logger.info("exec incremental export")
     result = util.exec_retry("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op export -c /etc/cita-cloud/config/config.toml -n /data -p /export -b 201 -e 300".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME")))
     if "export done!" not in result:
         print("exec incremental export error: ", result)
         exit(20)
 
-    # undo patch
+    logger.info("undo patch")
     result = util.exec("kubectl rollout undo -n {} sts {}-node0".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME")))
     if "rolled back" not in result:
         print("undo error: ", result)
         exit(30)
 
-    # wait for node restart
+    logger.info("wait 5min for node0 restart)
     time.sleep(300)
     util.check_block_increase()
 
     # restore
-    #stop node
+    logger.info("stop node0")
     result = util.exec("kubectl scale sts {}-node0 -n {} --replicas=0".format(os.getenv("CHAIN_NAME"), os.getenv("NAMESPACE")))
     if "scaled" not in result:
         print("stop node error: ", result)
         exit(40)
 
-    # wait for node stop
+    logger.info("wait 5min for node0 stop")
     time.sleep(300)
 
-    # create temp pod
+    logger.info("create temp pod")
     # nnn --- backup height
     # xxx --- chain type
     # zzz --- chain name
@@ -184,17 +184,17 @@ if __name__ == "__main__":
         print("create temp pod error: ", result)
         exit(50)
 
-    # wait for restore finish
+    logger.info("wait 5min for restore finish")
     time.sleep(300)
 
-    # delete temp pod
+    logger.info("delete temp pod")
     result = util.exec("kubectl delete pod restore -n {}".format(os.getenv("NAMESPACE")))
     if "deleted" not in result:
         print("delete temp pod error: ", result)
         exit(60)
     time.sleep(60)
 
-    # restart node0
+    logger.info("restart node0 and wait 5min")
     result = util.exec("kubectl scale sts {}-node0 -n {} --replicas=1".format(os.getenv("CHAIN_NAME"), os.getenv("NAMESPACE")))
     if "scaled" not in result:
         print("stop node error: ", result)
@@ -203,7 +203,7 @@ if __name__ == "__main__":
 
     util.check_block_increase()
 
-    # check restore
+    logger.info("check restore")
     node_status = util.get_node_status(retry_times=30, retry_wait=2)
     logger.debug("node status after restore is: {}".format(node_status))
 
