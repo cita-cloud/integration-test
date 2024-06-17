@@ -5,26 +5,26 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----
-    MIIBdDCCARqgAwIBAgIUCjGECYVzGsUYw40WazW4OD3mP7swCgYIKoZIzj0EAwIw
+    MIIBdTCCARqgAwIBAgIUYj0sVWTdTX6qaQkeBB3J2T+j6qAwCgYIKoZIzj0EAwIw
     HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
     WhgPNDA5NjAxMDEwMDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMT
-    AkNBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEXeKmAjEqtuu1TgHdoW2HBAxl
-    0VobxKLIsRcdnNxE37sg+5QeQZhdVm2Br8TLNJ1ZbaQYmuDbgHq2rYto67KPfKMy
-    MDAwHQYDVR0OBBYEFIoxhAmFcxrFGMONFms1uDg95j+7MA8GA1UdEwEB/wQFMAMB
-    Af8wCgYIKoZIzj0EAwIDSAAwRQIgc48PEcKNylJ0B515Lw1ERKLPxZgJnx/gRi2p
-    31TF5A8CIQCCU1YdO6sYHqZRnjyuOTfUNZW4S/rHwRZEUQkF06tYKQ==
+    AkNBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE5PRdPVbTQfp2+nJQ0eEsIVt/
+    a2/WXIYl4cDnMXWio68l+6k/EsslZLTJHiNPka38LrqW0AoGGLGxTcZFRVA5q6My
+    MDAwHQYDVR0OBBYEFGI9LFVk3U1+qmkJHgQdydk/o+qgMA8GA1UdEwEB/wQFMAMB
+    Af8wCgYIKoZIzj0EAwIDSQAwRgIhAPUhpvQxM49ld1Xypr4qeK0lz+2kKe3Fb15J
+    jNa4WIX+AiEAnV7/ewGQ3iUzLbwRfu9EeU81HKbCvKZd3Bek8Zke7aU=
     -----END CERTIFICATE-----
     """
     cert = """
     -----BEGIN CERTIFICATE-----
-    MIIBeTCCAR+gAwIBAgIUaPfs7veWJmuiQPyQsxQBo72sbMgwCgYIKoZIzj0EAwIw
+    MIIBeTCCAR+gAwIBAgIUd4MJPxb7TEE7/A7BjKiR+PwazsowCgYIKoZIzj0EAwIw
     HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
     WhgPNDA5NjAxMDEwMDAwMDBaMDIxEDAOBgNVBAoMB0NJVEFIdWIxHjAcBgNVBAMT
     FXRlc3QtY2hhaW4tcmFmdC1ub2RlMTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IA
-    BDEZw2SYgky7Pgy8DeSa/ANaLVjSYmprJQOoiLS7N4MRW5rH5YsT7wOxd6sTk50v
-    cRmoSEmT+ZzuYogXYlJMV+ajJDAiMCAGA1UdEQQZMBeCFXRlc3QtY2hhaW4tcmFm
-    dC1ub2RlMTAKBggqhkjOPQQDAgNIADBFAiEAyDnwsRgxoxVcargtin3CbfmAlCEu
-    1uDeUOEh1s0jK2oCICIFFqnILyJ6Q86jB0OH6RmhyuXAjabOai+Am9AROOGU
+    BN0pYACxA2q61dfY8aDJ36zPrV3/DmlmccMpsqQMwxvxVrulnDcH3LmZTlVwqzFc
+    2rUygAkiULbjKkuNAUOqZNSjJDAiMCAGA1UdEQQZMBeCFXRlc3QtY2hhaW4tcmFm
+    dC1ub2RlMTAKBggqhkjOPQQDAgNIADBFAiEAmHVt30TdGvYPp9DJwYxeqaJLBrjn
+    oYPzSn3WTc64MNYCIGDt5Mj0Y3Ly3cgNmZFVl67Ulp465+Qj8M3YPcj57lIV
     -----END CERTIFICATE-----
     """
     chain_id = "dc4257d3bdc69554939072abac52e72b6c4a0b8d00c6fda5bc1bacbc5a4cb00f"
@@ -36,9 +36,9 @@ data:
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg/G3+JCl+bOM1tnEY
-    6SHEmOlTPaTmJyuqKNwXCagDdLyhRANCAAQxGcNkmIJMuz4MvA3kmvwDWi1Y0mJq
-    ayUDqIi0uzeDEVuax+WLE+8DsXerE5OdL3EZqEhJk/mc7mKIF2JSTFfm
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgOr6uQRG+rbQ+HEWL
+    Muz+AV8WMQo+Pc5IOip1DkQSH2KhRANCAATdKWAAsQNqutXX2PGgyd+sz61d/w5p
+    ZnHDKbKkDMMb8Va7pZw3B9y5mU5VcKsxXNq1MoAJIlC24ypLjQFDqmTU
     -----END PRIVATE KEY-----
     """
     protocol = "quic"
@@ -114,6 +114,10 @@ data:
     secret_access_key = "testtest"
     service_type = "s3"
 
+    [storage_opendal.exporter]
+    base_path = ""
+    chain_name = "test-chain-raft"
+
     [storage_opendal.log_config]
     filter = "info"
     max_level = "info"
@@ -121,7 +125,7 @@ data:
 
     [genesis_block]
     prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
-    timestamp = 1710332166410
+    timestamp = 1718694932661
 
     [system_config]
     admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
@@ -130,10 +134,10 @@ data:
     chain_id = "dc4257d3bdc69554939072abac52e72b6c4a0b8d00c6fda5bc1bacbc5a4cb00f"
     quota_limit = 1073741824
     validators = [
-        "ac9a0cd0a9e60519b1575158044843dabeec1276",
-        "d5cc5d9443a4c1d8c0f3fc9650538981d8582adf",
-        "1355af5612e81327151faa0fe76fadeed495444a",
-        "90a7e0b542cf5ce4997b6b043f6771b1da1e7790",
+        "a5093b0b475af7f69997ff014a302f6b96a7083b",
+        "3decec23d841675a4ab21653cc4f5f0b13fb5e3c",
+        "05a403c866af1fe82f6f28492c5d4a9d1d4a6fb2",
+        "66b0ca5b80cf7e0639ab03130dead022112a703b",
     ]
     version = 0
 

@@ -55,6 +55,9 @@ def get_nodes(chain_name: str, namespace: str) -> List[Node]:
 
 
 def main():
+    if os.getenv("CHAIN_TYPE") == "overlord":
+        print("overlord chain don't need to execute this test")
+        exit(0)
     old_bn = util.get_block_number()
     logger.info("the block number before rollback is: {}".format(old_bn))
     nodes = get_nodes(chain_name=os.getenv("CHAIN_NAME"), namespace=os.getenv("NAMESPACE"))
