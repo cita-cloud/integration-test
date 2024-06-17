@@ -123,7 +123,7 @@ if __name__ == "__main__":
         print("undo error: ", result)
         exit(30)
 
-    logger.info("wait 5min for node0 restart)
+    logger.info("wait 5min for node0 restart")
     time.sleep(300)
     util.check_block_increase()
 
