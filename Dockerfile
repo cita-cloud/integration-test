@@ -3,7 +3,7 @@ FROM python:slim-bullseye
 WORKDIR /
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends crul mysql-client-5.7 \
+    && apt-get install -y --no-install-recommends crul mariadb-client-10.5 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
