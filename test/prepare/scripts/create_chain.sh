@@ -22,12 +22,61 @@ cldi account import 0xb2371a70c297106449f89445f20289e6d16942f08f861b5e95cbcf0462
 
 kubectl create namespace $NAMESPACE
 
+if [ "$CHAIN_TYPE" = "raft" ]; then
+  # recreate s3:minio
+  sed -i "s/xxxxxx/$SC/g" test/resource/minio.yaml
+  kubectl delete -f test/resource/minio.yaml -n $NAMESPACE --request-timeout=30s
+  kubectl delete pvc datadir-minio-0 -n $NAMESPACE --request-timeout=30s
+  kubectl apply -f test/resource/minio.yaml -n $NAMESPACE --request-timeout=30s
+fi
 
-# recreate s3:minio
-sed -i "s/xxxxxx/$SC/g" test/resource/minio.yaml
-kubectl delete -f test/resource/minio.yaml -n $NAMESPACE --request-timeout=30s
-kubectl delete pvc datadir-minio-0 -n $NAMESPACE --request-timeout=30s
-kubectl apply -f test/resource/minio.yaml -n $NAMESPACE --request-timeout=30s
+if [ "$CHAIN_TYPE" = "overlord" ]; then
+  # recreate strimzi kafka and kafka-bridge
+  sed -i "s/xxxxxx/$NAMESPACE/g" test/resource/kafka/strimzi.yaml
+  kubectl delete -f test/resource/kafka/kafka-bridge.yaml -n $NAMESPACE --request-timeout=30s
+  kubectl delete -f test/resource/kafka/kafka-single-node.yaml -n $NAMESPACE --request-timeout=30s
+  kubectl delete -f test/resource/kafka/strimzi.yaml -n $NAMESPACE --request-timeout=30s
+  kubectl delete pvc data-0-my-cluster-dual-role-0 -n $NAMESPACE --request-timeout=30s
+
+  kubectl create -f test/resource/kafka/strimzi.yaml -n $NAMESPACE --request-timeout=30s
+  kubectl wait deployment/strimzi-cluster-operator --for=condition=Available=True --timeout=300s -n $NAMESPACE
+  kubectl apply -f test/resource/kafka/kafka-single-node.yaml -n $NAMESPACE --request-timeout=30s
+  kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s -n $NAMESPACE
+  kubectl apply -f test/resource/kafka/kafka-bridge.yaml -n $NAMESPACE --request-timeout=30s
+  kubectl wait deployment/my-bridge-bridge --for=condition=Available=True --timeout=300s -n $NAMESPACE
+
+  # create kafka topic
+  kubectl exec -n $NAMESPACE -it my-cluster-dual-role-0 -c kafka -- bin/kafka-topics.sh --create --topic cita-cloud.test-chain-overlord.blocks --bootstrap-server my-cluster-kafka-bootstrap:9092
+  kubectl exec -n $NAMESPACE -it my-cluster-dual-role-0 -c kafka -- bin/kafka-topics.sh --create --topic cita-cloud.test-chain-overlord.txs --bootstrap-server my-cluster-kafka-bootstrap:9092
+  kubectl exec -n $NAMESPACE -it my-cluster-dual-role-0 -c kafka -- bin/kafka-topics.sh --create --topic cita-cloud.test-chain-overlord.utxos --bootstrap-server my-cluster-kafka-bootstrap:9092
+  kubectl exec -n $NAMESPACE -it my-cluster-dual-role-0 -c kafka -- bin/kafka-topics.sh --create --topic cita-cloud.test-chain-overlord.system-config --bootstrap-server my-cluster-kafka-bootstrap:9092
+  kubectl exec -n $NAMESPACE -it my-cluster-dual-role-0 -c kafka -- bin/kafka-topics.sh --create --topic cita-cloud.test-chain-overlord.receipts --bootstrap-server my-cluster-kafka-bootstrap:9092
+  kubectl exec -n $NAMESPACE -it my-cluster-dual-role-0 -c kafka -- bin/kafka-topics.sh --create --topic cita-cloud.test-chain-overlord.logs --bootstrap-server my-cluster-kafka-bootstrap:9092
+
+  # recreate doris
+  sed -i "s/xxxxxx/$NAMESPACE/g" test/resource/doris/operator.yaml
+  kubectl delete -f test/resource/doris/doriscluster-sample-storageclass.yaml -n $NAMESPACE --request-timeout=30s
+  kubectl delete -f test/resource/doris/operator.yaml --request-timeout=30s
+  kubectl delete -f test/resource/doris/doris.selectdb.com_dorisclusters.yaml --request-timeout=30s
+  kubectl delete pvc belog-doriscluster-sample-storageclass1-be-0 -n $NAMESPACE --request-timeout=30s
+  kubectl delete pvc betest-doriscluster-sample-storageclass1-be-0 -n $NAMESPACE --request-timeout=30s
+  kubectl delete pvc felog-doriscluster-sample-storageclass1-fe-0 -n $NAMESPACE --request-timeout=30s
+  kubectl delete pvc fetest-doriscluster-sample-storageclass1-fe-0 -n $NAMESPACE --request-timeout=30s
+
+  kubectl create -f test/resource/doris/doris.selectdb.com_dorisclusters.yaml --request-timeout=30s
+  kubectl apply -f test/resource/doris/operator.yaml --request-timeout=30s
+  kubectl wait deployment/doris-operator --for=condition=Available=True --timeout=300s -n $NAMESPACE
+  kubectl apply -f test/resource/doris/doriscluster-sample-storageclass.yaml -n $NAMESPACE --request-timeout=30s
+  sleep 3
+  kubectl wait pod/doriscluster-sample-storageclass1-fe-0 --for=condition=Ready=True --timeout=300s -n $NAMESPACE
+  sleep 3
+  kubectl wait pod/doriscluster-sample-storageclass1-be-0 --for=condition=Ready=True --timeout=300s -n $NAMESPACE
+
+  # create table and load routine
+  sed -i "s/xxxxxx/$CHAIN_NAME/g" test/resource/doris/kafka-load.sql
+  mysql -h doriscluster-sample-storageclass1-fe-internal.$NAMESPACE.svc.cluster.local -P 9030 -u root -e "SOURCE test/resource/doris/kafka-load.sql"
+fi
+
 
 # check pod
 times=60

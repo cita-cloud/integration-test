@@ -10,6 +10,10 @@ import util
 from logger import logger
 
 if __name__ == "__main__":
+    if os.getenv("CHAIN_TYPE") == "overlord":
+        print("overlord chain don't need to execute this test")
+        exit(0)
+    
     old_bn = util.get_block_number()
     logger.info("the block number before backup is: {}".format(old_bn))
     
