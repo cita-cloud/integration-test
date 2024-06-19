@@ -426,8 +426,8 @@ spec:
             - /dorisoperator
           args:
             - --leader-elect
-          image: selectdb/doris.k8s-operator:latest
-          imagePullPolicy: Always
+          image: registry.devops.rivtower.com/selectdb/doris.k8s-operator:latest
+          imagePullPolicy: IfNotPresent
           name: dorisoperator
           securityContext:
             allowPrivilegeEscalation: false

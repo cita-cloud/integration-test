@@ -40,6 +40,7 @@ if [ "$CHAIN_TYPE" = "overlord" ]; then
 
     # delete doris
     sed -i "s/xxxxxx/$NAMESPACE/g" test/resource/doris/operator.yaml
+    sed -i "s/xxxxxx/$SC/g" test/resource/doris/doriscluster-sample-storageclass.yaml
     kubectl delete -f test/resource/doris/doriscluster-sample-storageclass.yaml -n $NAMESPACE --request-timeout=30s
     kubectl delete -f test/resource/doris/operator.yaml --request-timeout=30s
     kubectl delete -f test/resource/doris/doris.selectdb.com_dorisclusters.yaml --request-timeout=30s
