@@ -17,6 +17,7 @@ spec:
         size: 100Gi
         deleteClaim: false
         kraftMetadata: shared
+        class: xxxxxx
 ---
 
 apiVersion: kafka.strimzi.io/v1beta2

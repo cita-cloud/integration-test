@@ -33,6 +33,7 @@ fi
 if [ "$CHAIN_TYPE" = "overlord" ]; then
   # recreate strimzi kafka and kafka-bridge
   sed -i "s/xxxxxx/$NAMESPACE/g" test/resource/kafka/strimzi.yaml
+  sed -i "s/xxxxxx/$SC/g" test/resource/kafka/kafka-single-node.yaml
   kubectl delete -f test/resource/kafka/kafka-bridge.yaml -n $NAMESPACE --request-timeout=30s
   kubectl delete -f test/resource/kafka/kafka-single-node.yaml -n $NAMESPACE --request-timeout=30s
   kubectl delete -f test/resource/kafka/strimzi.yaml -n $NAMESPACE --request-timeout=30s
@@ -43,7 +44,7 @@ if [ "$CHAIN_TYPE" = "overlord" ]; then
   kubectl apply -f test/resource/kafka/kafka-single-node.yaml -n $NAMESPACE --request-timeout=30s
   kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s -n $NAMESPACE
   kubectl apply -f test/resource/kafka/kafka-bridge.yaml -n $NAMESPACE --request-timeout=30s
-  kubectl wait deployment/my-bridge-bridge --for=condition=Available=True --timeout=300s -n $NAMESPACE
+  kubectl wait KafkaBridge/my-bridge --for=condition=Ready --timeout=300s -n $NAMESPACE
 
   # create kafka topic
   kubectl exec -n $NAMESPACE -it my-cluster-dual-role-0 -c kafka -- bin/kafka-topics.sh --create --topic cita-cloud.test-chain-overlord.blocks --bootstrap-server my-cluster-kafka-bootstrap:9092
