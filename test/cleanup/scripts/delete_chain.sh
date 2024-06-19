@@ -32,6 +32,7 @@ fi
 if [ "$CHAIN_TYPE" = "overlord" ]; then
     # delete strimzi kafka and kafka-bridge
     sed -i "s/xxxxxx/$NAMESPACE/g" test/resource/kafka/strimzi.yaml
+    sed -i "s/xxxxxx/$SC/g" test/resource/kafka/kafka-single-node.yaml
     kubectl delete -f test/resource/kafka/kafka-bridge.yaml -n $NAMESPACE --request-timeout=30s
     kubectl delete -f test/resource/kafka/kafka-single-node.yaml -n $NAMESPACE --request-timeout=30s
     kubectl delete -f test/resource/kafka/strimzi.yaml -n $NAMESPACE --request-timeout=30s
