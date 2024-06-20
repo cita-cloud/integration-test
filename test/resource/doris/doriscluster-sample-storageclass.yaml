@@ -10,8 +10,10 @@ metadata:
   name: doriscluster-sample-storageclass1
 spec:
   feSpec:
+    systemInitialization:
+      initImage: registry.devops.rivtower.com/selectdb/alpine:latest
     replicas: 1
-    image: selectdb/doris.fe-ubuntu:2.1.1
+    image: registry.devops.rivtower.com/selectdb/doris.fe-ubuntu:2.1.1
     limits:
       cpu: 4
       memory: 8Gi
@@ -23,7 +25,7 @@ spec:
       name: fetest
       persistentVolumeClaimSpec:
         # when use specific storageclass, the storageClassName should reConfig, example as annotation.
-        #storageClassName: openebs-jiva-csi-default
+        storageClassName: xxxxxx
         accessModes:
         - ReadWriteOnce
         resources:
@@ -34,15 +36,19 @@ spec:
       name: felog
       persistentVolumeClaimSpec:
         # when use specific storageclass, the storageClassName should reConfig, example as annotation.
-        #storageClassName: openebs-jiva-csi-default
+        storageClassName: xxxxxx
         accessModes:
         - ReadWriteOnce
         resources:
           requests:
             storage: 10Gi
   beSpec:
+    nodeSelector:
+      kubernetes.io/hostname: k8s120-wn120-141
+    systemInitialization:
+      initImage: registry.devops.rivtower.com/selectdb/alpine:latest
     replicas: 1
-    image: selectdb/doris.be-ubuntu:2.1.1
+    image: registry.devops.rivtower.com/selectdb/doris.be-ubuntu:2.1.1
     limits:
       cpu: 4
       memory: 8Gi
@@ -54,7 +60,7 @@ spec:
       name: betest
       persistentVolumeClaimSpec:
         # when use specific storageclass, the storageClassName should reConfig, example as annotation.
-        #storageClassName: openebs-jiva-csi-default
+        storageClassName: xxxxxx
         accessModes:
         - ReadWriteOnce
         resources:
@@ -64,7 +70,7 @@ spec:
       name: belog
       persistentVolumeClaimSpec:
         # when use specific storageclass, the storageClassName should reConfig, example as annotation.
-        #storageClassName: openebs-jiva-csi-default
+        storageClassName: xxxxxx
         accessModes:
         - ReadWriteOnce
         resources:
