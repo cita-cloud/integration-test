@@ -151,7 +151,7 @@ if __name__ == "__main__":
             "containers": [
             {
                 "name": "restore",
-                "image": "busybox",
+                "image": "registry.devops.rivtower.com/library/busybox:1.30",
                 "command": ["/bin/sh"],
                 "args": ["-c", "rm -rf /data/chain_data; rm -rf /data/data; cp -af /export/chain_data /data; cp -af /export/data /data"],
                 "volumeMounts": [
@@ -183,7 +183,7 @@ if __name__ == "__main__":
         }
     }
     '''
-    result = util.exec("kubectl run restore -n {} --overrides='{}' --image=busybox --restart=Never".format(os.getenv("NAMESPACE"), patch_json_template.replace("xxx", os.getenv("CHAIN_TYPE")).replace("zzz", os.getenv("CHAIN_NAME"))))
+    result = util.exec("kubectl run restore -n {} --overrides='{}' --image=registry.devops.rivtower.com/library/busybox:1.30 --restart=Never".format(os.getenv("NAMESPACE"), patch_json_template.replace("xxx", os.getenv("CHAIN_TYPE")).replace("zzz", os.getenv("CHAIN_NAME"))))
     if "created" not in result:
         print("create temp pod error: ", result)
         exit(50)
