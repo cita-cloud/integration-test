@@ -74,6 +74,9 @@ if [ "$CHAIN_TYPE" = "overlord" ]; then
     sleep 30
     kubectl wait pod/doriscluster-sample-storageclass1-be-0 --for=condition=Ready=True --timeout=600s -n $NAMESPACE
 
+    # wait 5min for doris be connect to fe 
+    sleep 300
+
     # create table and load routine
     sed -i "s/xxxxxx/$CHAIN_NAME/g" test/resource/doris/kafka-load.sql
     mysql -h doriscluster-sample-storageclass1-fe-internal.$NAMESPACE.svc.cluster.local -P 9030 -u root -e "SOURCE test/resource/doris/kafka-load.sql"
