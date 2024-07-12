@@ -5,27 +5,27 @@ data:
     [network_zenoh]
     ca_cert = """
     -----BEGIN CERTIFICATE-----
-    MIIBdDCCARqgAwIBAgIUe/Li6ogJuBqbYfIBoIRixxRVx+cwCgYIKoZIzj0EAwIw
+    MIIBdDCCARqgAwIBAgIUBDZCa3bgcxAAxydw6nbebzMGwL0wCgYIKoZIzj0EAwIw
     HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
     WhgPNDA5NjAxMDEwMDAwMDBaMB8xEDAOBgNVBAoMB0NJVEFIdWIxCzAJBgNVBAMT
-    AkNBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEvTA++E8lK6KJKUIMMUQM5tfH
-    BiyyA+B85dYkfiEFARPcFaqTYl1UCe581C6GWUi36/ZLmgozYKbL/Pre63AkI6My
-    MDAwHQYDVR0OBBYEFPvy4uqICbgam2HyAaCEYscUVcfnMA8GA1UdEwEB/wQFMAMB
-    Af8wCgYIKoZIzj0EAwIDSAAwRQIhANb1AaJm6x7ii70cnrdNCbgI2roN+/PqGqKv
-    01C8GiXaAiAbU7sVNkrPZqxYmWjBrShFfhdMr3LbzGwXMd5l3Whc0w==
+    AkNBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEwTlWldjAZjCKM7wS3QKvxhZt
+    J2djD8VwOvn83rib5stSCKjd9WocjHDd7PTn6Af2kQEoZ10k39Dvhck0PbnjiKMy
+    MDAwHQYDVR0OBBYEFBAX+TKFjSUxqPyYi3dLfnrB3irhMA8GA1UdEwEB/wQFMAMB
+    Af8wCgYIKoZIzj0EAwIDSAAwRQIgZCfb1dZt2u/KdEZyxDPmSpZ5EyadOb+uDSjt
+    XhEV5ZECIQDVO2jtQSBDOyOm5YjFwytH8VYlu2OueshUsQA7ZBoAIA==
     -----END CERTIFICATE-----
     """
     cert = """
     -----BEGIN CERTIFICATE-----
-    MIIBgTCCASegAwIBAgIUZZvRdGOqFIAm2V8xeV39IaD43CwwCgYIKoZIzj0EAwIw
+    MIIBgjCCASegAwIBAgIUX0oSW0rg+bM4/J/KgaqyMiE/nhEwCgYIKoZIzj0EAwIw
     HzEQMA4GA1UECgwHQ0lUQUh1YjELMAkGA1UEAxMCQ0EwIBcNNzUwMTAxMDAwMDAw
     WhgPNDA5NjAxMDEwMDAwMDBaMDYxEDAOBgNVBAoMB0NJVEFIdWIxIjAgBgNVBAMT
     GXRlc3QtY2hhaW4tb3ZlcmxvcmQtbm9kZTAwWTATBgcqhkjOPQIBBggqhkjOPQMB
-    BwNCAAREryPNR+muJY8b/3k/y+//EsoymQawET/Sjn1iflZ+WNwecs2FWvyLE5CB
-    eqcQiQopEmvtHgaUQOVzBdHiUjstoygwJjAkBgNVHREEHTAbghl0ZXN0LWNoYWlu
-    LW92ZXJsb3JkLW5vZGUwMAoGCCqGSM49BAMCA0gAMEUCIQCVheSc+YQcdwOH9LZD
-    y/LXNZMv0xYxwjaaUx+oosjw1wIgZ7405kEg+9OZH2xMwO3KT9Kt4MMyHXKQRX7f
-    i5NRSOI=
+    BwNCAATu3bN6FvFIS3YADYMH4EWwiuTvy+anyWbsAeneCi2qKjKhc28RcLyb1jqi
+    gt9l2lIuteIt4hS8DGdCb6+XPjt8oygwJjAkBgNVHREEHTAbghl0ZXN0LWNoYWlu
+    LW92ZXJsb3JkLW5vZGUwMAoGCCqGSM49BAMCA0kAMEYCIQDLtAbB4kjjKRvz1BTb
+    M1K4Cv3Tg60+4iu1y9owzOCaLQIhAOfrt/Q+cRbSn8o05PI7wDUUeZhQz4Osg5NM
+    ILxRKrXb
     -----END CERTIFICATE-----
     """
     chain_id = "f43b00f1e0d0b3b5a7c5692f622aa550f80612c3a8b73eec436cb02c1e616abe"
@@ -37,21 +37,21 @@ data:
     port = 40000
     priv_key = """
     -----BEGIN PRIVATE KEY-----
-    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgYDenP3jxyzB6z8HB
-    yHkb7cL2oWTuCgo0Ssxrl9Oc3nWhRANCAAREryPNR+muJY8b/3k/y+//EsoymQaw
-    ET/Sjn1iflZ+WNwecs2FWvyLE5CBeqcQiQopEmvtHgaUQOVzBdHiUjst
+    MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgRq9J0ynriaxttfi8
+    veFrwnJ6EHesaNExdrz++u4jrYmhRANCAATu3bN6FvFIS3YADYMH4EWwiuTvy+an
+    yWbsAeneCi2qKjKhc28RcLyb1jqigt9l2lIuteIt4hS8DGdCb6+XPjt8
     -----END PRIVATE KEY-----
     """
     protocol = "quic"
     validator_address = "/mnt/validator_address"
 
     [[network_zenoh.modules]]
-    hostname = "127.0.0.1"
+    hostname = "localhost"
     module_name = "consensus"
     port = 50001
 
     [[network_zenoh.modules]]
-    hostname = "127.0.0.1"
+    hostname = "localhost"
     module_name = "controller"
     port = 50004
 
@@ -130,7 +130,7 @@ data:
 
     [genesis_block]
     prevhash = "0x0000000000000000000000000000000000000000000000000000000000000000"
-    timestamp = 1718694928407
+    timestamp = 1720786436775
 
     [system_config]
     admin = "9bab5858df4a9e84ff3958884a01a4fce5e07edb"
@@ -139,10 +139,10 @@ data:
     chain_id = "f43b00f1e0d0b3b5a7c5692f622aa550f80612c3a8b73eec436cb02c1e616abe"
     quota_limit = 1073741824
     validators = [
-        "95f4713a71709d77bfcdfe824bfd0b0a02d80f32480c55c005a56eab052f1caf4ff2afe1f0d28210f567fe51185dc343",
-        "902807e5e4558433c530c763529661255f89766a764f9586fc4f0a85a81045feadf426aff4af43ebfeb8dea50fd90b52",
-        "8e88e0465ee5f852acc718ffb064a916c93cfe8d838025383329087754253cbef6a755c797ae334f8425dc2f00ca2006",
-        "9656ab66de72f8e00031be1fd3504dc6ad7c7511660693bff3df68ec77e6f1ca5d23b1c5f9c23b296b4ce191b4f8a75a",
+        "8a62df841d094606de7885899222e810aee37ccc000daa7579960ac6cc2e455a984a9ef58dbe327fe1f207b9473724cf",
+        "850b3b868a5a63da3c8221dc6b738c683dafcddba6cd98a69ba4adc406d375b686109a5e2bd67de310f9c49c02e68d81",
+        "9880331e2b83b298a1b360daca79544057c4b1097bfd48355abc363887637494923be2a43ff89b6afc3e0263fdea5153",
+        "8fe7f333fcd477bc7028aa6b3cde1852a3ee335d017e80e9e58e3e6b2a0f99a67cf30bff07e047bef0c2555bc0b6b0b7",
     ]
     version = 0
 
