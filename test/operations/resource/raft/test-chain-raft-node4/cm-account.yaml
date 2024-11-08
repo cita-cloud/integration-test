@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 binaryData:
-  private_key: NjlmYWQ2NGZjMjNiNTlkMDMzMjgwNWFiYTAyOWJiZmY2ZjBmNjgwOGYzOTU5NzI4NWQ3Y2VlMDlhMjk3ZmU1YQ==
+  private_key: MDViNzliMTFlYmM3NmZiYTdlOWJkODkzYzI5Mjc4OTU1ZGI2N2FiMzE3MTdkYmY2ZGQ3ZWZhZWViYmFkMjMzZg==
 data:
-  node_address: 3e03dcb9b712140cb1ccd253d9b363af1046c0bf
-  validator_address: 3e03dcb9b712140cb1ccd253d9b363af1046c0bf
+  node_address: 0ba9931291c14950cc1451a80931dc5e29ce124a
+  validator_address: 0ba9931291c14950cc1451a80931dc5e29ce124a
 metadata:
   labels:
     app.kubernetes.io/chain-name: test-chain-raft
