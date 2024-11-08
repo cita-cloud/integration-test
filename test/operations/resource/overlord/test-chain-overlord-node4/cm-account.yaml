@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 binaryData:
-  private_key: MDk3ZDAxMDgzY2IzNzllZGEzYTM4NDEzNjRlZDBlMjEwZWQ4NzY3YzRiOTIyNGE4MmJiZDQzYWNlMmVjY2MyMg==
+  private_key: MGUyMjEzOGVmNDI1NzhlMTU0ZTVkNjRkM2Q3NmY1ZmJjOGMwNjVhMWY4NjE0MjdlYTgxOTc2ZTkzZDlhYTI1NA==
 data:
-  node_address: 2144cd034ab6ecd846e82d0365c7906dfc9c4727
-  validator_address: 8b99b10f951f6801c2e8798ff7419a25a959b2ec2e1f100a9aba90a853418bbc554a2a274fad7e45f7d423d3b5ff47ec
+  node_address: fd29e953119fc444e7c5fd4ac427cb2e10c246b2
+  validator_address: 98799403d2233454d07f48097e8d72991e51e41f7e69d153c0f789d2f768d424abaa9dbc657148b1e9f16e797375d373
 metadata:
   labels:
     app.kubernetes.io/chain-name: test-chain-overlord
