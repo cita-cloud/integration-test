@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-import sys, json, time
+import sys, json, time, subprocess
 sys.path.append("test/utils")
 import util
 
@@ -168,13 +168,22 @@ Function signatures:
     #print('batch_contract_addr: ', batch_contract_addr)
     
     # adjust quota
-    cmd = 'cldi -c default -u admin admin set-quota-limit 1703741824'
-    ret = util.exec_retry(cmd.format(tx_hash))
-    if ret.__contains__("Error"):
-        print("get receipt failed!")
-        exit(90)
+    #cmd = 'cldi -c default -u admin admin set-quota-limit 1703741824'
+    #ret = util.exec_retry(cmd.format(tx_hash))
+    #if ret.__contains__("Error"):
+    #    print("get receipt failed!")
+    #    exit(90)
     
-    time.sleep(9)
+    #time.sleep(9)
+
+    # adjust block interval to 1s
+    #cmd = 'cldi -c default -u admin admin set-block-interval 1'
+    #ret = util.exec_retry(cmd.format(tx_hash))
+    #if ret.__contains__("Error"):
+    #    print("get receipt failed!")
+    #    exit(100)
+    # 
+    # time.sleep(9)
 
     # build tx data
     addr = contract_addr[2:]
@@ -189,26 +198,32 @@ Function signatures:
     #print("tx data: ", tx_data)
 
     # bench send
-    # tansfer 1000000
-    print('begin to transfer 1000000...')
-    cmd = "cldi -c default bench send -t {} -d 0x82cc3327{} -c 4 -q 650000 --disable-watch"
-    ret = util.exec(cmd.format(batch_contract_addr, tx_data))
+    # tansfer 10000000
+    begin_send_time = time.time()
+    print('{} - begin to transfer 1000000...'.format(time.strftime('%H:%M:%S',time.localtime(begin_send_time))))
+    cmd = "cldi -c default bench send -t {} -d 0x82cc3327{} -c 4 -q 650000 100000 --disable-watch"
+    subprocess.Popen(cmd.format(batch_contract_addr, tx_data), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     #print('ret: ', ret)
 
-    # check amount
-    cmd = "cldi -c default call {} 0x06661abd"
-    ret = util.exec(cmd.format(contract_addr))
-    amount = int(ret, 16)
-    
+    # calc latency
+    amount = 0
+    while amount == 0:
+        time.sleep(0.5)
+        # check amount
+        cmd = "cldi -c default call {} 0x06661abd"
+        ret = util.exec(cmd.format(contract_addr))
+        amount = int(ret, 16)
+
     begin_amount = amount
     begin_time = time.time()
+    print('latency of transfer: %.2f s' %  (begin_time - begin_send_time))
 
     print('begin to wath amount ...')
     print('begin time {} - begin amount {}'.format(time.strftime('%H:%M:%S',time.localtime(begin_time)), begin_amount))
 
     print('############################################################################')
 
-    while amount < 1000000:
+    while amount < 10000000:
         time.sleep(1)
 
         # check amount
@@ -224,7 +239,7 @@ Function signatures:
     print('end time {} - end amount {}'.format(time.strftime('%H:%M:%S',time.localtime(last_time)), 1000000))
 
     # calc tps
-    tps = (1000000 - begin_amount) / (last_time - begin_time)
+    tps = (10000000 - begin_amount) / (last_time - begin_time)
     print("tps: %.2f" % tps)
 
     exit(0)
