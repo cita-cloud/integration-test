@@ -168,22 +168,22 @@ Function signatures:
     #print('batch_contract_addr: ', batch_contract_addr)
     
     # adjust quota
-    #cmd = 'cldi -c default -u admin admin set-quota-limit 1703741824'
-    #ret = util.exec_retry(cmd.format(tx_hash))
-    #if ret.__contains__("Error"):
-    #    print("get receipt failed!")
-    #    exit(90)
+    cmd = 'cldi -c default -u admin admin set-quota-limit 1703741824'
+    ret = util.exec_retry(cmd.format(tx_hash))
+    if ret.__contains__("Error"):
+        print("get receipt failed!")
+        exit(90)
     
-    #time.sleep(9)
+    time.sleep(9)
 
     # adjust block interval to 1s
-    #cmd = 'cldi -c default -u admin admin set-block-interval 1'
-    #ret = util.exec_retry(cmd.format(tx_hash))
-    #if ret.__contains__("Error"):
-    #    print("get receipt failed!")
-    #    exit(100)
-    # 
-    # time.sleep(9)
+    cmd = 'cldi -c default -u admin admin set-block-interval 1'
+    ret = util.exec_retry(cmd.format(tx_hash))
+    if ret.__contains__("Error"):
+        print("get receipt failed!")
+        exit(100)
+     
+    time.sleep(9)
 
     # build tx data
     addr = contract_addr[2:]
@@ -201,7 +201,7 @@ Function signatures:
     # tansfer 10000000
     begin_send_time = time.time()
     print('{} - begin to transfer 1000000...'.format(time.strftime('%H:%M:%S',time.localtime(begin_send_time))))
-    cmd = "cldi -c default bench send -t {} -d 0x82cc3327{} -c 4 -q 650000 100000 --disable-watch"
+    cmd = "cldi -c default bench send -t {} -d 0x82cc3327{} -c 4 -q 650000 --disable-watch"
     subprocess.Popen(cmd.format(batch_contract_addr, tx_data), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     #print('ret: ', ret)
 
@@ -223,7 +223,7 @@ Function signatures:
 
     print('############################################################################')
 
-    while amount < 10000000:
+    while amount < 1000000:
         time.sleep(1)
 
         # check amount
@@ -239,7 +239,16 @@ Function signatures:
     print('end time {} - end amount {}'.format(time.strftime('%H:%M:%S',time.localtime(last_time)), 1000000))
 
     # calc tps
-    tps = (10000000 - begin_amount) / (last_time - begin_time)
+    tps = (1000000 - begin_amount) / (last_time - begin_time)
     print("tps: %.2f" % tps)
+
+    # adjust block interval back to 3s
+    cmd = 'cldi -c default -u admin admin set-block-interval 3'
+    ret = util.exec_retry(cmd.format(tx_hash))
+    if ret.__contains__("Error"):
+        print("get receipt failed!")
+        exit(100)
+     
+    time.sleep(9)
 
     exit(0)
