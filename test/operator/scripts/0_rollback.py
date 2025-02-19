@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
     logger.info("exec rollback")
     result = util.exec_retry("kubectl exec -n {} -it {}-node0-0 -c patch-op -- cloud-op rollback -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), os.getenv("CHAIN_NAME"), old_bn - 100))
-    if "executor rollback done" not in result:
+    if "executor rollback done" not in result and "ignore rollback" not in result:
         print("exec rollback error: ", result)
         exit(20)
 
