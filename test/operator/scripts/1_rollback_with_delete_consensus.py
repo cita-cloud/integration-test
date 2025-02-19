@@ -126,6 +126,8 @@ def main():
 
     logger.info("rollback cloud storage")
     result = util.exec_retry("kubectl exec -n {} -it {}-0 -c patch-op -- cloud-op cloud-rollback -c /etc/cita-cloud/config/config.toml -n /data {}".format(os.getenv("NAMESPACE"), nodes[0].name, old_bn - 400))
+    if "ignore rollback" in result:
+        exit(0)
     if "cloud rollback done" not in result:
         print("exec rollback error: ", result)
         exit(30)
